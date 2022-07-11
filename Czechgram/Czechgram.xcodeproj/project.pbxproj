@@ -16,10 +16,11 @@
 		B3F149C2287AB8930072DA45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B3F149C1287AB8930072DA45 /* .swiftlint.yml */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
-		D2623527287BF572002F0610 /* ImageCollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* ImageCollectionViewDatasource.swift */; };
+		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
 		D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352A287C0203002F0610 /* DetailButtonSection.swift */; };
 		D262352D287C03DC002F0610 /* UIView +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352C287C03DC002F0610 /* UIView +.swift */; };
 		D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */; };
+		D2623533287C1959002F0610 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623532287C1959002F0610 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,10 +36,11 @@
 		B3F149C1287AB8930072DA45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
-		D2623526287BF572002F0610 /* ImageCollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewDatasource.swift; sourceTree = "<group>"; };
+		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
 		D262352A287C0203002F0610 /* DetailButtonSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailButtonSection.swift; sourceTree = "<group>"; };
 		D262352C287C03DC002F0610 /* UIView +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView +.swift"; sourceTree = "<group>"; };
 		D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDescriptionSection.swift; sourceTree = "<group>"; };
+		D2623532287C1959002F0610 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,10 +98,11 @@
 				B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */,
 				B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */,
 				B3F149B0287AB6AD0072DA45 /* ViewController.swift */,
+				D2623532287C1959002F0610 /* DetailView.swift */,
 				D2623522287BC06B002F0610 /* DetailProfileSection.swift */,
 				D262352A287C0203002F0610 /* DetailButtonSection.swift */,
 				D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */,
-				D2623526287BF572002F0610 /* ImageCollectionViewDatasource.swift */,
+				D2623526287BF572002F0610 /* CollectionViewDatasource.swift */,
 				D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */,
 				D262352C287C03DC002F0610 /* UIView +.swift */,
 				B3F149B5287AB6B60072DA45 /* Assets.xcassets */,
@@ -227,11 +230,12 @@
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
 				B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */,
 				D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */,
+				D2623533287C1959002F0610 /* DetailView.swift in Sources */,
 				D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
-				D2623527287BF572002F0610 /* ImageCollectionViewDatasource.swift in Sources */,
+				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
