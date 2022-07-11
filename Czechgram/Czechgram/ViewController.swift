@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var dataSource: ImageCollectionViewDatasource<UIImage, DetailCollectionViewCell>?
+
     private let detailScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,11 +32,13 @@ class ViewController: UIViewController {
     private let imageSection: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        
+
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.cellID)
 
         return collectionView
@@ -46,6 +50,7 @@ class ViewController: UIViewController {
         setSubViews()
         setConstraints()
         setSectionsData()
+        setCollectionView()
     }
 }
 
@@ -83,11 +88,25 @@ private extension ViewController {
 
     func setCollectionView() {
         imageSection.delegate = self
+
+        let dataSource = ImageCollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
+            cell.configure(image: image)
+        })
+
+        self.dataSource = dataSource
+        imageSection.dataSource = dataSource
     }
 }
 
-extension ViewController: UICollectionViewDelegate {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 추가 구현 예정
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = imageSection.frame.width
+        let height = imageSection.frame.height
+
+        return CGSize(width: width, height: height)
     }
 }

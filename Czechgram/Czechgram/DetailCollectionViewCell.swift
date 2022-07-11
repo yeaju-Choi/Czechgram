@@ -5,7 +5,6 @@
 //  Created by juntaek.oh on 2022/07/11.
 //
 
-import Foundation
 import UIKit
 
 final class DetailCollectionViewCell: UICollectionViewCell {
@@ -30,7 +29,7 @@ final class DetailCollectionViewCell: UICollectionViewCell {
         fatalError()
     }
 
-    func configureCell(image: UIImage) {
+    func configure(image: UIImage) {
         imageView.image = image
     }
 }
