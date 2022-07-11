@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailProfileSectionView: UIView {
+class DetailProfileSection: UIView {
 
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,7 +58,7 @@ class DetailProfileSectionView: UIView {
     }
 }
 
-private extension DetailProfileSectionView {
+private extension DetailProfileSection {
 
     func setSubViews() {
         self.addSubviews(profileImageView, profileIDView, selectbarView)

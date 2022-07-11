@@ -21,8 +21,8 @@ class ViewController: UIViewController {
         return scrollView
     }()
 
-    private let profileSection: DetailProfileSectionView = {
-        let section = DetailProfileSectionView()
+    private let profileSection: DetailProfileSection = {
+        let section = DetailProfileSection()
         section.translatesAutoresizingMaskIntoConstraints = false
         section.backgroundColor = .white
 
@@ -44,8 +44,16 @@ class ViewController: UIViewController {
         return collectionView
     }()
 
-    private let buttonSection: DetailButtonSectionView = {
-        let section = DetailButtonSectionView()
+    private let buttonSection: DetailButtonSection = {
+        let section = DetailButtonSection()
+        section.translatesAutoresizingMaskIntoConstraints = false
+        section.backgroundColor = .white
+
+        return section
+    }()
+
+    private let descriptionSection: DetailDescriptionSection = {
+        let section = DetailDescriptionSection()
         section.translatesAutoresizingMaskIntoConstraints = false
         section.backgroundColor = .white
 
@@ -64,6 +72,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         profileSection.setProfileImageViewCornerRound()
+        descriptionSection.setProfileImageViewCornerRound()
     }
 }
 
@@ -71,7 +80,7 @@ private extension ViewController {
 
     func setSubViews() {
         view.addSubview(detailScrollView)
-        detailScrollView.addSubviews(profileSection, imageSection, buttonSection)
+        detailScrollView.addSubviews(profileSection, imageSection, buttonSection, descriptionSection)
     }
 
     func setConstraints() {
@@ -85,22 +94,30 @@ private extension ViewController {
             profileSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
             profileSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
             profileSection.widthAnchor.constraint(equalTo: detailScrollView.widthAnchor),
-            profileSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.1),
+            profileSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.08),
 
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
             imageSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
-            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.65),
+            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.60),
 
             buttonSection.topAnchor.constraint(equalTo: imageSection.bottomAnchor),
             buttonSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
             buttonSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
-            buttonSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.05)
+            buttonSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.05),
+
+            descriptionSection.topAnchor.constraint(equalTo: buttonSection.bottomAnchor),
+            descriptionSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
+            descriptionSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor)
         ])
     }
 
     func setSectionsData() {
         profileSection.configure(image: UIImage(), id: "zeto_h_jt")
+        descriptionSection.configure(image: UIImage(), id: "yeyeju_님 외 12명이 좋아합니다", description: """
+                        zeto_h_jt 견생 중 가장 장발일 때
+                        #말티즈 #사진빨 #빡빡이
+                        """)
     }
 
     func setCollectionView() {

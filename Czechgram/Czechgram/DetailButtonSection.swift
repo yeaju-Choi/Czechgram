@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailButtonSectionView: UIView {
+class DetailButtonSection: UIView {
 
     private let leftStackView: UIStackView = {
         let stackView = UIStackView()
@@ -68,7 +68,7 @@ class DetailButtonSectionView: UIView {
     }
 }
 
-private extension DetailButtonSectionView {
+private extension DetailButtonSection {
 
     func setConstraints() {
         self.addSubviews(leftStackView, scrapImageView)
