@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6FFB6391C18D03BDD1B39D73 /* Pods_Czechgram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8395B4FD5F0B8CBFCD1C25 /* Pods_Czechgram.framework */; };
+		B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DA287BBA0200E2599B /* HomeViewController.swift */; };
+		B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */; };
 		B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */; };
 		B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */; };
 		B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149B0287AB6AD0072DA45 /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		2C1CA1BA3CAEE782D8C6E777 /* Pods-Czechgram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.debug.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.debug.xcconfig"; sourceTree = "<group>"; };
 		7B8395B4FD5F0B8CBFCD1C25 /* Pods_Czechgram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Czechgram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B37747DA287BBA0200E2599B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationTitleView.swift; sourceTree = "<group>"; };
 		B3F149A9287AB6AD0072DA45 /* Czechgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Czechgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 				B3F149B5287AB6B60072DA45 /* Assets.xcassets */,
 				B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */,
 				B3F149BA287AB6B60072DA45 /* Info.plist */,
+				B37747DA287BBA0200E2599B /* HomeViewController.swift */,
+				B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */,
 			);
 			path = Czechgram;
 			sourceTree = "<group>";
@@ -209,6 +215,8 @@
 				B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */,
+				B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +285,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -332,7 +340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
