@@ -44,6 +44,14 @@ class ViewController: UIViewController {
         return collectionView
     }()
 
+    private let buttonSection: DetailButtonSectionView = {
+        let section = DetailButtonSectionView()
+        section.translatesAutoresizingMaskIntoConstraints = false
+        section.backgroundColor = .white
+
+        return section
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -52,14 +60,18 @@ class ViewController: UIViewController {
         setSectionsData()
         setCollectionView()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        profileSection.setProfileImageViewCornerRound()
+    }
 }
 
 private extension ViewController {
 
     func setSubViews() {
         view.addSubview(detailScrollView)
-        detailScrollView.addSubview(profileSection)
-        detailScrollView.addSubview(imageSection)
+        detailScrollView.addSubviews(profileSection, imageSection, buttonSection)
     }
 
     func setConstraints() {
@@ -78,12 +90,17 @@ private extension ViewController {
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
             imageSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
-            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.65)
+            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.65),
+
+            buttonSection.topAnchor.constraint(equalTo: imageSection.bottomAnchor),
+            buttonSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
+            buttonSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
+            buttonSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.05)
         ])
     }
 
     func setSectionsData() {
-        profileSection.configureProfile(image: UIImage(), id: "zeto_h_jt")
+        profileSection.configure(image: UIImage(), id: "zeto_h_jt")
     }
 
     func setCollectionView() {

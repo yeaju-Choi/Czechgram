@@ -20,7 +20,7 @@ class DetailProfileSectionView: UIView {
 
     private let profileIDView: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +41,6 @@ class DetailProfileSectionView: UIView {
         super.init(frame: frame)
         setSubViews()
         setConstraints()
-        setProfileImageViewCornerRound()
     }
 
     @available(*, unavailable)
@@ -49,18 +48,20 @@ class DetailProfileSectionView: UIView {
         fatalError()
     }
 
-    func configureProfile(image: UIImage, id: String) {
+    func configure(image: UIImage, id: String) {
         profileImageView.image = image
         profileIDView.text = id
+    }
+
+    func setProfileImageViewCornerRound() {
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 }
 
 private extension DetailProfileSectionView {
 
     func setSubViews() {
-        self.addSubview(profileImageView)
-        self.addSubview(profileIDView)
-        self.addSubview(selectbarView)
+        self.addSubviews(profileImageView, profileIDView, selectbarView)
     }
 
     func setConstraints() {
@@ -79,9 +80,5 @@ private extension DetailProfileSectionView {
             selectbarView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.3),
             selectbarView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.06)
         ])
-    }
-
-    func setProfileImageViewCornerRound() {
-        profileImageView.layer.cornerRadius = 28
     }
 }
