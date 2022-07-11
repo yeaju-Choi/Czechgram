@@ -14,6 +14,7 @@
 		B3F149B6287AB6B60072DA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B5287AB6B60072DA45 /* Assets.xcassets */; };
 		B3F149B9287AB6B60072DA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */; };
 		B3F149C2287AB8930072DA45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B3F149C1287AB8930072DA45 /* .swiftlint.yml */; };
+		D2623523287BC06B002F0610 /* DetailProfileSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		B3F149B8287AB6B60072DA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B3F149BA287AB6B60072DA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3F149C1287AB8930072DA45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D2623522287BC06B002F0610 /* DetailProfileSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSectionView.swift; sourceTree = "<group>"; };
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +86,7 @@
 				B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */,
 				B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */,
 				B3F149B0287AB6AD0072DA45 /* ViewController.swift */,
+				D2623522287BC06B002F0610 /* DetailProfileSectionView.swift */,
 				B3F149B5287AB6B60072DA45 /* Assets.xcassets */,
 				B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */,
 				B3F149BA287AB6B60072DA45 /* Info.plist */,
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */,
+				D2623523287BC06B002F0610 /* DetailProfileSectionView.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 			);
