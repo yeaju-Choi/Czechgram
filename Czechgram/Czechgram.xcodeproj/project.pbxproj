@@ -11,6 +11,8 @@
 		B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DA287BBA0200E2599B /* HomeViewController.swift */; };
 		B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */; };
 		B37747DF287BED7D00E2599B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DE287BED7C00E2599B /* ProfileView.swift */; };
+		B37747E1287C146000E2599B /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747E0287C146000E2599B /* PostCell.swift */; };
+		B37747E3287C162200E2599B /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */; };
 		B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */; };
 		B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */; };
 		B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149B0287AB6AD0072DA45 /* ViewController.swift */; };
@@ -25,6 +27,8 @@
 		B37747DA287BBA0200E2599B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationTitleView.swift; sourceTree = "<group>"; };
 		B37747DE287BED7C00E2599B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B37747E0287C146000E2599B /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		B3F149A9287AB6AD0072DA45 /* Czechgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Czechgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +98,8 @@
 				B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */,
 				B3F149BA287AB6B60072DA45 /* Info.plist */,
 				B37747DA287BBA0200E2599B /* HomeViewController.swift */,
+				B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */,
+				B37747E0287C146000E2599B /* PostCell.swift */,
 				B37747DE287BED7C00E2599B /* ProfileView.swift */,
 				B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */,
 			);
@@ -215,6 +221,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B37747E3287C162200E2599B /* HomeCollectionViewDataSource.swift in Sources */,
+				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
