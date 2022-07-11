@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private var dataSource: ImageCollectionViewDatasource<UIImage, DetailCollectionViewCell>?
+    private var dataSource: CollectionViewDatasource<UIImage, DetailCollectionViewCell>?
 
     private let detailScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -78,7 +78,7 @@ private extension ViewController {
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
             imageSection.trailingAnchor.constraint(equalTo: detailScrollView.trailingAnchor),
-            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.6)
+            imageSection.heightAnchor.constraint(equalTo: detailScrollView.heightAnchor, multiplier: 0.65)
         ])
     }
 
@@ -89,7 +89,7 @@ private extension ViewController {
     func setCollectionView() {
         imageSection.delegate = self
 
-        let dataSource = ImageCollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
+        let dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
             cell.configure(image: image)
         })
 
