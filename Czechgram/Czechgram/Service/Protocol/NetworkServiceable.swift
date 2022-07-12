@@ -8,6 +8,6 @@
 import Foundation
 
 protocol NetworkServiceable {
-    typealias CompletionHandler = (Result<Data, Error>) -> Void
+    typealias CompletionHandler = (Result<Data, NetworkError>) -> Void
     static func request(endPoint: EndPoint, completion: @escaping CompletionHandler)
 }

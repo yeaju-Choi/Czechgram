@@ -17,12 +17,12 @@ struct NetworkService: NetworkServiceable {
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             guard let !error = error else {
-                completion(.failure(error))
+                completion(.failure(.transportError(error)))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                completion(.failure(error))
+                completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
                 return
             }
             
