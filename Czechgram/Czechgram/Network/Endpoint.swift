@@ -10,6 +10,7 @@ import Foundation
 enum EndPoint: EndPontable {
 
     case instagramAuthorize
+    case requestToken(code: String)
 
     var base: URL? {
         switch self {
@@ -24,6 +25,8 @@ enum EndPoint: EndPontable {
         switch self {
         case .instagramAuthorize:
             return "/oauth/authorize"
+        case .requestToken:
+            return "/oauth/access_token"
         default:
             return ""
         }
@@ -31,6 +34,8 @@ enum EndPoint: EndPontable {
 
     var httpMethod: HTTPMethod {
         switch self {
+        case .requestToken:
+            return .post
         default:
             return .get
         }
@@ -39,12 +44,21 @@ enum EndPoint: EndPontable {
     var contentType: [String: String]? {
         switch self {
         default:
-            return nil
+            return ["Content-type": "application/json",
+                    "Accept": "application/json"]
         }
     }
 
     var parameter: [String: Any]? {
         switch self {
+
+        case .requestToken(let code):
+            // TODO: 실제 값으로 변경해야 함
+            return ["client_id": "990602627938098",
+                    "client_secret": "a1b2C3D4",
+                    "code": "AQBx-hBsH3...",
+                    "grant_type": "\(code)"]
+
         case .instagramAuthorize:
             // TODO: 실제 값으로 변경해야 함
             return ["client_id": "990602627938098",
