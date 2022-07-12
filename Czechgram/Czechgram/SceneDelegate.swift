@@ -16,10 +16,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         // TODO: 후에 변경 해야함
-        let mainViewController = HomeViewController()
-        let navigationController = UINavigationController(rootViewController: mainViewController)
+        let mainViewController = LoginViewController()
 
-        window?.rootViewController = navigationController
+        window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
 }
