@@ -85,12 +85,7 @@ final class ProfileView: UIView {
 private extension ProfileView {
 
     func addSubviews() {
-        self.addSubview(userImageView)
-        self.addSubview(postsButton)
-        self.addSubview(followersButton)
-        self.addSubview(followingButton)
-        self.addSubview(nameLabel)
-        self.addSubview(editButton)
+        addSubviews(userImageView, postsButton, followersButton, followingButton, nameLabel, editButton)
     }
 
     func setLayouts() {
@@ -138,7 +133,5 @@ private extension ProfileView {
             editButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             editButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
-
     }
-
 }

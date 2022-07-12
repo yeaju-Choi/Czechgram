@@ -71,16 +71,16 @@ private extension DetailButtonSection {
 
     func setConstraints() {
         self.addSubviews(leftStackView, scrapImageView)
-        leftStackView.addArrangedSubview(heartImageView)
-        leftStackView.addArrangedSubview(commentImageView)
-        leftStackView.addArrangedSubview(messageImageView)
+        leftStackView.addArrangedSubviews(heartImageView, commentImageView, messageImageView)
 
         NSLayoutConstraint.activate([
             leftStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             leftStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             leftStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
-            leftStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
+            leftStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3)
+        ])
 
+        NSLayoutConstraint.activate([
             scrapImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             scrapImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             scrapImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),

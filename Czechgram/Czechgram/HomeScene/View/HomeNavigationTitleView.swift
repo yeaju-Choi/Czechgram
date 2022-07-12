@@ -51,13 +51,10 @@ final class HomeNavigationTitleView: UIView {
 
 private extension HomeNavigationTitleView {
     func addSubviews() {
-        self.addSubview(idLabel)
-        self.addSubview(menuButton)
-        self.addSubview(postButton)
+        addSubviews(idLabel, menuButton, postButton)
     }
 
     func setLayout() {
-
         NSLayoutConstraint.activate([
             idLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             idLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
@@ -79,6 +76,5 @@ private extension HomeNavigationTitleView {
             postButton.heightAnchor.constraint(equalToConstant: 20),
             postButton.leadingAnchor.constraint(greaterThanOrEqualTo: idLabel.trailingAnchor, constant: 50)
         ])
-
     }
 }

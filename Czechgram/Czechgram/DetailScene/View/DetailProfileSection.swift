@@ -39,7 +39,6 @@ class DetailProfileSection: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setSubViews()
         setConstraints()
     }
 
@@ -60,21 +59,23 @@ class DetailProfileSection: UIView {
 
 private extension DetailProfileSection {
 
-    func setSubViews() {
-        self.addSubviews(profileImageView, profileIDLabel, selectbarView)
-    }
-
     func setConstraints() {
+        self.addSubviews(profileImageView, profileIDLabel, selectbarView)
+
         NSLayoutConstraint.activate([
             profileImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             profileImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
-            profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor),
+            profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor)
+        ])
 
+        NSLayoutConstraint.activate([
             profileIDLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 15),
             profileIDLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            profileIDLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            profileIDLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
+        ])
 
+        NSLayoutConstraint.activate([
             selectbarView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             selectbarView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             selectbarView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.3),

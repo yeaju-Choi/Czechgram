@@ -15,7 +15,7 @@
 		B37747E3287C162200E2599B /* HomeCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */; };
 		B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */; };
 		B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */; };
-		B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149B0287AB6AD0072DA45 /* ViewController.swift */; };
+		B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149B0287AB6AD0072DA45 /* DetailViewController.swift */; };
 		B3F149B6287AB6B60072DA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B5287AB6B60072DA45 /* Assets.xcassets */; };
 		B3F149B9287AB6B60072DA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */; };
 		B3F149C2287AB8930072DA45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B3F149C1287AB8930072DA45 /* .swiftlint.yml */; };
@@ -26,6 +26,7 @@
 		D262352D287C03DC002F0610 /* UIView +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352C287C03DC002F0610 /* UIView +.swift */; };
 		D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */; };
 		D2623533287C1959002F0610 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623532287C1959002F0610 /* DetailView.swift */; };
+		D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262353D287D17DA002F0610 /* UIStackView +.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +40,7 @@
 		B3F149A9287AB6AD0072DA45 /* Czechgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Czechgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B3F149B0287AB6AD0072DA45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B3F149B0287AB6AD0072DA45 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		B3F149B5287AB6B60072DA45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3F149B8287AB6B60072DA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B3F149BA287AB6B60072DA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		D262352C287C03DC002F0610 /* UIView +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView +.swift"; sourceTree = "<group>"; };
 		D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDescriptionSection.swift; sourceTree = "<group>"; };
 		D2623532287C1959002F0610 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		D262353D287D17DA002F0610 /* UIStackView +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView +.swift"; sourceTree = "<group>"; };
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,26 +107,67 @@
 		B3F149AB287AB6AD0072DA45 /* Czechgram */ = {
 			isa = PBXGroup;
 			children = (
+				D2623539287D15D7002F0610 /* HomeScene */,
+				D2623538287D145A002F0610 /* DetailScene */,
+				D262353A287D15EA002F0610 /* Extension + */,
 				B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */,
 				B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */,
-				B3F149B0287AB6AD0072DA45 /* ViewController.swift */,
+				B3F149B5287AB6B60072DA45 /* Assets.xcassets */,
+				B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */,
+				B3F149BA287AB6B60072DA45 /* Info.plist */,
+			);
+			path = Czechgram;
+			sourceTree = "<group>";
+		};
+		D2623538287D145A002F0610 /* DetailScene */ = {
+			isa = PBXGroup;
+			children = (
+				D262353C287D165D002F0610 /* View */,
+			);
+			path = DetailScene;
+			sourceTree = "<group>";
+		};
+		D2623539287D15D7002F0610 /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				D262353B287D1626002F0610 /* View */,
+			);
+			path = HomeScene;
+			sourceTree = "<group>";
+		};
+		D262353A287D15EA002F0610 /* Extension + */ = {
+			isa = PBXGroup;
+			children = (
+				D262352C287C03DC002F0610 /* UIView +.swift */,
+				D262353D287D17DA002F0610 /* UIStackView +.swift */,
+			);
+			path = "Extension +";
+			sourceTree = "<group>";
+		};
+		D262353B287D1626002F0610 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B37747DA287BBA0200E2599B /* HomeViewController.swift */,
+				B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */,
+				B37747DE287BED7C00E2599B /* ProfileView.swift */,
+				B37747E0287C146000E2599B /* PostCell.swift */,
+				B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D262353C287D165D002F0610 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B3F149B0287AB6AD0072DA45 /* DetailViewController.swift */,
 				D2623532287C1959002F0610 /* DetailView.swift */,
 				D2623522287BC06B002F0610 /* DetailProfileSection.swift */,
 				D262352A287C0203002F0610 /* DetailButtonSection.swift */,
 				D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */,
-				D2623526287BF572002F0610 /* CollectionViewDatasource.swift */,
 				D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */,
-				D262352C287C03DC002F0610 /* UIView +.swift */,
-				B3F149B5287AB6B60072DA45 /* Assets.xcassets */,
-				B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */,
-				B3F149BA287AB6B60072DA45 /* Info.plist */,
-				B37747DA287BBA0200E2599B /* HomeViewController.swift */,
-				B37747E2287C162200E2599B /* HomeCollectionViewDataSource.swift */,
-				B37747E0287C146000E2599B /* PostCell.swift */,
-				B37747DE287BED7C00E2599B /* ProfileView.swift */,
-				B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */,
+				D2623526287BF572002F0610 /* CollectionViewDatasource.swift */,
 			);
-			path = Czechgram;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,11 +288,12 @@
 				B37747E3287C162200E2599B /* HomeCollectionViewDataSource.swift in Sources */,
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
-				B3F149B1287AB6AD0072DA45 /* ViewController.swift in Sources */,
+				B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */,
 				D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */,
 				D2623533287C1959002F0610 /* DetailView.swift in Sources */,
 				D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
+				D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */,
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,

@@ -58,7 +58,6 @@ class DetailDescriptionSection: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setSubViews()
         setConstraints()
     }
 
@@ -81,32 +80,38 @@ class DetailDescriptionSection: UIView {
 
 private extension DetailDescriptionSection {
 
-    func setSubViews() {
+    func setConstraints() {
         self.addSubviews(likeLine, contentDescriptionLabel, dateLabel)
         self.likeLine.addSubviews(profileImageView, likeDescriptionLabel)
-    }
 
-    func setConstraints() {
         NSLayoutConstraint.activate([
             likeLine.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             likeLine.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             likeLine.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            likeLine.heightAnchor.constraint(equalToConstant: 25),
+            likeLine.heightAnchor.constraint(equalToConstant: 25)
+        ])
 
+        NSLayoutConstraint.activate([
             profileImageView.leadingAnchor.constraint(equalTo: likeLine.leadingAnchor, constant: 15),
             profileImageView.topAnchor.constraint(equalTo: likeLine.topAnchor),
             profileImageView.bottomAnchor.constraint(equalTo: likeLine.bottomAnchor),
-            profileImageView.widthAnchor.constraint(equalTo: likeLine.heightAnchor),
+            profileImageView.widthAnchor.constraint(equalTo: likeLine.heightAnchor)
+        ])
 
+        NSLayoutConstraint.activate([
             likeDescriptionLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 5),
             likeDescriptionLabel.trailingAnchor.constraint(equalTo: likeLine.trailingAnchor, constant: -15),
             likeDescriptionLabel.topAnchor.constraint(equalTo: likeLine.topAnchor),
-            likeDescriptionLabel.bottomAnchor.constraint(equalTo: likeLine.bottomAnchor),
+            likeDescriptionLabel.bottomAnchor.constraint(equalTo: likeLine.bottomAnchor)
+        ])
 
+        NSLayoutConstraint.activate([
             contentDescriptionLabel.topAnchor.constraint(equalTo: likeLine.bottomAnchor, constant: 10),
             contentDescriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            contentDescriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+            contentDescriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+        ])
 
+        NSLayoutConstraint.activate([
             dateLabel.topAnchor.constraint(equalTo: contentDescriptionLabel.bottomAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             dateLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)

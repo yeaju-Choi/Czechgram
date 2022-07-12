@@ -94,23 +94,28 @@ private extension DetailView {
 
     func setConstraints() {
         NSLayoutConstraint.activate([
-
             profileSection.topAnchor.constraint(equalTo: self.topAnchor),
             profileSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             profileSection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             profileSection.widthAnchor.constraint(equalTo: self.widthAnchor),
-            profileSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.08),
+            profileSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.08)
+        ])
 
+        NSLayoutConstraint.activate([
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             imageSection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imageSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6),
+            imageSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
+        ])
 
+        NSLayoutConstraint.activate([
             buttonSection.topAnchor.constraint(equalTo: imageSection.bottomAnchor),
             buttonSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             buttonSection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            buttonSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.05),
+            buttonSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.05)
+        ])
 
+        NSLayoutConstraint.activate([
             descriptionSection.topAnchor.constraint(equalTo: buttonSection.bottomAnchor),
             descriptionSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             descriptionSection.trailingAnchor.constraint(equalTo: self.trailingAnchor)

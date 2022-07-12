@@ -65,13 +65,10 @@ private extension HomeViewController {
     func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubview(profileView)
-        contentView.addSubview(collectionView)
-
+        contentView.addSubviews(profileView, collectionView)
     }
 
     func setLayouts() {
-
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -104,22 +101,26 @@ private extension HomeViewController {
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 1500)
         ])
-
     }
 }
 
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         let detailVC = DetailViewController()
+         self.navigationController?.pushViewController(detailVC, animated: true)
+     }
+
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width / 3 - 1
         return CGSize(width: width, height: width)
-    }
+     }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
          return 1
-    }
+     }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
          return 1
      }
-
  }

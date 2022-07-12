@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class DetailViewController: UIViewController {
 
     private var dataSource: CollectionViewDatasource<UIImage, DetailCollectionViewCell>?
 
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     }
 }
 
-private extension ViewController {
+private extension DetailViewController {
 
     func setConstraints() {
         view.addSubview(detailScrollView)
@@ -53,8 +53,10 @@ private extension ViewController {
             detailScrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             detailScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             detailScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            detailScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            detailScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
 
+        NSLayoutConstraint.activate([
             detailView.topAnchor.constraint(equalTo: detailScrollView.topAnchor),
             detailView.bottomAnchor.constraint(equalTo: detailScrollView.bottomAnchor),
             detailView.leadingAnchor.constraint(equalTo: detailScrollView.leadingAnchor),
@@ -88,7 +90,7 @@ private extension ViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 추가 구현 예정
     }
