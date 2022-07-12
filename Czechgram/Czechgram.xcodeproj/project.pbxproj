@@ -18,6 +18,9 @@
 		B3F149B6287AB6B60072DA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B5287AB6B60072DA45 /* Assets.xcassets */; };
 		B3F149B9287AB6B60072DA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */; };
 		B3F149C2287AB8930072DA45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B3F149C1287AB8930072DA45 /* .swiftlint.yml */; };
+		B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEA287D607E00E06E85 /* Endpoint.swift */; };
+		B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEC287D609200E06E85 /* Endpontable.swift */; };
+		B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEE287D622800E06E85 /* HTTPMethod.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -45,6 +48,9 @@
 		B3F149B8287AB6B60072DA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B3F149BA287AB6B60072DA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3F149C1287AB8930072DA45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B3F23FEA287D607E00E06E85 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		B3F23FEC287D609200E06E85 /* Endpontable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpontable.swift; sourceTree = "<group>"; };
+		B3F23FEE287D622800E06E85 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 		B3F149AB287AB6AD0072DA45 /* Czechgram */ = {
 			isa = PBXGroup;
 			children = (
+				B3F23FE9287D602500E06E85 /* Network */,
 				D262353F287D601D002F0610 /* LoginScene */,
 				D2623539287D15D7002F0610 /* HomeScene */,
 				D2623538287D145A002F0610 /* DetailScene */,
@@ -120,6 +127,16 @@
 				B3F149BA287AB6B60072DA45 /* Info.plist */,
 			);
 			path = Czechgram;
+			sourceTree = "<group>";
+		};
+		B3F23FE9287D602500E06E85 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B3F23FEA287D607E00E06E85 /* Endpoint.swift */,
+				B3F23FEC287D609200E06E85 /* Endpontable.swift */,
+				B3F23FEE287D622800E06E85 /* HTTPMethod.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
@@ -312,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */,
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
 				B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */,
@@ -322,6 +340,10 @@
 				D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */,
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
+				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
+				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
+				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,
 				D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
