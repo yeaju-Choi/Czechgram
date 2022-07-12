@@ -81,12 +81,11 @@ private extension DetailViewController {
     }
 
     func setCollectionView() {
-        let dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
+        dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
             cell.configure(image: image)
         })
 
-        self.dataSource = dataSource
-        detailView.setUPCollectionView(delegate: self, dataSource: dataSource)
+        detailView.setUPCollectionView(delegate: self, dataSource: self.dataSource)
     }
 }
 

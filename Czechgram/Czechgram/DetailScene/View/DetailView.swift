@@ -60,7 +60,7 @@ final class DetailView: UIView {
         fatalError()
     }
 
-    func setUPCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
+    func setUPCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource?) {
         imageSection.delegate = delegate
         imageSection.dataSource = dataSource
     }

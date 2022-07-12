@@ -9,8 +9,11 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
+    let dummyData: [String] = ["userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage"]
+
     private var profileView = ProfileView()
-    private var homeCollectionViewDataSource: HomeCollectionViewDataSource?
+//    private var homeCollectionViewDataSource: HomeCollectionViewDataSource?
+    private var datasource: CollectionViewDatasource<String, PostCell>?
 
     private var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
@@ -43,11 +46,7 @@ final class HomeViewController: UIViewController {
         setNavigationController()
         addSubviews()
         setLayouts()
-
-        self.homeCollectionViewDataSource = HomeCollectionViewDataSource()
-        self.collectionView.dataSource = homeCollectionViewDataSource
-        self.collectionView.delegate = self
-
+        setCollectionView()
     }
 
     override func viewDidLayoutSubviews() {
@@ -101,6 +100,14 @@ private extension HomeViewController {
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 1500)
         ])
+    }
+
+    func setCollectionView() {
+        datasource = CollectionViewDatasource(dummyData, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: String, cell: PostCell) in
+            cell.setImage(image: UIImage(named: imageData) ?? UIImage())
+        }
+        self.collectionView.dataSource = self.datasource
+        self.collectionView.delegate = self
     }
 }
 
