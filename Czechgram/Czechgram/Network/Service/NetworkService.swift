@@ -10,10 +10,10 @@ import Foundation
 struct NetworkService: NetworkServiceable {
     
     static func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
-        var urlRequest = URLRequest(url: endPoint.url)
-        urlRequest.httpMethod = endPoint.method
-        urlRequest.setValue(endPoint.headerValue, forHTTPHeaderField: endPoint.headerType)
-        urlRequest.httpBody = endPoint.body
+        var urlRequest = URLRequest(url: endPoint.base)
+        urlRequest.httpMethod = endPoint.httpMethod
+        urlRequest.setValue(endPoint.contentType, forHTTPHeaderField: endPoint.headerType)
+        urlRequest.httpBody = endPoint
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             guard let !error = error else {
