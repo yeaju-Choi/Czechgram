@@ -29,6 +29,8 @@
 		D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */; };
 		D2623533287C1959002F0610 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623532287C1959002F0610 /* DetailView.swift */; };
 		D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262353D287D17DA002F0610 /* UIStackView +.swift */; };
+		D2623541287D6049002F0610 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623540287D6049002F0610 /* LoginViewController.swift */; };
+		D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623543287D6DCC002F0610 /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDescriptionSection.swift; sourceTree = "<group>"; };
 		D2623532287C1959002F0610 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		D262353D287D17DA002F0610 /* UIStackView +.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView +.swift"; sourceTree = "<group>"; };
+		D2623540287D6049002F0610 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D2623543287D6DCC002F0610 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				B3F23FE9287D602500E06E85 /* Network */,
+				D262353F287D601D002F0610 /* LoginScene */,
 				D2623539287D15D7002F0610 /* HomeScene */,
 				D2623538287D145A002F0610 /* DetailScene */,
 				D262353A287D15EA002F0610 /* Extension + */,
@@ -182,6 +187,31 @@
 				D2623526287BF572002F0610 /* CollectionViewDatasource.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D262353F287D601D002F0610 /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				D2623545287D6DCF002F0610 /* ViewModel */,
+				D2623542287D6DBD002F0610 /* View */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		D2623542287D6DBD002F0610 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D2623540287D6049002F0610 /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D2623545287D6DCF002F0610 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D2623543287D6DCC002F0610 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,6 +344,10 @@
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,
+				D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */,
+				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
+				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				D2623541287D6049002F0610 /* LoginViewController.swift in Sources */,
 				B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */,
 				B37747DF287BED7D00E2599B /* ProfileView.swift in Sources */,
 				B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */,
