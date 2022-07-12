@@ -18,6 +18,9 @@
 		B3F149B6287AB6B60072DA45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B5287AB6B60072DA45 /* Assets.xcassets */; };
 		B3F149B9287AB6B60072DA45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F149B7287AB6B60072DA45 /* LaunchScreen.storyboard */; };
 		B3F149C2287AB8930072DA45 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = B3F149C1287AB8930072DA45 /* .swiftlint.yml */; };
+		B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEA287D607E00E06E85 /* Endpoint.swift */; };
+		B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEC287D609200E06E85 /* Endpontable.swift */; };
+		B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEE287D622800E06E85 /* HTTPMethod.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -26,9 +29,13 @@
 		D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262352E287C0D71002F0610 /* DetailDescriptionSection.swift */; };
 		D2623533287C1959002F0610 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623532287C1959002F0610 /* DetailView.swift */; };
 		D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262353D287D17DA002F0610 /* UIStackView +.swift */; };
+
 		D2623549287D79E7002F0610 /* NetworkServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623548287D79E7002F0610 /* NetworkServiceable.swift */; };
 		D262354B287D7B02002F0610 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262354A287D7B02002F0610 /* NetworkService.swift */; };
 		D262354D287D7DF0002F0610 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262354C287D7DF0002F0610 /* NetworkError.swift */; };
+		D2623541287D6049002F0610 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623540287D6049002F0610 /* LoginViewController.swift */; };
+		D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623543287D6DCC002F0610 /* LoginViewModel.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +53,9 @@
 		B3F149B8287AB6B60072DA45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B3F149BA287AB6B60072DA45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3F149C1287AB8930072DA45 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		B3F23FEA287D607E00E06E85 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		B3F23FEC287D609200E06E85 /* Endpontable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpontable.swift; sourceTree = "<group>"; };
+		B3F23FEE287D622800E06E85 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -57,6 +67,10 @@
 		D2623548287D79E7002F0610 /* NetworkServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceable.swift; sourceTree = "<group>"; };
 		D262354A287D7B02002F0610 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D262354C287D7DF0002F0610 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+
+		D2623540287D6049002F0610 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D2623543287D6DCC002F0610 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +125,8 @@
 		B3F149AB287AB6AD0072DA45 /* Czechgram */ = {
 			isa = PBXGroup;
 			children = (
+				B3F23FE9287D602500E06E85 /* Network */,
+				D262353F287D601D002F0610 /* LoginScene */,
 				D2623539287D15D7002F0610 /* HomeScene */,
 				D2623538287D145A002F0610 /* DetailScene */,
 				D2623546287D79B7002F0610 /* Service */,
@@ -122,6 +138,16 @@
 				B3F149BA287AB6B60072DA45 /* Info.plist */,
 			);
 			path = Czechgram;
+			sourceTree = "<group>";
+		};
+		B3F23FE9287D602500E06E85 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B3F23FEA287D607E00E06E85 /* Endpoint.swift */,
+				B3F23FEC287D609200E06E85 /* Endpontable.swift */,
+				B3F23FEE287D622800E06E85 /* HTTPMethod.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
@@ -174,6 +200,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+
 		D2623546287D79B7002F0610 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +217,30 @@
 				D2623548287D79E7002F0610 /* NetworkServiceable.swift */,
 			);
 			path = Protocol;
+    };
+		D262353F287D601D002F0610 /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				D2623545287D6DCF002F0610 /* ViewModel */,
+				D2623542287D6DBD002F0610 /* View */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		D2623542287D6DBD002F0610 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D2623540287D6049002F0610 /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D2623545287D6DCF002F0610 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D2623543287D6DCC002F0610 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */,
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
 				D2623549287D79E7002F0610 /* NetworkServiceable.swift in Sources */,
@@ -319,8 +371,14 @@
 				D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */,
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
+				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,
+				D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */,
+				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
+				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				D2623541287D6049002F0610 /* LoginViewController.swift in Sources */,
 				B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */,
 				D262354D287D7DF0002F0610 /* NetworkError.swift in Sources */,
 				B37747DF287BED7D00E2599B /* ProfileView.swift in Sources */,

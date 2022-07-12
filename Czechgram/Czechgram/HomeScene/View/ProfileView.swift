@@ -89,12 +89,12 @@ private extension ProfileView {
         NSLayoutConstraint.activate([
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            userImageView.heightAnchor.constraint(lessThanOrEqualToConstant: 110),
+            userImageView.heightAnchor.constraint(equalToConstant: 110),
             userImageView.widthAnchor.constraint(equalTo: userImageView.heightAnchor)
         ])
 
         NSLayoutConstraint.activate([
-            postsButton.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 20),
+            postsButton.leadingAnchor.constraint(greaterThanOrEqualTo: userImageView.trailingAnchor, constant: 20),
             postsButton.centerYAnchor.constraint(equalTo: userImageView.centerYAnchor),
             postsButton.widthAnchor.constraint(equalToConstant: 40),
             postsButton.heightAnchor.constraint(equalToConstant: 40)
@@ -119,14 +119,14 @@ private extension ProfileView {
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             nameLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 10),
-            nameLabel.heightAnchor.constraint(equalToConstant: 20),
+            nameLabel.heightAnchor.constraint(equalToConstant: 35),
             nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
 
         NSLayoutConstraint.activate([
             editButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             editButton.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            editButton.heightAnchor.constraint(equalToConstant: 30),
+            editButton.heightAnchor.constraint(equalToConstant: 35),
             editButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             editButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10)
         ])
