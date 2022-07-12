@@ -19,8 +19,7 @@ class PostCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addsubViews()
-        setLayouts()
+        configureLayouts()
     }
 
     @available (*, unavailable)
@@ -28,18 +27,16 @@ class PostCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setImage(image: UIImage) {
+    func set(image: UIImage) {
         postImageView.image = image
     }
 }
 
 private extension PostCell {
 
-    func addsubViews() {
+    func configureLayouts() {
         contentView.addSubview(postImageView)
-    }
 
-    func setLayouts() {
         NSLayoutConstraint.activate([
             postImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             postImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

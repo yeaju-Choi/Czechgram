@@ -39,7 +39,7 @@ class DetailProfileSection: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setConstraints()
+        configureLayouts()
     }
 
     @available(*, unavailable)
@@ -47,19 +47,19 @@ class DetailProfileSection: UIView {
         fatalError()
     }
 
-    func configure(image: UIImage, id: String) {
+    func set(image: UIImage, id: String) {
         profileImageView.image = image
         profileIDLabel.text = id
     }
 
-    func setProfileImageViewCornerRound() {
+    func setProfileImageViewCornerRoundly() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 }
 
 private extension DetailProfileSection {
 
-    func setConstraints() {
+    func configureLayouts() {
         self.addSubviews(profileImageView, profileIDLabel, selectbarView)
 
         NSLayoutConstraint.activate([

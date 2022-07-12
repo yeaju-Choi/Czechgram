@@ -12,7 +12,6 @@ final class HomeViewController: UIViewController {
     let dummyData: [String] = ["userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage"]
 
     private var profileView = ProfileView()
-//    private var homeCollectionViewDataSource: HomeCollectionViewDataSource?
     private var datasource: CollectionViewDatasource<String, PostCell>?
 
     private var scrollView: UIScrollView = {
@@ -44,13 +43,12 @@ final class HomeViewController: UIViewController {
         self.view.backgroundColor = .white
 
         setNavigationController()
-        addSubviews()
-        setLayouts()
+        configureLayouts()
         setCollectionView()
     }
 
     override func viewDidLayoutSubviews() {
-        profileView.setUserImageCornerRound()
+        profileView.setUserImageCornerRoundly()
     }
 }
 
@@ -61,13 +59,11 @@ private extension HomeViewController {
         self.navigationItem.titleView = titleView
     }
 
-    func addSubviews() {
+    func configureLayouts() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(profileView, collectionView)
-    }
 
-    func setLayouts() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -104,7 +100,7 @@ private extension HomeViewController {
 
     func setCollectionView() {
         datasource = CollectionViewDatasource(dummyData, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: String, cell: PostCell) in
-            cell.setImage(image: UIImage(named: imageData) ?? UIImage())
+            cell.set(image: UIImage(named: imageData) ?? UIImage())
         }
         self.collectionView.dataSource = self.datasource
         self.collectionView.delegate = self
