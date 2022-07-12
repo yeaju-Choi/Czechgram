@@ -70,7 +70,7 @@ final class DetailView: UIView {
     }
 
     func setUPDescriptionData(profile: UIImage, userId: String, likePeople: String, description: String) {
-        descriptionSection.configure(image: profile, id: "\(userId)\(likePeople)", description: description)
+        descriptionSection.configure(image: profile, likeLine: "\(userId)\(likePeople)", description: description, date: "2022년 7월 11일")
     }
 
     func setUPUserImageRoundly() {

@@ -18,7 +18,7 @@ class DetailProfileSection: UIView {
         return imageView
     }()
 
-    private let profileIDView: UILabel = {
+    private let profileIDLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
@@ -50,7 +50,7 @@ class DetailProfileSection: UIView {
 
     func configure(image: UIImage, id: String) {
         profileImageView.image = image
-        profileIDView.text = id
+        profileIDLabel.text = id
     }
 
     func setProfileImageViewCornerRound() {
@@ -61,7 +61,7 @@ class DetailProfileSection: UIView {
 private extension DetailProfileSection {
 
     func setSubViews() {
-        self.addSubviews(profileImageView, profileIDView, selectbarView)
+        self.addSubviews(profileImageView, profileIDLabel, selectbarView)
     }
 
     func setConstraints() {
@@ -71,9 +71,9 @@ private extension DetailProfileSection {
             profileImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
             profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor),
 
-            profileIDView.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 15),
-            profileIDView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            profileIDView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            profileIDLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 15),
+            profileIDLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            profileIDLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
             selectbarView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             selectbarView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
