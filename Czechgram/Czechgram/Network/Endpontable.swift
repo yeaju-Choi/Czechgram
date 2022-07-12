@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol EndPontable {
+    var base: URL? {get}
+    var path: String {get}
+    var httpMethod: HTTPMethod {get}
+    var contentType: [String:String]? {get}
+    var parameter: [String:Any]? {get}
+}
