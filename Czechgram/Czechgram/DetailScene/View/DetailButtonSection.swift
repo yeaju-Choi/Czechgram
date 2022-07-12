@@ -58,7 +58,7 @@ class DetailButtonSection: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setConstraints()
+        configureLayouts()
     }
 
     @available(*, unavailable)
@@ -69,7 +69,7 @@ class DetailButtonSection: UIView {
 
 private extension DetailButtonSection {
 
-    func setConstraints() {
+    func configureLayouts() {
         self.addSubviews(leftStackView, scrapImageView)
         leftStackView.addArrangedSubviews(heartImageView, commentImageView, messageImageView)
 

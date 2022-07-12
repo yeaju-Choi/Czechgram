@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailCollectionViewCell: UICollectionViewCell {
 
-    static let cellID = "DetailCollectionViewCell"
+    static let reuseIdentifier = "DetailCollectionViewCell"
 
     private let imageView: UIImageView = {
         let image = UIImageView()
@@ -21,7 +21,7 @@ final class DetailCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setConstraints()
+        configureLayouts()
     }
 
     @available(*, unavailable)
@@ -29,14 +29,14 @@ final class DetailCollectionViewCell: UICollectionViewCell {
         fatalError()
     }
 
-    func configure(image: UIImage) {
+    func set(image: UIImage) {
         imageView.image = image
     }
 }
 
 private extension DetailCollectionViewCell {
 
-    func setConstraints() {
+    func configureLayouts() {
         self.addSubview(imageView)
 
         NSLayoutConstraint.activate([

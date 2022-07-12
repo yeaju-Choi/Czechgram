@@ -37,8 +37,7 @@ final class HomeNavigationTitleView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        addSubviews()
-        setLayout()
+        configureLayouts()
 
     }
 
@@ -50,11 +49,9 @@ final class HomeNavigationTitleView: UIView {
 }
 
 private extension HomeNavigationTitleView {
-    func addSubviews() {
+    func configureLayouts() {
         addSubviews(idLabel, menuButton, postButton)
-    }
 
-    func setLayout() {
         NSLayoutConstraint.activate([
             idLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             idLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),

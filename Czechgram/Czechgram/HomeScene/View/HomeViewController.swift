@@ -9,8 +9,10 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
+    let dummyData: [String] = ["userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage"]
+
     private var profileView = ProfileView()
-    private var homeCollectionViewDataSource: HomeCollectionViewDataSource?
+    private var datasource: CollectionViewDatasource<String, PostCell>?
 
     private var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
@@ -41,17 +43,12 @@ final class HomeViewController: UIViewController {
         self.view.backgroundColor = .white
 
         setNavigationController()
-        addSubviews()
-        setLayouts()
-
-        self.homeCollectionViewDataSource = HomeCollectionViewDataSource()
-        self.collectionView.dataSource = homeCollectionViewDataSource
-        self.collectionView.delegate = self
-
+        configureLayouts()
+        setCollectionView()
     }
 
     override func viewDidLayoutSubviews() {
-        profileView.setUserImageCornerRound()
+        profileView.setUserImageCornerRoundly()
     }
 }
 
@@ -62,13 +59,11 @@ private extension HomeViewController {
         self.navigationItem.titleView = titleView
     }
 
-    func addSubviews() {
+    func configureLayouts() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(profileView, collectionView)
-    }
 
-    func setLayouts() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -101,6 +96,14 @@ private extension HomeViewController {
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 1500)
         ])
+    }
+
+    func setCollectionView() {
+        datasource = CollectionViewDatasource(dummyData, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: String, cell: PostCell) in
+            cell.set(image: UIImage(named: imageData) ?? UIImage())
+        }
+        self.collectionView.dataSource = self.datasource
+        self.collectionView.delegate = self
     }
 }
 

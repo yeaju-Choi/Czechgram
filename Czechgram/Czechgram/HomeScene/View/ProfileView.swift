@@ -68,8 +68,7 @@ final class ProfileView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubviews()
-        setLayouts()
+        configureLayouts()
     }
 
     @available (*, unavailable)
@@ -77,18 +76,16 @@ final class ProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setUserImageCornerRound() {
+    func setUserImageCornerRoundly() {
         userImageView.layer.cornerRadius = userImageView.frame.height/2
     }
 }
 
 private extension ProfileView {
 
-    func addSubviews() {
+    func configureLayouts() {
         addSubviews(userImageView, postsButton, followersButton, followingButton, nameLabel, editButton)
-    }
 
-    func setLayouts() {
         NSLayoutConstraint.activate([
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             userImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),

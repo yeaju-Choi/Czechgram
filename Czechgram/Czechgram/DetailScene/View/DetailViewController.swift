@@ -32,20 +32,20 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setConstraints()
+        configureLayouts()
         setSectionsData()
         setCollectionView()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        detailView.setUPUserImageRoundly()
+        detailView.setUserImageRoundly()
     }
 }
 
 private extension DetailViewController {
 
-    func setConstraints() {
+    func configureLayouts() {
         view.addSubview(detailScrollView)
         detailScrollView.addSubview(detailView)
 
@@ -66,8 +66,8 @@ private extension DetailViewController {
     }
 
     func setSectionsData() {
-        detailView.setUPProfileData(profile: UIImage(), userId: "zeto_h_jt")
-        detailView.setUPDescriptionData(profile: UIImage(), userId: "yeyeju_", likePeople: "님 외 12명이 좋아합니다", description: """
+        detailView.setProfileData(profile: UIImage(), userId: "zeto_h_jt")
+        detailView.setDescriptionData(profile: UIImage(), userId: "yeyeju_", likePeople: "님 외 12명이 좋아합니다", description: """
                         zeto_h_jt 견생 중 가장 장발일 때
                         #말티즈 #사진빨 #빡빡이
                         ------------------
@@ -81,12 +81,11 @@ private extension DetailViewController {
     }
 
     func setCollectionView() {
-        let dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.cellID, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
-            cell.configure(image: image)
+        dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
+            cell.set(image: image)
         })
 
-        self.dataSource = dataSource
-        detailView.setUPCollectionView(delegate: self, dataSource: dataSource)
+        detailView.setCollectionView(delegate: self, dataSource: self.dataSource)
     }
 }
 

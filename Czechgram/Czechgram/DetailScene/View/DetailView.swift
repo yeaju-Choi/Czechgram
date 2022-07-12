@@ -28,7 +28,7 @@ final class DetailView: UIView {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.cellID)
+        collectionView.register(DetailCollectionViewCell.self, forCellWithReuseIdentifier: DetailCollectionViewCell.reuseIdentifier)
 
         return collectionView
     }()
@@ -51,8 +51,7 @@ final class DetailView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setSubViews()
-        setConstraints()
+        configureLayouts()
     }
 
     @available(*, unavailable)
@@ -60,22 +59,22 @@ final class DetailView: UIView {
         fatalError()
     }
 
-    func setUPCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
+    func setCollectionView(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource?) {
         imageSection.delegate = delegate
         imageSection.dataSource = dataSource
     }
 
-    func setUPProfileData(profile: UIImage, userId: String) {
-        profileSection.configure(image: profile, id: userId)
+    func setProfileData(profile: UIImage, userId: String) {
+        profileSection.set(image: profile, id: userId)
     }
 
-    func setUPDescriptionData(profile: UIImage, userId: String, likePeople: String, description: String) {
-        descriptionSection.configure(image: profile, likeLine: "\(userId)\(likePeople)", description: description, date: "2022년 7월 11일")
+    func setDescriptionData(profile: UIImage, userId: String, likePeople: String, description: String) {
+        descriptionSection.set(image: profile, likeLine: "\(userId)\(likePeople)", description: description, date: "2022년 7월 11일")
     }
 
-    func setUPUserImageRoundly() {
-        profileSection.setProfileImageViewCornerRound()
-        descriptionSection.setProfileImageViewCornerRound()
+    func setUserImageRoundly() {
+        profileSection.setProfileImageViewCornerRoundly()
+        descriptionSection.setProfileImageViewCornerRoundly()
     }
 
     func getImageCellSize() -> CGSize {
@@ -87,12 +86,9 @@ final class DetailView: UIView {
 }
 
 private extension DetailView {
-
-    func setSubViews() {
+    func configureLayouts() {
         addSubviews(profileSection, imageSection, buttonSection, descriptionSection)
-    }
 
-    func setConstraints() {
         NSLayoutConstraint.activate([
             profileSection.topAnchor.constraint(equalTo: self.topAnchor),
             profileSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),

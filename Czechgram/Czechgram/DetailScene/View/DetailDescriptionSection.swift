@@ -58,7 +58,7 @@ class DetailDescriptionSection: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setConstraints()
+        configureLayouts()
     }
 
     @available(*, unavailable)
@@ -66,21 +66,21 @@ class DetailDescriptionSection: UIView {
         fatalError()
     }
 
-    func configure(image: UIImage, likeLine: String, description: String, date: String) {
+    func set(image: UIImage, likeLine: String, description: String, date: String) {
         profileImageView.image = image
         likeDescriptionLabel.text = likeLine
         contentDescriptionLabel.text = description
         dateLabel.text = date
     }
 
-    func setProfileImageViewCornerRound() {
+    func setProfileImageViewCornerRoundly() {
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 }
 
 private extension DetailDescriptionSection {
 
-    func setConstraints() {
+    func configureLayouts() {
         self.addSubviews(likeLine, contentDescriptionLabel, dateLabel)
         self.likeLine.addSubviews(profileImageView, likeDescriptionLabel)
 
