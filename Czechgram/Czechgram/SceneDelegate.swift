@@ -21,4 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url, let grantCode = url.absoluteString.components(separatedBy: "code=").last else { return }
+
+        print(grantCode)
+    }
 }

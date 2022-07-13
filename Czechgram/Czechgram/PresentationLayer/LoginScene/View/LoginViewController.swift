@@ -10,7 +10,7 @@ import UIKit
 final class LoginViewController: UIViewController {
 
     var loginVM = LoginViewModel()
-    
+
     private let instaLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -25,6 +25,7 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         configureLayouts()
         configureInstaLoginButton()
+        configureViewModel()
     }
 }
 
@@ -48,7 +49,7 @@ private extension LoginViewController {
 
         if #available(iOS 14.0, *) {
             let action = UIAction { _ in
-                self.present(navi, animated: true)
+                self.loginVM.enquireInstaToken()
             }
             instaLoginButton.addAction(action, for: .touchDown)
         } else {
@@ -58,6 +59,13 @@ private extension LoginViewController {
 
     @objc
     func presentNextScene(to viewController: UIViewController) {
-        self.present(viewController, animated: true)
+        self.loginVM.enquireInstaToken()
+    }
+
+    func configureViewModel() {
+        loginVM.instaOAuthPageURL.bind { url in
+            guard let validURL = url, UIApplication.shared.canOpenURL(validURL) else { return }
+            UIApplication.shared.open(validURL)
+        }
     }
 }

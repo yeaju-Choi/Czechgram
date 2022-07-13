@@ -13,9 +13,9 @@ struct NetworkService: NetworkServiceable {
 
         let request = makeURLRequest(with: endPoint)
         switch request {
-        case .failure(_):
+        case .failure:
             completion(.failure(.noURL))
-            
+
         case .success(let request):
             URLSession.shared.dataTask(with: request) { (data, response, error) in
                 guard let httpResponse = response as? HTTPURLResponse else { return }
@@ -42,7 +42,7 @@ struct NetworkService: NetworkServiceable {
 
     static func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
         guard let url = target.url else { return .failure(.noData) }
-        
+
         var request = URLRequest(url: url)
 
         if let header = target.contentType {
