@@ -12,16 +12,16 @@ enum EndPoint: EndPontable {
     case instagramAuthorize
     case requestToken(code: String)
 
-    var base: URL? {
+    var base: String {
         switch self {
         case .instagramAuthorize:
-            return URL(string: "https://api.instagram.com")
+            return "https://api.instagram.com"
         default:
-            return URL(string: "")
+            return ""
         }
     }
 
-    var path: String {
+    var path: String? {
         switch self {
         case .instagramAuthorize:
             return "/oauth/authorize"
@@ -49,7 +49,7 @@ enum EndPoint: EndPontable {
         }
     }
 
-    var parameter: [String: Any]? {
+    var parameter: [String: String]? {
         switch self {
 
         case .requestToken(let code):
