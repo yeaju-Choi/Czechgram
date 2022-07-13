@@ -9,6 +9,8 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 
+    var loginVM: LoginViewModel?
+    
     private let instaLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +25,7 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         configureLayouts()
         configureInstaLoginButton()
+        loginVM = LoginViewModel()
     }
 }
 

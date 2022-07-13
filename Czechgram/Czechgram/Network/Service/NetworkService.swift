@@ -12,48 +12,38 @@ struct NetworkService: NetworkServiceable {
     static func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
 
         let request = makeURLRequest(with: endPoint)
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let httpResponse = response as? HTTPURLResponse else { return }
+        switch request {
+        case .failure(_):
+            completion(.failure(.noURL))
+            
+        case .success(let request):
+            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                guard let httpResponse = response as? HTTPURLResponse else { return }
 
-            if let error = error {
-                completion(.failure(.transportError(error)))
-                return
-            }
+                if let error = error {
+                    completion(.failure(.transportError(error)))
+                    return
+                }
 
-            guard (200...299).contains(httpResponse.statusCode) else {
-                completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
-                return
-            }
+                guard (200...299).contains(httpResponse.statusCode) else {
+                    completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
+                    return
+                }
 
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
+                guard let data = data else {
+                    completion(.failure(.noData))
+                    return
+                }
 
-            completion(.success(data))
-        }.resume()
+                completion(.success(data))
+            }.resume()
+        }
     }
 
-    static func makeURLRequest(with target: EndPoint) -> URLRequest {
-        guard var url = URL(string: target.base) else {
-            preconditionFailure("invalid base url")
-        }
-
-        if let path = target.path {
-            url = url.appendingPathComponent(path)
-        }
-
-        var components = URLComponents(string: "\(url)")
-
-        if let queryParam = target.parameter {
-            components?.queryItems = queryParam.map { URLQueryItem(name: $0, value: $1)
-            }
-        }
-
-        guard let validURL = components?.url else {
-            preconditionFailure("invalid url components")
-        }
-        var request = URLRequest(url: validURL)
+    static func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
+        guard let url = target.url else { return .failure(.noData) }
+        
+        var request = URLRequest(url: url)
 
         if let header = target.contentType {
             header.forEach { (key, value) in
@@ -62,6 +52,6 @@ struct NetworkService: NetworkServiceable {
             request.httpMethod = target.httpMethod.value
         }
 
-        return request
+        return .success(request)
     }
 }

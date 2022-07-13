@@ -8,9 +8,11 @@
 import Foundation
 
 protocol EndPontable {
-    var base: String {get}
+    var scheme: String {get}
+    var host: String {get}
     var path: String? {get}
     var httpMethod: HTTPMethod {get}
     var contentType: [String: String]? {get}
-    var parameter: [String: String]? {get}
+    var queryItems: [URLQueryItem]? {get}
+    var url: URL? {get}
 }

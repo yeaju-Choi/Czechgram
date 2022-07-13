@@ -11,16 +11,19 @@ enum EndPoint: EndPontable {
 
     case instagramAuthorize
     case requestToken(code: String)
-
-    var base: String {
-        switch self {
-        case .instagramAuthorize:
-            return "https://api.instagram.com"
-        default:
-            return ""
-        }
+    
+    var scheme: String {
+        return "https://"
     }
-
+    
+    var host: String {
+        switch self {
+        default:
+            return "api.instagram.com"
+        }
+        
+    }
+    
     var path: String? {
         switch self {
         case .instagramAuthorize:
@@ -49,25 +52,37 @@ enum EndPoint: EndPontable {
         }
     }
 
-    var parameter: [String: String]? {
+    var queryItems: [URLQueryItem]? {
         switch self {
         case .instagramAuthorize:
             // TODO: 실제 값으로 변경해야 함
-            return ["client_id": "3180795768850143",
-                    "redirect_uri": "https://socialsizzle.heroku.com/auth/",
-                    "response_type": "code",
-                    "scope": "user_profile, user_media"]
+            
+            return [URLQueryItem(name: "client_id", value: "3180795768850143"),
+             URLQueryItem(name: "redirect_uri", value: "https://socialsizzle.heroku.com/auth/"),
+             URLQueryItem(name: "response_type", value: "code"),
+             URLQueryItem(name: "scope", value: "user_profile, user_media")
+             ]
             
         case .requestToken(let code):
-            // TODO: 실제 값으로 변경해야 함
-            return ["client_id": "3180795768850143",
-                    "client_secret": "f641f554a2c5adc9adb5676eba521f8d",
-                    "code": "AQBx-hBsH3...",
-                    "grant_type": "\(code)"]
-
+            return [URLQueryItem(name: "client_id", value: "3180795768850143"),
+             URLQueryItem(name: "client_secret", value: "f641f554a2c5adc9adb5676eba521f8d"),
+             URLQueryItem(name: "code", value: "AQBx-hBsH3..."),
+             URLQueryItem(name: "grant_type", value: "\(code)")
+             ]
+        
         default:
             return nil
         }
+    }
+    
+    var url: URL? {
+        var components = URLComponents()
+        components.scheme = self.scheme
+        components.host = self.host
+        components.path = self.path ?? ""
+        components.queryItems = self.queryItems
+        
+        return components.url
     }
 
 }
