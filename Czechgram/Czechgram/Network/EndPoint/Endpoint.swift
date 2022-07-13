@@ -51,20 +51,20 @@ enum EndPoint: EndPontable {
 
     var parameter: [String: String]? {
         switch self {
-
+        case .instagramAuthorize:
+            // TODO: 실제 값으로 변경해야 함
+            return ["client_id": "3180795768850143",
+                    "redirect_uri": "https://socialsizzle.heroku.com/auth/",
+                    "response_type": "code",
+                    "scope": "user_profile, user_media"]
+            
         case .requestToken(let code):
             // TODO: 실제 값으로 변경해야 함
-            return ["client_id": "990602627938098",
-                    "client_secret": "a1b2C3D4",
+            return ["client_id": "3180795768850143",
+                    "client_secret": "f641f554a2c5adc9adb5676eba521f8d",
                     "code": "AQBx-hBsH3...",
                     "grant_type": "\(code)"]
 
-        case .instagramAuthorize:
-            // TODO: 실제 값으로 변경해야 함
-            return ["client_id": "990602627938098",
-                    "redirect_uri": "https://socialsizzle.herokuapp.com/auth/",
-                    "response_type": "code",
-                    "scope": "user_profile,user_media"]
         default:
             return nil
         }
