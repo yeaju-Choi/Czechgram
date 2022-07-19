@@ -25,30 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         guard let url = URLContexts.first?.url, let grantCode = url.absoluteString.components(separatedBy: "code=").last else { return }
 
-        NetworkService.request(endPoint: .shortLivedToken(code: grantCode)) { result in
-            switch result {
-            case .success(let data):
-                      guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                      let accessToken = jsonData["access_token"] as? String,
-                      let userID = jsonData["user_id"] as? UInt else { return }
-                UserDefaults.standard.set(userID, forKey: "userID")
-
-                NetworkService.request(endPoint: .longLivedToken(token: accessToken)) { result in
-                    switch result {
-                    case .success(let data):
-                        guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                        let accessToken = jsonData["access_token"] as? String else { return }
-                        UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
-
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-
-        }
-
+        NotificationCenter.default.post(name: NSNotification.Name("GrantCode"), object: nil, userInfo: ["GrantCode": grantCode])
     }
 }

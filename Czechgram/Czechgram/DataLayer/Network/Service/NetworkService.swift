@@ -58,7 +58,7 @@ struct NetworkService: NetworkServiceable {
                 params[queryItem.name] = queryItem.value
 
             }
-            let formDataString = (param.flatMap({ (key, value) -> String in
+            let formDataString = (param.compactMap({ (key, value) -> String in
               return "\(key)=\(value)"
             }) as Array).joined(separator: "&")
 

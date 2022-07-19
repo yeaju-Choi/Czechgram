@@ -64,21 +64,17 @@ enum EndPoint: EndPontable {
     var queryItems: [URLQueryItem]? {
         switch self {
         case .instagramAuthorize:
-            // TODO: 실제 값으로 변경해야 함
-
             return [URLQueryItem(name: "client_id", value: "622682008886100"),
              URLQueryItem(name: "redirect_uri", value: "https://wnsxor1993.github.io/"),
              URLQueryItem(name: "response_type", value: "code"),
-             URLQueryItem(name: "scope", value: "user_profile, user_media")
-             ]
+             URLQueryItem(name: "scope", value: "user_profile, user_media")]
 
         case .shortLivedToken(let code):
             return [URLQueryItem(name: "client_id", value: "622682008886100"),
              URLQueryItem(name: "client_secret", value: "2b5c96cee7df4b0e8b5a8a291ed7d747"),
              URLQueryItem(name: "code", value: "\(code)"),
              URLQueryItem(name: "grant_type", value: "authorization_code"),
-             URLQueryItem(name: "redirect_uri", value: "https://wnsxor1993.github.io/")
-             ]
+             URLQueryItem(name: "redirect_uri", value: "https://wnsxor1993.github.io/")]
 
         case .longLivedToken(let token):
             return [URLQueryItem(name: "grant_type", value: "ig_exchange_token"),
@@ -93,8 +89,9 @@ enum EndPoint: EndPontable {
         components.scheme = self.scheme
         components.host = self.host
         components.path = self.path ?? ""
+
         if self.httpMethod == .get {
-        components.queryItems = self.queryItems
+            components.queryItems = self.queryItems
         }
 
         return components.url
