@@ -30,8 +30,6 @@ enum EndPoint: EndPontable {
             return "/oauth/authorize"
         case .requestToken:
             return "/oauth/access_token"
-        default:
-            return ""
         }
     }
 
@@ -58,7 +56,7 @@ enum EndPoint: EndPontable {
             // TODO: 실제 값으로 변경해야 함
 
             return [URLQueryItem(name: "client_id", value: "622682008886100"),
-             URLQueryItem(name: "redirect_uri", value: "https://github.com/wnsxor1993"),
+             URLQueryItem(name: "redirect_uri", value: "https://wnsxor1993.github.io/"),
              URLQueryItem(name: "response_type", value: "code"),
              URLQueryItem(name: "scope", value: "user_profile, user_media")
              ]
@@ -69,9 +67,6 @@ enum EndPoint: EndPontable {
              URLQueryItem(name: "code", value: "AQBx-hBsH3..."),
              URLQueryItem(name: "grant_type", value: "\(code)")
              ]
-
-        default:
-            return nil
         }
     }
 
