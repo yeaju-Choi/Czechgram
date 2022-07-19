@@ -8,6 +8,7 @@
 import Foundation
 
 enum NetworkError: Error {
+    case noURL
     case transportError(Error)
     case serverError(statusCode: Int)
     case noData

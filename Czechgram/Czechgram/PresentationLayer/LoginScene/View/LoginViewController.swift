@@ -9,6 +9,8 @@ import UIKit
 
 final class LoginViewController: UIViewController {
 
+    var loginVM = LoginViewModel()
+
     private let instaLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +25,7 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         configureLayouts()
         configureInstaLoginButton()
+        configureObservableBinding()
     }
 }
 
@@ -46,7 +49,7 @@ private extension LoginViewController {
 
         if #available(iOS 14.0, *) {
             let action = UIAction { _ in
-                self.present(navi, animated: true)
+                self.loginVM.enquireInstaToken()
             }
             instaLoginButton.addAction(action, for: .touchDown)
         } else {
@@ -56,6 +59,32 @@ private extension LoginViewController {
 
     @objc
     func presentNextScene(to viewController: UIViewController) {
-        self.present(viewController, animated: true)
+        self.loginVM.enquireInstaToken()
+    }
+
+    func configureObservableBinding() {
+        loginVM.instaOAuthPageURL.bind { url in
+            guard let validURL = url, UIApplication.shared.canOpenURL(validURL) else { return }
+            UIApplication.shared.open(validURL)
+        }
+
+        loginVM.isFetchedOAuthToken.bind { isFetched in
+            switch isFetched {
+            case true:
+                DispatchQueue.main.async {
+                    let homeVC = HomeViewController()
+                    let navigation = UINavigationController(rootViewController: homeVC)
+                    navigation.modalPresentationStyle = .fullScreen
+                    self.present(navigation, animated: true)
+                }
+
+            case false:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+                    self.present(alert, animated: true)
+                }
+            }
+        }
     }
 }
