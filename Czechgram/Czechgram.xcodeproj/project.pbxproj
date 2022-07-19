@@ -21,6 +21,8 @@
 		B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEA287D607E00E06E85 /* Endpoint.swift */; };
 		B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEC287D609200E06E85 /* Endpontable.swift */; };
 		B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEE287D622800E06E85 /* HTTPMethod.swift */; };
+		D24B348E2886A25D00F8243F /* OAuthLoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */; };
+		D24B34902886A2F200F8243F /* InstagramLoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -55,6 +57,8 @@
 		B3F23FEA287D607E00E06E85 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		B3F23FEC287D609200E06E85 /* Endpontable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpontable.swift; sourceTree = "<group>"; };
 		B3F23FEE287D622800E06E85 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthLoginUsecase.swift; sourceTree = "<group>"; };
+		D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginUsecase.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -144,6 +148,23 @@
 				D2623546287D79B7002F0610 /* Service */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		D24B348B2886A23000F8243F /* LoginUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */,
+				D24B348C2886A24F00F8243F /* Protocol */,
+			);
+			path = LoginUsecase;
+			sourceTree = "<group>";
+		};
+		D24B348C2886A24F00F8243F /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
@@ -270,6 +291,7 @@
 		D2623556287E9745002F0610 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				D24B348B2886A23000F8243F /* LoginUsecase */,
 			);
 			path = DomainLayer;
 			sourceTree = "<group>";
@@ -405,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24B348E2886A25D00F8243F /* OAuthLoginUsecase.swift in Sources */,
 				D262355A287E97F0002F0610 /* Observable.swift in Sources */,
 				B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */,
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
@@ -422,6 +445,7 @@
 				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
+				D24B34902886A2F200F8243F /* InstagramLoginUsecase.swift in Sources */,
 				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,
 				D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
