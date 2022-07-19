@@ -25,7 +25,7 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         configureLayouts()
         configureInstaLoginButton()
-        configureViewModel()
+        configureObservableBinding()
     }
 }
 
@@ -62,10 +62,29 @@ private extension LoginViewController {
         self.loginVM.enquireInstaToken()
     }
 
-    func configureViewModel() {
+    func configureObservableBinding() {
         loginVM.instaOAuthPageURL.bind { url in
             guard let validURL = url, UIApplication.shared.canOpenURL(validURL) else { return }
             UIApplication.shared.open(validURL)
+        }
+
+        loginVM.isFetchedOAuthToken.bind { isFetched in
+            switch isFetched {
+            case true:
+                DispatchQueue.main.async {
+                    let homeVC = HomeViewController()
+                    let navigation = UINavigationController(rootViewController: homeVC)
+                    navigation.modalPresentationStyle = .fullScreen
+                    self.present(navigation, animated: true)
+                }
+
+            case false:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+                    self.present(alert, animated: true)
+                }
+            }
         }
     }
 }

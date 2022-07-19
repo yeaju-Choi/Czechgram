@@ -10,11 +10,16 @@ import UIKit
 final class LoginViewModel {
 
     var instaOAuthPageURL: Observable<URL?> = Observable(nil)
+    var isFetchedOAuthToken: Observable<Bool> = Observable(false)
 
     private var shortLivedToken: String = "" {
         didSet {
             self.fetchLongLivedToken()
         }
+    }
+
+    init() {
+        configureNotification()
     }
 
     func enquireInstaToken() {
@@ -41,7 +46,7 @@ private extension LoginViewModel {
 // MARK: Private extension of Internal Call
 
 private extension LoginViewModel {
-    
+
     func updateInstaPageURL() {
         instaOAuthPageURL.updateValue(value: EndPoint.instagramAuthorize.url)
     }
@@ -58,19 +63,24 @@ private extension LoginViewModel {
 
             case .failure(let error):
                 print(error.localizedDescription)
+                self?.isFetchedOAuthToken.updateValue(value: false)
             }
         }
     }
 
     func fetchLongLivedToken() {
-        NetworkService.request(endPoint: .longLivedToken(token: shortLivedToken)) { result in
+        NetworkService.request(endPoint: .longLivedToken(token: shortLivedToken)) { [weak self] result in
             switch result {
             case .success(let data):
                 guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                 let accessToken = jsonData["access_token"] as? String else { return }
+
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
+                self?.isFetchedOAuthToken.updateValue(value: true)
+
             case .failure(let error):
                 print(error.localizedDescription)
+                self?.isFetchedOAuthToken.updateValue(value: false)
             }
         }
     }
