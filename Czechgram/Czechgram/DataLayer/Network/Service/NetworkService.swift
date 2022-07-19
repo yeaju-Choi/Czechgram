@@ -47,9 +47,26 @@ struct NetworkService: NetworkServiceable {
 
         if let header = target.contentType {
             header.forEach { (key, value) in
-                request.addValue(key, forHTTPHeaderField: value)
+                request.addValue(value, forHTTPHeaderField: key)
             }
             request.httpMethod = target.httpMethod.value
+        }
+
+        switch target.httpMethod {
+        case .post:
+            let param: [String: String] = (target.queryItems ?? []).reduce(into: [:]) { params, queryItem in
+                params[queryItem.name] = queryItem.value
+
+            }
+            let formDataString = (param.flatMap({ (key, value) -> String in
+              return "\(key)=\(value)"
+            }) as Array).joined(separator: "&")
+
+            let formEncodedData = formDataString.data(using: .utf8)
+            request.httpBody = formEncodedData
+
+        default:
+            break
         }
 
         return .success(request)
