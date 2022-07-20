@@ -32,6 +32,9 @@
 		D2525A372887DC9300078D1C /* ViewMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A362887DC9300078D1C /* ViewMyPageRepository.swift */; };
 		D2525A392887DCB400078D1C /* ViewDefaultMyPageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A382887DCB400078D1C /* ViewDefaultMyPageRepository.swift */; };
 		D2525A3B2887DE6100078D1C /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A3A2887DE6100078D1C /* JSONConverter.swift */; };
+		D2525A3E2887E4C100078D1C /* UserPageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A3D2887E4C100078D1C /* UserPageEntity.swift */; };
+		D2525A402887E50A00078D1C /* MediaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A3F2887E50A00078D1C /* MediaEntity.swift */; };
+		D2525A422887E7E600078D1C /* MediaImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A412887E7E600078D1C /* MediaImageEntity.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -77,6 +80,9 @@
 		D2525A362887DC9300078D1C /* ViewMyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMyPageRepository.swift; sourceTree = "<group>"; };
 		D2525A382887DCB400078D1C /* ViewDefaultMyPageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDefaultMyPageRepository.swift; sourceTree = "<group>"; };
 		D2525A3A2887DE6100078D1C /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
+		D2525A3D2887E4C100078D1C /* UserPageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPageEntity.swift; sourceTree = "<group>"; };
+		D2525A3F2887E50A00078D1C /* MediaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEntity.swift; sourceTree = "<group>"; };
+		D2525A412887E7E600078D1C /* MediaImageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImageEntity.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -222,6 +228,16 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		D2525A3C2887E4B500078D1C /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A3D2887E4C100078D1C /* UserPageEntity.swift */,
+				D2525A3F2887E50A00078D1C /* MediaEntity.swift */,
+				D2525A412887E7E600078D1C /* MediaImageEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +363,7 @@
 		D2623556287E9745002F0610 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				D2525A3C2887E4B500078D1C /* Entity */,
 				D24B348B2886A23000F8243F /* LoginUsecase */,
 			);
 			path = DomainLayer;
@@ -502,12 +519,15 @@
 				D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */,
 				B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */,
 				D262353E287D17DA002F0610 /* UIStackView +.swift in Sources */,
+				D2525A402887E50A00078D1C /* MediaEntity.swift in Sources */,
+				D2525A422887E7E600078D1C /* MediaImageEntity.swift in Sources */,
 				D2525A332887DC3800078D1C /* ViewDefaultMyPageUsecase.swift in Sources */,
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D2525A312887DC0F00078D1C /* ViewMyPageUsecase.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
 				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
+				D2525A3E2887E4C100078D1C /* UserPageEntity.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 				D24B34902886A2F200F8243F /* InstagramLoginUsecase.swift in Sources */,
 				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,

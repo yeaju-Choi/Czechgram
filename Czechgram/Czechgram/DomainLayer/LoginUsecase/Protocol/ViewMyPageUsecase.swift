@@ -9,5 +9,5 @@ import Foundation
 
 protocol ViewMyPageUsecase {
 
-    func execute()
+    func executeUserPage(completion: @escaping (UserPageEntity) -> Void)
 }

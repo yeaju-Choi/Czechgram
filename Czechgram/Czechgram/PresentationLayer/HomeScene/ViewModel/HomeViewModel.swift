@@ -9,9 +9,20 @@ import Foundation
 
 final class HomeViewModel {
 
+    var instaOAuthPageURL: Observable<UserPageEntity?> = Observable(nil)
+
     let myPageUsecase: ViewMyPageUsecase = ViewDefaultMyPageUsecase()
 
-    func enquiredAllData() {
+    func enquireAllData() {
+        myPageUsecase.executeUserPage { [weak self] userPage in
+            self?.enquireImages(with: userPage)
+        }
+    }
+}
+
+private extension HomeViewModel {
+
+    func enquireImages(with: UserPageEntity) {
 
     }
 }

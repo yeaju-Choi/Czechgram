@@ -11,10 +11,26 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
 
     let myPageRepository: ViewMyPageRepository = ViewDefaultMyPageRepository()
 
-    func execute() {
-        myPageRepository.requestPageData { userPageDTO in
-            guard let validDTO = userPageDTO else { return }
+    func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
+        myPageRepository.requestPageData { [weak self] userPageDTO in
+            guard let validDTO = userPageDTO, let entity = self?.convertEntity(from: validDTO) else { return }
 
+            completion(entity)
         }
+    }
+}
+
+private extension ViewDefaultMyPageUsecase {
+
+    func convertEntity(from userDTO: UserPageDTO) -> UserPageEntity {
+        var imageEntity = [MediaImageEntity]()
+        userDTO.media.mediaIDs.forEach {
+            let entity = MediaImageEntity(id: $0.id)
+            imageEntity.append(entity)
+        }
+
+        let mediaEntity = MediaEntity(images: imageEntity, page: userDTO.media.paging)
+        let userEntity = UserPageEntity(userName: userDTO.username, mediaCount: userDTO.mediaCount, media: mediaEntity)
+        return userEntity
     }
 }
