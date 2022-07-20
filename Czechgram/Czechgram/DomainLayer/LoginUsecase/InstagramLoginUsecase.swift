@@ -53,7 +53,6 @@ private extension InstagramLoginUsecase {
                 let accessToken = jsonData["access_token"] as? String else { return }
 
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                print(accessToken)
                 tokenCompletion(accessToken)
 
             case .failure(let error):

@@ -9,10 +9,10 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
-    let dummyData: [String] = ["userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage"]
+    private var homeVM = HomeViewModel()
 
     private var profileView = ProfileView()
-    private var datasource: CollectionViewDatasource<String, PostCell>?
+    private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
 
     private var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
@@ -45,6 +45,8 @@ final class HomeViewController: UIViewController {
         setNavigationController()
         configureLayouts()
         setCollectionView()
+        configureBind()
+        homeVM.enquireAllData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -53,6 +55,20 @@ final class HomeViewController: UIViewController {
 }
 
 private extension HomeViewController {
+
+    func configureBind() {
+        homeVM.myPageData.bind { [weak self] userPageData in
+            guard let userPageData = userPageData else { return }
+            self?.datasource = CollectionViewDatasource(userPageData.media.images, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: MediaImageEntity, cell: PostCell) in
+                guard let image = imageData.image else { return }
+                cell.set(image: image)
+            }
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+
+    }
 
     func setNavigationController() {
         let titleView = HomeNavigationTitleView()
@@ -99,9 +115,6 @@ private extension HomeViewController {
     }
 
     func setCollectionView() {
-        datasource = CollectionViewDatasource(dummyData, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: String, cell: PostCell) in
-            cell.set(image: UIImage(named: imageData) ?? UIImage())
-        }
         self.collectionView.dataSource = self.datasource
         self.collectionView.delegate = self
     }
