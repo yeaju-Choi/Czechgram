@@ -23,6 +23,9 @@
 		B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23FEE287D622800E06E85 /* HTTPMethod.swift */; };
 		D24B348E2886A25D00F8243F /* OAuthLoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */; };
 		D24B34902886A2F200F8243F /* InstagramLoginUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */; };
+		D2525A282887D2D100078D1C /* UserPageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A272887D2D100078D1C /* UserPageDTO.swift */; };
+		D2525A2A2887D3A400078D1C /* MediaDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A292887D3A400078D1C /* MediaDTO.swift */; };
+		D2525A2C2887D3EC00078D1C /* MediaPagingDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A2B2887D3EC00078D1C /* MediaPagingDTO.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -59,6 +62,9 @@
 		B3F23FEE287D622800E06E85 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthLoginUsecase.swift; sourceTree = "<group>"; };
 		D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginUsecase.swift; sourceTree = "<group>"; };
+		D2525A272887D2D100078D1C /* UserPageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPageDTO.swift; sourceTree = "<group>"; };
+		D2525A292887D3A400078D1C /* MediaDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDTO.swift; sourceTree = "<group>"; };
+		D2525A2B2887D3EC00078D1C /* MediaPagingDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPagingDTO.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -165,6 +171,16 @@
 				D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		D2525A262887D27300078D1C /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A272887D2D100078D1C /* UserPageDTO.swift */,
+				D2525A292887D3A400078D1C /* MediaDTO.swift */,
+				D2525A2B2887D3EC00078D1C /* MediaPagingDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
@@ -299,6 +315,7 @@
 		D2623557287E9760002F0610 /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				D2525A262887D27300078D1C /* DTO */,
 				B3F23FE9287D602500E06E85 /* Network */,
 			);
 			path = DataLayer;
@@ -433,6 +450,7 @@
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
 				B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */,
+				D2525A2C2887D3EC00078D1C /* MediaPagingDTO.swift in Sources */,
 				D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */,
 				D2623552287D8183002F0610 /* NetworkServiceable.swift in Sources */,
 				D262354B287D7B02002F0610 /* NetworkService.swift in Sources */,
@@ -448,6 +466,8 @@
 				D24B34902886A2F200F8243F /* InstagramLoginUsecase.swift in Sources */,
 				B3F23FEF287D622800E06E85 /* HTTPMethod.swift in Sources */,
 				D2623544287D6DCC002F0610 /* LoginViewModel.swift in Sources */,
+				D2525A282887D2D100078D1C /* UserPageDTO.swift in Sources */,
+				D2525A2A2887D3A400078D1C /* MediaDTO.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 				D2623541287D6049002F0610 /* LoginViewController.swift in Sources */,
