@@ -63,7 +63,9 @@ private extension HomeViewController {
                 guard let image = imageData.image else { return }
                 cell.set(image: image)
             }
+
             DispatchQueue.main.async {
+                self?.collectionView.dataSource = self?.datasource
                 self?.collectionView.reloadData()
             }
         }
@@ -115,7 +117,7 @@ private extension HomeViewController {
     }
 
     func setCollectionView() {
-        self.collectionView.dataSource = self.datasource
+
         self.collectionView.delegate = self
     }
 }

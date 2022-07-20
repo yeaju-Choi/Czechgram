@@ -381,9 +381,9 @@
 		D2623556287E9745002F0610 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				D24B348B2886A23000F8243F /* LoginUsecase */,
 				B3AD441E2887F15F00A9B59E /* HomeUsecase */,
 				D2525A3C2887E4B500078D1C /* Entity */,
-				D24B348B2886A23000F8243F /* LoginUsecase */,
 			);
 			path = DomainLayer;
 			sourceTree = "<group>";

@@ -39,6 +39,9 @@ private extension ViewDefaultMyPageUsecase {
             imageEntity.append(entity)
         }
 
+        imageEntity.sort { lhs, rhs in
+            lhs.id > rhs.id
+        }
         let mediaEntity = MediaEntity(images: imageEntity, page: userDTO.media.paging)
         let userEntity = UserPageEntity(userName: userDTO.username, mediaCount: userDTO.mediaCount, media: mediaEntity)
         return userEntity

@@ -31,8 +31,12 @@ private extension HomeViewModel {
         entity.media.images.forEach {
             myPageUsecase.executeMediaImage(with: $0) { mediaEntity in
                 imageEntites.append(mediaEntity)
+
+                guard imageEntites.count != entity.media.images.count else {
+                    completion(imageEntites)
+                    return
+                }
             }
         }
-
     }
 }
