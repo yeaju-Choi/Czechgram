@@ -5,7 +5,7 @@
 //  Created by juntaek.oh on 2022/07/20.
 //
 
-import Foundation
+import UIKit
 
 final class ViewDefaultMyPageRepository: ViewMyPageRepository {
 
@@ -14,6 +14,25 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
     func requestPageData(for completion: @escaping (UserPageDTO?) -> Void) {
         fetchUserPageData(with: completion)
     }
+    
+    func requestMediaData(with id: String, for completion: @escaping (UIImage?) -> Void) {
+        guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
+        networkService.request(endPoint: .imageUrl(mediaID: id, token: token)) { [weak self] result in
+            switch result {
+            case .success(let data):
+                let jsonConverter = JSONConverter<MediaUrlDTO>()
+                let mediaUrlDTO = jsonConverter.decode(data: data)
+                guard let url: String = mediaUrlDTO?.mediaType == .Video ? mediaUrlDTO?.thumbnailUrl : mediaUrlDTO?.mediaUrl else { print(NetworkError.noURL)
+                    return }
+                
+                self?.fetchUserImageData(with: url, completion: <#T##(UIImage) -> Void#>)
+            case .failure(let error):
+                print(NetworkError.noData)
+            }
+        }
+
+    }
+    
 }
 
 private extension ViewDefaultMyPageRepository {
@@ -32,5 +51,9 @@ private extension ViewDefaultMyPageRepository {
                 print(NetworkError.noData)
             }
         }
+    }
+    
+    func fetchUserImageData(with url: String, completion: @escaping (UIImage) -> Void) {
+        
     }
 }

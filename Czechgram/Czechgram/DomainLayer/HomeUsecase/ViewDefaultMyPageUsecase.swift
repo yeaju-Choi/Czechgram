@@ -18,6 +18,11 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
             completion(entity)
         }
     }
+    
+    func executeMediaImage(with id: String, completion: @escaping (MediaImageEntity) -> Void) {
+        myPageRepository.requestMediaData()
+    }
+    
 }
 
 private extension ViewDefaultMyPageUsecase {

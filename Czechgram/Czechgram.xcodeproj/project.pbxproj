@@ -12,6 +12,7 @@
 		B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */; };
 		B37747DF287BED7D00E2599B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DE287BED7C00E2599B /* ProfileView.swift */; };
 		B37747E1287C146000E2599B /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747E0287C146000E2599B /* PostCell.swift */; };
+		B3AD44212887F7BA00A9B59E /* MediaUrlDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AD44202887F7BA00A9B59E /* MediaUrlDTO.swift */; };
 		B3F149AD287AB6AD0072DA45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */; };
 		B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */; };
 		B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F149B0287AB6AD0072DA45 /* DetailViewController.swift */; };
@@ -58,6 +59,7 @@
 		B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationTitleView.swift; sourceTree = "<group>"; };
 		B37747DE287BED7C00E2599B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B37747E0287C146000E2599B /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		B3AD44202887F7BA00A9B59E /* MediaUrlDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaUrlDTO.swift; sourceTree = "<group>"; };
 		B3F149A9287AB6AD0072DA45 /* Czechgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Czechgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F149AC287AB6AD0072DA45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3F149AE287AB6AD0072DA45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B3AD441E2887F15F00A9B59E /* HomeUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A322887DC3800078D1C /* ViewDefaultMyPageUsecase.swift */,
+				B3AD441F2887F17E00A9B59E /* Protocol */,
+			);
+			path = HomeUsecase;
+			sourceTree = "<group>";
+		};
+		B3AD441F2887F17E00A9B59E /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A302887DC0F00078D1C /* ViewMyPageUsecase.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		B3F149A0287AB6AD0072DA45 = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +197,6 @@
 			isa = PBXGroup;
 			children = (
 				D24B348F2886A2F200F8243F /* InstagramLoginUsecase.swift */,
-				D2525A322887DC3800078D1C /* ViewDefaultMyPageUsecase.swift */,
 				D24B348C2886A24F00F8243F /* Protocol */,
 			);
 			path = LoginUsecase;
@@ -188,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				D24B348D2886A25D00F8243F /* OAuthLoginUsecase.swift */,
-				D2525A302887DC0F00078D1C /* ViewMyPageUsecase.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -199,6 +216,7 @@
 				D2525A272887D2D100078D1C /* UserPageDTO.swift */,
 				D2525A292887D3A400078D1C /* MediaDTO.swift */,
 				D2525A2B2887D3EC00078D1C /* MediaPagingDTO.swift */,
+				B3AD44202887F7BA00A9B59E /* MediaUrlDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -363,6 +381,7 @@
 		D2623556287E9745002F0610 /* DomainLayer */ = {
 			isa = PBXGroup;
 			children = (
+				B3AD441E2887F15F00A9B59E /* HomeUsecase */,
 				D2525A3C2887E4B500078D1C /* Entity */,
 				D24B348B2886A23000F8243F /* LoginUsecase */,
 			);
@@ -525,6 +544,7 @@
 				D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */,
 				D2525A312887DC0F00078D1C /* ViewMyPageUsecase.swift in Sources */,
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
+				B3AD44212887F7BA00A9B59E /* MediaUrlDTO.swift in Sources */,
 				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				D2525A3E2887E4C100078D1C /* UserPageEntity.swift in Sources */,

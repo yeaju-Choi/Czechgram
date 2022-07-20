@@ -22,7 +22,10 @@ final class HomeViewModel {
 
 private extension HomeViewModel {
 
-    func enquireImages(with: UserPageEntity) {
-
+    func enquireImages(with entity: UserPageEntity) {
+        entity.media.images.forEach {
+            myPageUsecase.executeMediaImage(with: $0.id)
+        }
+        
     }
 }

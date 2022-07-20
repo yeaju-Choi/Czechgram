@@ -13,6 +13,7 @@ enum EndPoint: EndPontable {
     case shortLivedToken(code: String)
     case longLivedToken(token: String)
     case userPage(token: String)
+    case imageUrl(mediaID: String, token: String)
 
     var scheme: String {
         return "https"
@@ -20,7 +21,7 @@ enum EndPoint: EndPontable {
 
     var host: String {
         switch self {
-        case .longLivedToken, .userPage:
+        case .longLivedToken, .userPage, .imageUrl:
             return "graph.instagram.com"
         default:
             return "api.instagram.com"
@@ -38,6 +39,8 @@ enum EndPoint: EndPontable {
             return "/access_token"
         case .userPage:
             return "/me"
+        case .imageUrl(let id, _):
+            return "/\(id)"
         }
     }
 
@@ -52,7 +55,7 @@ enum EndPoint: EndPontable {
 
     var contentType: [String: String]? {
         switch self {
-        case .instagramAuthorize, .longLivedToken, .userPage:
+        case .instagramAuthorize, .longLivedToken, .userPage, .imageUrl:
             return ["Content-type": "application/json",
                     "Accept": "application/json"]
         default:
@@ -84,7 +87,12 @@ enum EndPoint: EndPontable {
         case .userPage(let token):
             return [URLQueryItem(name: "fields", value: "username,media_count,media"),
                     URLQueryItem(name: "access_token", value: token)]
+            
+        case .imageUrl(_, let token):
+            return [URLQueryItem(name: "fields", value: "id,media_type,media_url,thumbnail_url"),
+                    URLQueryItem(name: "access_token", value: token)]
         }
+        
 
     }
 
