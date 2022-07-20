@@ -9,6 +9,8 @@ import Foundation
 
 final class InstagramLoginUsecase: OAuthLoginUsecase {
 
+    let networkService: NetworkServiceable = NetworkService()
+
     func execute(_ urlCompletion: @escaping (URL) -> Void) {
         guard let url = EndPoint.instagramAuthorize.url else { return }
 
@@ -25,13 +27,13 @@ final class InstagramLoginUsecase: OAuthLoginUsecase {
 private extension InstagramLoginUsecase {
 
     func changeShortLivedToken(from grantCode: String, _ tokenCompletion: @escaping (String?) -> Void) {
-        NetworkService.request(endPoint: .shortLivedToken(code: grantCode)) { [weak self] result in
+        networkService.request(endPoint: .shortLivedToken(code: grantCode)) { [weak self] result in
             switch result {
             case .success(let data):
                       guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                       let accessToken = jsonData["access_token"] as? String,
                       let userID = jsonData["user_id"] as? UInt else { return }
-                
+
                 UserDefaults.standard.set(userID, forKey: "userID")
                 self?.changeLongLivedToken(from: accessToken) { token in
                     tokenCompletion(token)
@@ -44,13 +46,14 @@ private extension InstagramLoginUsecase {
     }
 
     func changeLongLivedToken(from shortToken: String, _ tokenCompletion: @escaping (String?) -> Void) {
-        NetworkService.request(endPoint: .longLivedToken(token: shortToken)) { result in
+        networkService.request(endPoint: .longLivedToken(token: shortToken)) { result in
             switch result {
             case .success(let data):
                 guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                 let accessToken = jsonData["access_token"] as? String else { return }
 
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
+                print(accessToken)
                 tokenCompletion(accessToken)
 
             case .failure(let error):

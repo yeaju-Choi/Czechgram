@@ -9,7 +9,7 @@ import Foundation
 
 struct NetworkService: NetworkServiceable {
 
-    static func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
+    func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
 
         let request = makeURLRequest(with: endPoint)
         switch request {
@@ -39,8 +39,11 @@ struct NetworkService: NetworkServiceable {
             }.resume()
         }
     }
+}
 
-    static func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
+private extension NetworkService {
+
+    func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
         guard let url = target.url else { return .failure(.noData) }
 
         var request = URLRequest(url: url)
