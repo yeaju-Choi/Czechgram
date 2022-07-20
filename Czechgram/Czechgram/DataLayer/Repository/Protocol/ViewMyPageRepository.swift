@@ -10,5 +10,5 @@ import UIKit
 protocol ViewMyPageRepository {
 
     func requestPageData(for completion: @escaping (UserPageDTO?) -> Void)
-    func requestMediaData(for completion: @escaping (UIImage?) -> Void)
+    func requestMediaData(with id: String, for completion: @escaping (UIImage?) -> Void)
 }

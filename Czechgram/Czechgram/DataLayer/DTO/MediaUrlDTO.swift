@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct MediaUrlDTO: Codable{
+struct MediaUrlDTO: Codable {
     let id: String
     let mediaType: MediaType
     let mediaUrl: String
     let thumbnailUrl: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case mediaType = "media_type"
@@ -26,4 +26,3 @@ enum MediaType: String, Codable {
     case Video = "VIDEO"
     case CarouselAlBum = "CAROUSEL_ALBUM"
 }
-

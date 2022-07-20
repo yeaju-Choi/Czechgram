@@ -14,7 +14,7 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
     func requestPageData(for completion: @escaping (UserPageDTO?) -> Void) {
         fetchUserPageData(with: completion)
     }
-    
+
     func requestMediaData(with id: String, for completion: @escaping (UIImage?) -> Void) {
         guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
         networkService.request(endPoint: .imageUrl(mediaID: id, token: token)) { [weak self] result in
@@ -24,15 +24,15 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
                 let mediaUrlDTO = jsonConverter.decode(data: data)
                 guard let url: String = mediaUrlDTO?.mediaType == .Video ? mediaUrlDTO?.thumbnailUrl : mediaUrlDTO?.mediaUrl else { print(NetworkError.noURL)
                     return }
-                
-                self?.fetchUserImageData(with: url, completion: <#T##(UIImage) -> Void#>)
-            case .failure(let error):
+
+                self?.fetchUserImageData(with: url, completion: completion)
+            case .failure:
                 print(NetworkError.noData)
             }
         }
 
     }
-    
+
 }
 
 private extension ViewDefaultMyPageRepository {
@@ -52,8 +52,18 @@ private extension ViewDefaultMyPageRepository {
             }
         }
     }
-    
-    func fetchUserImageData(with url: String, completion: @escaping (UIImage) -> Void) {
-        
+
+    func fetchUserImageData(with url: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: url) else { return }
+        networkService.requestImage(url: url) { result in
+            switch result {
+            case .success(let data):
+                let image = UIImage(data: data)
+                completion(image)
+            case .failure:
+                print(NetworkError.noData)
+
+            }
+        }
     }
 }
