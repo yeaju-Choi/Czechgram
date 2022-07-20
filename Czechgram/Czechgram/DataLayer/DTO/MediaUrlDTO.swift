@@ -12,12 +12,14 @@ struct MediaUrlDTO: Codable {
     let mediaType: MediaType
     let mediaUrl: String
     let thumbnailUrl: String?
+    let timestamp: String
 
     enum CodingKeys: String, CodingKey {
         case id
         case mediaType = "media_type"
         case mediaUrl = "media_url"
         case thumbnailUrl = "thumbnail_url"
+        case timestamp
     }
 }
 

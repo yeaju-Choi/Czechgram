@@ -20,10 +20,11 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
     }
 
     func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
-        myPageRepository.requestMediaData(with: imageEntity.id) { image in
-            guard let image = image else { return }
+        myPageRepository.requestMediaData(with: imageEntity.id) { [weak self] image, createdTime in
+            guard let image = image, let time = createdTime, let date = self?.convertDate(with: time) else { return }
             var entity = imageEntity
             entity.image = image
+            entity.createdTime = date
             completion(entity)
         }
     }
@@ -38,12 +39,19 @@ private extension ViewDefaultMyPageUsecase {
             let entity = MediaImageEntity(id: $0.id)
             imageEntity.append(entity)
         }
-
-        imageEntity.sort { lhs, rhs in
-            lhs.id > rhs.id
-        }
         let mediaEntity = MediaEntity(images: imageEntity, page: userDTO.media.paging)
         let userEntity = UserPageEntity(userName: userDTO.username, mediaCount: userDTO.mediaCount, media: mediaEntity)
         return userEntity
+    }
+
+    func convertDate(with: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss+SSSS"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        if let date = dateFormatter.date(from: with) {
+            return date
+        } else {
+            return nil
+        }
     }
 }

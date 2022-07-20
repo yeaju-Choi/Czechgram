@@ -15,17 +15,16 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
         fetchUserPageData(with: completion)
     }
 
-    func requestMediaData(with id: String, for completion: @escaping (UIImage?) -> Void) {
+    func requestMediaData(with id: String, for completion: @escaping (UIImage?, String?) -> Void) {
         guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
         networkService.request(endPoint: .imageUrl(mediaID: id, token: token)) { [weak self] result in
             switch result {
             case .success(let data):
                 let jsonConverter = JSONConverter<MediaUrlDTO>()
-                let mediaUrlDTO = jsonConverter.decode(data: data)
-                guard let url: String = mediaUrlDTO?.mediaType == .Video ? mediaUrlDTO?.thumbnailUrl : mediaUrlDTO?.mediaUrl else { print(NetworkError.noURL)
+                guard let mediaUrlDTO = jsonConverter.decode(data: data) else { print(NetworkError.noURL)
                     return }
 
-                self?.fetchUserImageData(with: url, completion: completion)
+                self?.fetchUserImageData(with: mediaUrlDTO, completion: completion)
             case .failure:
                 print(NetworkError.noData)
             }
@@ -53,13 +52,13 @@ private extension ViewDefaultMyPageRepository {
         }
     }
 
-    func fetchUserImageData(with url: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: url) else { return }
-        networkService.requestImage(url: url) { result in
+    func fetchUserImageData(with dto: MediaUrlDTO, completion: @escaping (UIImage?, String?) -> Void) {
+        guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url) else { return }
+        networkService.requestImage(url: validUrl) { result in
             switch result {
             case .success(let data):
                 let image = UIImage(data: data)
-                completion(image)
+                completion(image, dto.timestamp)
             case .failure:
                 print(NetworkError.noData)
 

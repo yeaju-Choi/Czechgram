@@ -11,4 +11,5 @@ struct MediaImageEntity {
 
     let id: String
     var image: UIImage?
+    var createdTime: Date?
 }

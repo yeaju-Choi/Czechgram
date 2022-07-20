@@ -16,8 +16,16 @@ final class HomeViewModel {
     func enquireAllData() {
         myPageUsecase.executeUserPage { [weak self] userPage in
             self?.enquireImages(with: userPage, completion: { [weak self] mediaImages in
+                let images = mediaImages.sorted { firstValue, secondValue in
+                    if let firstTime = firstValue.createdTime, let secondTime = secondValue.createdTime {
+                        return firstTime > secondTime
+                    } else {
+                        return firstValue.id > secondValue.id
+                    }
+                }
+
                 var completedUserPage = userPage
-                completedUserPage.media.images = mediaImages
+                completedUserPage.media.images = images
                 self?.myPageData.updateValue(value: completedUserPage)
             })
         }

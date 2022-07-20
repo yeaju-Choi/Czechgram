@@ -89,7 +89,7 @@ enum EndPoint: EndPontable {
                     URLQueryItem(name: "access_token", value: token)]
 
         case .imageUrl(_, let token):
-            return [URLQueryItem(name: "fields", value: "id,media_type,media_url,thumbnail_url"),
+            return [URLQueryItem(name: "fields", value: "id,media_type,media_url,thumbnail_url,timestamp"),
                     URLQueryItem(name: "access_token", value: token)]
         }
 
