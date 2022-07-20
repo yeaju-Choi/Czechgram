@@ -80,7 +80,7 @@ enum EndPoint: EndPontable {
             return [URLQueryItem(name: "grant_type", value: "ig_exchange_token"),
                     URLQueryItem(name: "client_secret", value: "2b5c96cee7df4b0e8b5a8a291ed7d747"),
                     URLQueryItem(name: "access_token", value: token)]
-            
+
         case .userPage(let token):
             return [URLQueryItem(name: "fields", value: "username,media_count,media"),
                     URLQueryItem(name: "access_token", value: token)]

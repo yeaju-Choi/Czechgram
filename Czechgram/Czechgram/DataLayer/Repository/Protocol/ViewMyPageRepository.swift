@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ViewMyPageRepository {
-    
-    func requestPageData()
+
+    func requestPageData(for completion: @escaping (UserPageDTO?) -> Void)
 }

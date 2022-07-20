@@ -8,8 +8,10 @@
 import Foundation
 
 final class HomeViewModel {
-    
+
+    let myPageUsecase: ViewMyPageUsecase = ViewDefaultMyPageUsecase()
+
     func enquiredAllData() {
-        
+
     }
 }
