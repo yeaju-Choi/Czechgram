@@ -24,8 +24,6 @@ class ImageCacheService {
         guard !fileManager.fileExists(atPath: filePath.path) else { return }
 
         fileManager.createFile(atPath: filePath.path, contents: image.jpegData(compressionQuality: 0.5))
-        print("=>\(filePath)")
-
     }
 
     static func loadData(url: URL) -> UIImage? {
