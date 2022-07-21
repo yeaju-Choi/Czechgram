@@ -25,6 +25,7 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
             var entity = imageEntity
             entity.image = image
             entity.createdTime = date
+            // TODO: entity 저장 (캐시, 파일매니저)
             completion(entity)
         }
     }

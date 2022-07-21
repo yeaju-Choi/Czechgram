@@ -54,14 +54,19 @@ private extension ViewDefaultMyPageRepository {
 
     func fetchUserImageData(with dto: MediaUrlDTO, completion: @escaping (UIImage?, String?) -> Void) {
         guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url) else { return }
-        networkService.requestImage(url: validUrl) { result in
-            switch result {
-            case .success(let data):
-                let image = UIImage(data: data)
-                completion(image, dto.timestamp)
-            case .failure:
-                print(NetworkError.noData)
+        if let cachedImage = ImageCacheService.loadData(url: validUrl) {
+            completion(cachedImage, dto.timestamp)
+        } else {
+            networkService.requestImage(url: validUrl) { result in
+                switch result {
+                case .success(let data):
+                    let image = UIImage(data: data)
+                    ImageCacheService.saveData(image: image, url: validUrl)
+                    completion(image, dto.timestamp)
+                case .failure:
+                    print(NetworkError.noData)
 
+                }
             }
         }
     }
