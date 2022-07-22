@@ -11,4 +11,5 @@ protocol ViewMyPageRepository {
 
     func requestPageData(for completion: @escaping (UserPageDTO?) -> Void)
     func requestMediaData(with id: String, for completion: @escaping (UIImage?, String?) -> Void)
+    func requestNextPageMediaData(with validURL: URL, for completion: @escaping (MediaDTO?) -> Void)
 }

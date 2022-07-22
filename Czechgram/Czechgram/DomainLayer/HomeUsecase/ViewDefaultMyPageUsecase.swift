@@ -13,7 +13,7 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
 
     func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
         myPageRepository.requestPageData { [weak self] userPageDTO in
-            guard let validDTO = userPageDTO, let entity = self?.convertEntity(from: validDTO) else { return }
+            guard let validDTO = userPageDTO, let entity = self?.convert(from: validDTO) else { return }
 
             completion(entity)
         }
@@ -30,17 +30,31 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
         }
     }
 
+    func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void) {
+        guard let section = nextImageSection, let url = URL(string: section) else { return }
+        myPageRepository.requestNextPageMediaData(with: url) { [weak self] media in
+            guard let media = media else { return }
+            let mediaEntity = self?.convert(from: media)
+            completion(mediaEntity)
+        }
+    }
 }
 
 private extension ViewDefaultMyPageUsecase {
 
-    func convertEntity(from userDTO: UserPageDTO) -> UserPageEntity {
+    func convert(from mediaDTO: MediaDTO) -> MediaEntity {
         var imageEntity = [MediaImageEntity]()
-        userDTO.media.mediaIDs.forEach {
+        mediaDTO.mediaIDs.forEach {
             let entity = MediaImageEntity(id: $0.id)
             imageEntity.append(entity)
         }
-        let mediaEntity = MediaEntity(images: imageEntity, page: userDTO.media.paging)
+        let mediaEntity = MediaEntity(images: imageEntity, page: mediaDTO.paging)
+
+        return mediaEntity
+    }
+
+    func convert(from userDTO: UserPageDTO) -> UserPageEntity {
+        let mediaEntity = self.convert(from: userDTO.media)
         let userEntity = UserPageEntity(userName: userDTO.username, mediaCount: userDTO.mediaCount, media: mediaEntity)
         return userEntity
     }

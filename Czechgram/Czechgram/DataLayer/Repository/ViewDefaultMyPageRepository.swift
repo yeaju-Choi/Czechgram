@@ -29,7 +29,20 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
                 print(NetworkError.noData)
             }
         }
+    }
 
+    func requestNextPageMediaData(with validURL: URL, for completion: @escaping (MediaDTO?) -> Void) {
+        networkService.requestImage(url: validURL) { result in
+            switch result {
+            case .success(let data):
+                let jsonConverter = JSONConverter<MediaDTO>()
+                let dto = jsonConverter.decode(data: data)
+                completion(dto)
+
+            case .failure:
+                print(NetworkError.noData)
+            }
+        }
     }
 
 }

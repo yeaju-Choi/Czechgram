@@ -38,6 +38,8 @@ final class HomeViewController: UIViewController {
         return collectionView
     }()
 
+    private var contentViewHeightConstraint = [NSLayoutConstraint]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -69,6 +71,7 @@ private extension HomeViewController {
                 self?.collectionView.dataSource = self?.datasource
                 self?.setContentViewHeight(imagesCount: userPageData.media.images.count)
                 self?.collectionView.reloadData()
+                self?.scrollView.setNeedsLayout()
             }
         }
     }
@@ -122,6 +125,8 @@ private extension HomeViewController {
     }
 
     func setContentViewHeight(imagesCount: Int) {
+        NSLayoutConstraint.deactivate(contentViewHeightConstraint)
+
         var line = 0
 
         if imagesCount % 3 == 0 {
@@ -132,18 +137,19 @@ private extension HomeViewController {
         }
 
         let cellHeight = Int(collectionView.frame.width / 3 - 1)
-        let collectionViewHeight = CGFloat(cellHeight * line + 220)
-        NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: collectionViewHeight)
-        ])
+        let collectionViewHeight = CGFloat((cellHeight * line) + (1 * line) + 220)
+
+        contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: collectionViewHeight)]
+        NSLayoutConstraint.activate(contentViewHeightConstraint)
     }
 }
 
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         let detailVC = DetailViewController()
-         self.navigationController?.pushViewController(detailVC, animated: true)
+//         let detailVC = DetailViewController()
+//         self.navigationController?.pushViewController(detailVC, animated: true)
+         self.homeVM.enquireNextImages()
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
