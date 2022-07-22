@@ -64,12 +64,13 @@ private extension HomeViewController {
                 cell.set(image: image)
             }
 
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                self?.profileView.setProfileData(userName: userPageData.userName, postCount: userPageData.mediaCount)
                 self?.collectionView.dataSource = self?.datasource
+                self?.setContentViewHeight(imagesCount: userPageData.media.images.count)
                 self?.collectionView.reloadData()
             }
         }
-
     }
 
     func setNavigationController() {
@@ -111,14 +112,30 @@ private extension HomeViewController {
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 1500)
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
     func setCollectionView() {
 
         self.collectionView.delegate = self
+    }
+
+    func setContentViewHeight(imagesCount: Int) {
+        var line = 0
+
+        if imagesCount % 3 == 0 {
+            line = imagesCount / 3
+
+        } else {
+            line = imagesCount / 3 + 1
+        }
+
+        let cellHeight = Int(collectionView.frame.width / 3 - 1)
+        let collectionViewHeight = CGFloat(cellHeight * line + 220)
+        NSLayoutConstraint.activate([
+            contentView.heightAnchor.constraint(equalToConstant: collectionViewHeight)
+        ])
     }
 }
 
@@ -130,8 +147,8 @@ private extension HomeViewController {
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / 3 - 1
-        return CGSize(width: width, height: width)
+         let width = collectionView.frame.width / 3 - 1
+         return CGSize(width: width, height: width)
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -141,4 +158,5 @@ private extension HomeViewController {
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
          return 1
      }
+
  }

@@ -13,14 +13,12 @@ final class ProfileView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "userImage")
 
         return imageView
     }()
 
     private var postsButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("7\n게시물", for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.tintColor = .black
         button.titleLabel?.textAlignment = .center
@@ -30,7 +28,6 @@ final class ProfileView: UIView {
 
     private var followersButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("24\n팔로워", for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.tintColor = .black
         button.titleLabel?.textAlignment = .center
@@ -40,7 +37,6 @@ final class ProfileView: UIView {
 
     private var followingButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("24\n팔로잉", for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.tintColor = .black
         button.titleLabel?.textAlignment = .center
@@ -50,7 +46,6 @@ final class ProfileView: UIView {
 
     private var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "czech"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -74,6 +69,14 @@ final class ProfileView: UIView {
     @available (*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setProfileData(userName: String, postCount: Int) {
+        nameLabel.text = userName
+        postsButton.setTitle("\(postCount)\n게시물", for: .normal)
+        userImageView.image = UIImage(named: "userImage")
+        followersButton.setTitle("24\n팔로워", for: .normal)
+        followingButton.setTitle("24\n팔로잉", for: .normal)
     }
 
     func setUserImageCornerRoundly() {
