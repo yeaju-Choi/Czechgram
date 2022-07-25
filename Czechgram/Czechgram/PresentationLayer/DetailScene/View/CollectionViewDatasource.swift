@@ -33,4 +33,16 @@ final class CollectionViewDatasource<Model, Cell: UICollectionViewCell>: NSObjec
         cellConfigurator(models[indexPath.row], cell)
         return cell
     }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter else { return UICollectionReusableView() }
+        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LoadingReusableView.reuseIdentifier, for: indexPath) as? LoadingReusableView else { return UICollectionReusableView()}
+
+        return footer
+    }
+
 }

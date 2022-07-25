@@ -12,8 +12,15 @@ final class HomeViewModel {
     var myPageData: Observable<UserPageEntity?> = Observable(nil)
 
     let myPageUsecase: ViewMyPageUsecase = ViewDefaultMyPageUsecase()
+    var isAvailableAdditionalFetching: Observable<Bool> = Observable(false)
+    var isLoading: Bool = false
+
+    private(set) lazy var isFetchAllData: Bool = {
+        return myPageData.value?.mediaCount == myPageData.value?.media.images.count
+    }()
 
     func enquireAllData() {
+        isAvailableAdditionalFetching.updateValue(value: false)
         myPageUsecase.executeUserPage { [weak self] userPage in
             self?.enquireImages(with: userPage.media, completion: { [weak self] mediaImages in
                 let images = mediaImages.sorted { firstValue, secondValue in
@@ -27,6 +34,7 @@ final class HomeViewModel {
                 var completedUserPage = userPage
                 completedUserPage.media.images = images
                 self?.myPageData.updateValue(value: completedUserPage)
+
             })
         }
     }
@@ -47,6 +55,8 @@ final class HomeViewModel {
                 var refreshedUserPage = userPage
                 refreshedUserPage.media.images.append(contentsOf: images)
                 self?.myPageData.updateValue(value: refreshedUserPage)
+                sleep(2)
+                self?.isAvailableAdditionalFetching.updateValue(value: false)
             })
         }
     }
@@ -67,4 +77,5 @@ private extension HomeViewModel {
             }
         }
     }
+
 }

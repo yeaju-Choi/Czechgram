@@ -30,10 +30,12 @@ final class HomeViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.footerReferenceSize = CGSize(width: 370, height: 50)
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
         collectionView.register(PostCell.self, forCellWithReuseIdentifier: PostCell.reuseIdentifier)
+        collectionView.register(LoadingReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingReusableView.reuseIdentifier)
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -125,7 +127,7 @@ private extension HomeViewController {
         let row = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
 
         let cellHeight = Int(collectionView.frame.width / 3 - 1)
-        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220)
+        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220 + 100)
 
         contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: contentViewHeight)]
         NSLayoutConstraint.activate(contentViewHeightConstraint)
@@ -135,9 +137,8 @@ private extension HomeViewController {
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//         let detailVC = DetailViewController()
-//         self.navigationController?.pushViewController(detailVC, animated: true)
-         self.homeVM.enquireNextImages()
+         let detailVC = DetailViewController()
+         self.navigationController?.pushViewController(detailVC, animated: true)
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -152,5 +153,52 @@ private extension HomeViewController {
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
          return 1
      }
+
+     // MARK: Loading Footer Settings
+     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+
+         // 로딩중이거나, 모든 데이터를 가지고 왔다면
+         if homeVM.isFetchAllData || homeVM.isLoading {
+             return CGSize.zero // 로딩창 안보이게 설정
+         } else {
+             return CGSize(width: collectionView.frame.width, height: 50)
+         }
+
+     }
+
+     // footer appear
+     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+             guard let footer = view as? LoadingReusableView else { return }
+
+         if elementKind == UICollectionView.elementKindSectionFooter && homeVM.isLoading {
+                     footer.activityIndicator.startAnimating()
+             } else {
+
+                 footer.activityIndicator.stopAnimating()
+             }
+
+         }
+
+     // footer disappear
+     func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+             if elementKind == UICollectionView.elementKindSectionFooter {
+                 guard let footer = view as? LoadingReusableView else { return }
+                 footer.activityIndicator.stopAnimating()
+             }
+         }
+
+     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+         if homeVM.isFetchAllData {
+                 print("no more Image")
+         } else {
+             // 보고있는 이미지가 마지막 이미지이고, 로딩중이 아닐때
+             guard let imagesCount: Int = homeVM.myPageData.value?.media.images.count else { return }
+                    if indexPath.row ==  imagesCount - 1 && homeVM.isLoading == false {
+                        homeVM.enquireNextImages()
+                    }
+             }
+
+         }
 
  }
