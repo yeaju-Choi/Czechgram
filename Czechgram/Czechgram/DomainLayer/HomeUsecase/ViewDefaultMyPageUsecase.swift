@@ -48,7 +48,7 @@ private extension ViewDefaultMyPageUsecase {
             let entity = MediaImageEntity(id: $0.id)
             imageEntity.append(entity)
         }
-        let mediaEntity = MediaEntity(images: imageEntity, page: mediaDTO.paging)
+        let mediaEntity = MediaEntity(images: imageEntity, page: mediaDTO.paging ?? MediaPagingDTO(next: nil, previous: nil))
 
         return mediaEntity
     }

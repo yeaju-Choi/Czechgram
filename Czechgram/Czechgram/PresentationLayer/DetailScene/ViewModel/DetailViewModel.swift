@@ -21,10 +21,13 @@ final class DetailViewModel {
     func enquireImages() {
         detailUsecase.executePostData(with: mediaImageEntity.id) { [weak self] mediaImageEntities in
             guard let imageEntity = self?.mediaImageEntity else { return }
-            var allMedias = [imageEntity]
-            allMedias.append(contentsOf: mediaImageEntities)
 
-            self?.supplementProperties(for: allMedias)
+            if mediaImageEntities.isEmpty {
+                self?.myPageData.updateValue(value: [imageEntity])
+
+            } else {
+                self?.supplementProperties(for: mediaImageEntities)
+            }
         }
     }
 }

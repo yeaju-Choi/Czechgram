@@ -15,9 +15,11 @@ final class ViewDefaultDetailPostUsecase: ViewDetailPostUsecase {
         detailPostRepository.requestChildrenData(with: id) { mediaDTO in
             var mediaImageEnities = [MediaImageEntity]()
 
-            mediaDTO.mediaIDs.forEach {
-                let entity = MediaImageEntity(id: $0.id)
-                mediaImageEnities.append(entity)
+            if !mediaDTO.mediaIDs.isEmpty {
+                mediaDTO.mediaIDs.forEach {
+                    let entity = MediaImageEntity(id: $0.id)
+                    mediaImageEnities.append(entity)
+                }
             }
 
             completion(mediaImageEnities)
@@ -39,7 +41,7 @@ final class ViewDefaultDetailPostUsecase: ViewDetailPostUsecase {
 private extension ViewDefaultDetailPostUsecase {
 
     func convert(from userDTO: MediaDTO) -> MediaEntity {
-        let userEntity = MediaEntity(images: [MediaImageEntity](), page: userDTO.paging)
+        let userEntity = MediaEntity(images: [MediaImageEntity](), page: userDTO.paging ?? MediaPagingDTO(next: nil, previous: nil))
         return userEntity
     }
 

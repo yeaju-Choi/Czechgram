@@ -50,6 +50,7 @@ final class DetailViewController: UIViewController {
         configureLayouts()
         setSectionsData()
         setCollectionView()
+        configureBinding()
         detailViewModel.enquireImages()
     }
 
@@ -103,7 +104,8 @@ private extension DetailViewController {
     func configureBinding() {
         detailViewModel.myPageData.bind { [weak self] entities in
             guard let entities = entities, let firstImage = entities[0].image else { return }
-            self?.imageRatio = firstImage.size.height / firstImage.size.width
+            let ratio = firstImage.size.height / firstImage.size.width
+            self?.imageRatio = ratio
             self?.dataSource = CollectionViewDatasource(entities, reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (entity: MediaImageEntity, cell: DetailCollectionViewCell) in
                 guard let image = entity.image else { return }
                 cell.set(image: image)
@@ -111,7 +113,7 @@ private extension DetailViewController {
 
             DispatchQueue.main.async {
                 self?.detailView.updateCollectionView(with: self?.dataSource)
-                self?.detailView.reloadCollectionView()
+                self?.detailView.reloadCollectionView(ratio: ratio)
             }
         }
     }
@@ -125,5 +127,9 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         return detailView.getImageCellSize(ratio: imageRatio)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }

@@ -70,7 +70,8 @@ final class DetailView: UIView {
         imageSection.dataSource = dataSource
     }
 
-    func reloadCollectionView() {
+    func reloadCollectionView(ratio: CGFloat) {
+        setImageSectionHeight(ratio: ratio)
         imageSection.reloadData()
     }
 
@@ -90,7 +91,6 @@ final class DetailView: UIView {
     func getImageCellSize(ratio: CGFloat) -> CGSize {
         let width = imageSection.frame.width
         let height = width * ratio
-        setImageSectionHeight(ratio: ratio)
 
         return CGSize(width: width, height: height)
     }
@@ -112,8 +112,8 @@ private extension DetailView {
         NSLayoutConstraint.activate([
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageSection.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-//            imageSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
+            imageSection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            imageSection.widthAnchor.constraint(equalTo: self.widthAnchor)
         ])
 
         NSLayoutConstraint.activate([
