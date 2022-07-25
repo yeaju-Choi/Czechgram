@@ -8,5 +8,6 @@
 import Foundation
 
 protocol ViewDetailPostUsecase {
-    
+
+    func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void)
 }
