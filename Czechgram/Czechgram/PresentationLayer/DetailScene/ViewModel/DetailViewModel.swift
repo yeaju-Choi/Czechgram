@@ -39,6 +39,13 @@ private extension DetailViewModel {
                 imageEntites.append(imageEntity)
 
                 guard imageEntites.count != mediaImage.count else {
+                    imageEntites.sort { firstValue, secondValue in
+                        if let firstTime = firstValue.createdTime, let secondTime = secondValue.createdTime {
+                            return firstTime > secondTime
+                        } else {
+                            return firstValue.id > secondValue.id
+                        }
+                    }
                     self?.myPageData.updateValue(value: imageEntites)
                     return
                 }

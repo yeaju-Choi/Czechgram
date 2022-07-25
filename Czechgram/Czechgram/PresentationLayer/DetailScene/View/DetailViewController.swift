@@ -8,7 +8,7 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-
+    
     private var detailViewModel: DetailViewModel
     private let userId: String
 
