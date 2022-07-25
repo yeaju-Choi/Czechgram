@@ -135,9 +135,8 @@ private extension HomeViewController {
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//         let detailVC = DetailViewController()
-//         self.navigationController?.pushViewController(detailVC, animated: true)
-         self.homeVM.enquireNextImages()
+         let detailVC = DetailViewController()
+         self.navigationController?.pushViewController(detailVC, animated: true)
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
