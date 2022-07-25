@@ -122,12 +122,12 @@ private extension HomeViewController {
     func setContentViewHeight(imagesCount: Int) {
         NSLayoutConstraint.deactivate(contentViewHeightConstraint)
 
-        let line = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
+        let row = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
 
         let cellHeight = Int(collectionView.frame.width / 3 - 1)
-        let collectionViewHeight = CGFloat((cellHeight * line) + (1 * line) + 220)
+        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220)
 
-        contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: collectionViewHeight)]
+        contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: contentViewHeight)]
         NSLayoutConstraint.activate(contentViewHeightConstraint)
     }
 }
