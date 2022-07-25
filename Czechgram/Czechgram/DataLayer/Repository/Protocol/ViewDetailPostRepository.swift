@@ -11,4 +11,5 @@ protocol ViewDetailPostRepository {
 
     var networkService: NetworkServiceable { get }
     func requestChildrenData(with id: String, for completion: @escaping (MediaDTO) -> Void)
+    func requestChildrenImage(with id: String, for completion: @escaping (UIImage?, String?) -> Void)
 }

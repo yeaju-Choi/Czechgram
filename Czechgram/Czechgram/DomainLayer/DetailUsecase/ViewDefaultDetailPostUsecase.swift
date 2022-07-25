@@ -14,13 +14,24 @@ final class ViewDefaultDetailPostUsecase: ViewDetailPostUsecase {
     func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void) {
         detailPostRepository.requestChildrenData(with: id) { mediaDTO in
             var mediaImageEnities = [MediaImageEntity]()
-            
+
             mediaDTO.mediaIDs.forEach {
                 let entity = MediaImageEntity(id: $0.id)
                 mediaImageEnities.append(entity)
             }
-            
+
             completion(mediaImageEnities)
+        }
+    }
+
+    func executePostImages(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
+        detailPostRepository.requestChildrenImage(with: imageEntity.id) { [weak self] image, createdTime in
+            guard let image = image, let time = createdTime, let date = self?.convertDate(with: time) else { return }
+            var entity = imageEntity
+            entity.image = image
+            entity.createdTime = date
+            // TODO: entity 저장 (캐시, 파일매니저)
+            completion(entity)
         }
     }
 }

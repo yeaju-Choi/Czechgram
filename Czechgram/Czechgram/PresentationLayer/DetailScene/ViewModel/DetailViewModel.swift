@@ -9,22 +9,40 @@ import Foundation
 
 final class DetailViewModel {
 
+    var myPageData: Observable<[MediaImageEntity]?> = Observable(nil)
+
     let mediaImageEntity: MediaImageEntity
     private var detailUsecase: ViewDetailPostUsecase = ViewDefaultDetailPostUsecase()
-    
-    private var postMedias: [MediaImageEntity]? {
-        didSet {
-            
-        }
-    }
 
     init(cellEntity: MediaImageEntity) {
         self.mediaImageEntity = cellEntity
     }
 
-    func enquireImages(with completion: @escaping (MediaEntity) -> Void) {
+    func enquireImages() {
         detailUsecase.executePostData(with: mediaImageEntity.id) { [weak self] mediaImageEntities in
-            self?.postMedias = mediaImageEntities
+            guard let imageEntity = self?.mediaImageEntity else { return }
+            var allMedias = [imageEntity]
+            allMedias.append(contentsOf: mediaImageEntities)
+
+            self?.supplementProperties(for: allMedias)
+        }
+    }
+}
+
+private extension DetailViewModel {
+
+    func supplementProperties(for mediaImage: [MediaImageEntity]) {
+        var imageEntites = [MediaImageEntity]()
+
+        mediaImage.forEach {
+            detailUsecase.executePostImages(with: $0) { [weak self] imageEntity in
+                imageEntites.append(imageEntity)
+
+                guard imageEntites.count != mediaImage.count else {
+                    self?.myPageData.updateValue(value: imageEntites)
+                    return
+                }
+            }
         }
     }
 }

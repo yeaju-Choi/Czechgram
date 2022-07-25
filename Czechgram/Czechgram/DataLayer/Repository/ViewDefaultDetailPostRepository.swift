@@ -26,16 +26,28 @@ final class ViewDefaultDetailPostRepository: ViewDetailPostRepository {
             }
         }
     }
+
+    func requestChildrenImage(with id: String, for completion: @escaping (UIImage?, String?) -> Void) {
+        guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
+        networkService.request(endPoint: .imageUrl(mediaID: id, token: token)) { [weak self] result in
+            switch result {
+            case .success(let data):
+                let jsonConverter = JSONConverter<MediaUrlDTO>()
+                guard let mediaUrlDTO = jsonConverter.decode(data: data) else { print(NetworkError.noURL)
+                    return }
+
+                self?.fetchUserImageData(with: mediaUrlDTO, completion: completion)
+            case .failure:
+                print(NetworkError.noData)
+            }
+        }
+    }
 }
 
 private extension ViewDefaultDetailPostRepository {
 
-    func fetchUserImageData(with dto: MediaDTO, completion: @escaping (UIImage?, String?) -> Void) {
-        dto.mediaIDs.forEach {
-            guard let validUrl: URL = URL(string: $0.id) else { return }
-        }
-        
-        guard let validUrl: URL = URL(string: dto.mediaUrl) else { return }
+    func fetchUserImageData(with dto: MediaUrlDTO, completion: @escaping (UIImage?, String?) -> Void) {
+        guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url) else { return }
         if let cachedImage = ImageCacheService.loadData(url: validUrl) {
             completion(cachedImage, dto.timestamp)
         } else {
