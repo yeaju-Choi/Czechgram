@@ -49,6 +49,8 @@ final class DetailView: UIView {
         return section
     }()
 
+    private var collectionViewHeightConstraint = [NSLayoutConstraint]()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayouts()
@@ -64,6 +66,14 @@ final class DetailView: UIView {
         imageSection.dataSource = dataSource
     }
 
+    func updateCollectionView(with dataSource: UICollectionViewDataSource?) {
+        imageSection.dataSource = dataSource
+    }
+
+    func reloadCollectionView() {
+        imageSection.reloadData()
+    }
+
     func setProfileData(profile: UIImage, userId: String) {
         profileSection.set(image: profile, id: userId)
     }
@@ -77,15 +87,17 @@ final class DetailView: UIView {
         descriptionSection.setProfileImageViewCornerRoundly()
     }
 
-    func getImageCellSize() -> CGSize {
+    func getImageCellSize(ratio: CGFloat) -> CGSize {
         let width = imageSection.frame.width
-        let height = imageSection.frame.height
+        let height = width * ratio
+        setImageSectionHeight(ratio: ratio)
 
         return CGSize(width: width, height: height)
     }
 }
 
 private extension DetailView {
+
     func configureLayouts() {
         addSubviews(profileSection, imageSection, buttonSection, descriptionSection)
 
@@ -100,8 +112,8 @@ private extension DetailView {
         NSLayoutConstraint.activate([
             imageSection.topAnchor.constraint(equalTo: profileSection.bottomAnchor),
             imageSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageSection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imageSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
+            imageSection.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+//            imageSection.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.6)
         ])
 
         NSLayoutConstraint.activate([
@@ -116,5 +128,14 @@ private extension DetailView {
             descriptionSection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             descriptionSection.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
+    }
+
+    func setImageSectionHeight(ratio: CGFloat) {
+        NSLayoutConstraint.deactivate(collectionViewHeightConstraint)
+
+        let viewHeight = imageSection.frame.width * ratio
+
+        collectionViewHeightConstraint = [imageSection.heightAnchor.constraint(equalToConstant: viewHeight)]
+        NSLayoutConstraint.activate(collectionViewHeightConstraint)
     }
 }

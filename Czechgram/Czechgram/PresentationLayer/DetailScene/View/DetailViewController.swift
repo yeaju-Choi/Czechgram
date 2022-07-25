@@ -8,11 +8,11 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-    
+
     private var detailViewModel: DetailViewModel
     private let userId: String
 
-    private var dataSource: CollectionViewDatasource<UIImage, DetailCollectionViewCell>?
+    private var dataSource: CollectionViewDatasource<MediaImageEntity, DetailCollectionViewCell>?
 
     private let detailScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -32,6 +32,8 @@ final class DetailViewController: UIViewController {
         return detailView
     }()
 
+    private var imageRatio: CGFloat = 0
+
     init(cellEntity: MediaImageEntity, userId: String) {
         self.detailViewModel = DetailViewModel(cellEntity: cellEntity)
         self.userId = userId
@@ -48,6 +50,7 @@ final class DetailViewController: UIViewController {
         configureLayouts()
         setSectionsData()
         setCollectionView()
+        detailViewModel.enquireImages()
     }
 
     override func viewDidLayoutSubviews() {
@@ -94,11 +97,23 @@ private extension DetailViewController {
     }
 
     func setCollectionView() {
-        dataSource = CollectionViewDatasource([UIImage(systemName: "heart")!, UIImage(systemName: "heart.fill")!], reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (image: UIImage, cell: DetailCollectionViewCell) in
-            cell.set(image: image)
-        })
+        detailView.setCollectionView(delegate: self, dataSource: nil)
+    }
 
-        detailView.setCollectionView(delegate: self, dataSource: self.dataSource)
+    func configureBinding() {
+        detailViewModel.myPageData.bind { [weak self] entities in
+            guard let entities = entities, let firstImage = entities[0].image else { return }
+            self?.imageRatio = firstImage.size.height / firstImage.size.width
+            self?.dataSource = CollectionViewDatasource(entities, reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (entity: MediaImageEntity, cell: DetailCollectionViewCell) in
+                guard let image = entity.image else { return }
+                cell.set(image: image)
+            })
+
+            DispatchQueue.main.async {
+                self?.detailView.updateCollectionView(with: self?.dataSource)
+                self?.detailView.reloadCollectionView()
+            }
+        }
     }
 }
 
@@ -109,6 +124,6 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDelega
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return detailView.getImageCellSize()
+        return detailView.getImageCellSize(ratio: imageRatio)
     }
 }

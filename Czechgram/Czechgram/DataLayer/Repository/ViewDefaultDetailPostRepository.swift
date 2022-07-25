@@ -59,7 +59,6 @@ private extension ViewDefaultDetailPostRepository {
                     completion(image, dto.timestamp)
                 case .failure:
                     print(NetworkError.noData)
-
                 }
             }
         }
