@@ -39,6 +39,10 @@
 		D2525A402887E50A00078D1C /* MediaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A3F2887E50A00078D1C /* MediaEntity.swift */; };
 		D2525A422887E7E600078D1C /* MediaImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A412887E7E600078D1C /* MediaImageEntity.swift */; };
 		D2525A45288E668500078D1C /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A44288E668500078D1C /* DetailViewModel.swift */; };
+		D2525A49288E702C00078D1C /* ViewDetailPostUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A48288E702C00078D1C /* ViewDetailPostUsecase.swift */; };
+		D2525A4B288E70E800078D1C /* ViewDefaultDetailPostUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A4A288E70E800078D1C /* ViewDefaultDetailPostUsecase.swift */; };
+		D2525A4D288E729F00078D1C /* ViewDetailPostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A4C288E729F00078D1C /* ViewDetailPostRepository.swift */; };
+		D2525A4F288E72E500078D1C /* ViewDefaultDetailPostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2525A4E288E72E500078D1C /* ViewDefaultDetailPostRepository.swift */; };
 		D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623522287BC06B002F0610 /* DetailProfileSection.swift */; };
 		D2623525287BD0D4002F0610 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */; };
 		D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623526287BF572002F0610 /* CollectionViewDatasource.swift */; };
@@ -91,6 +95,10 @@
 		D2525A3F2887E50A00078D1C /* MediaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaEntity.swift; sourceTree = "<group>"; };
 		D2525A412887E7E600078D1C /* MediaImageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImageEntity.swift; sourceTree = "<group>"; };
 		D2525A44288E668500078D1C /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		D2525A48288E702C00078D1C /* ViewDetailPostUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailPostUsecase.swift; sourceTree = "<group>"; };
+		D2525A4A288E70E800078D1C /* ViewDefaultDetailPostUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDefaultDetailPostUsecase.swift; sourceTree = "<group>"; };
+		D2525A4C288E729F00078D1C /* ViewDetailPostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailPostRepository.swift; sourceTree = "<group>"; };
+		D2525A4E288E72E500078D1C /* ViewDefaultDetailPostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDefaultDetailPostRepository.swift; sourceTree = "<group>"; };
 		D2623522287BC06B002F0610 /* DetailProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProfileSection.swift; sourceTree = "<group>"; };
 		D2623524287BD0D4002F0610 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 		D2623526287BF572002F0610 /* CollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDatasource.swift; sourceTree = "<group>"; };
@@ -247,6 +255,7 @@
 		D2525A342887DC7800078D1C /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				D2525A4E288E72E500078D1C /* ViewDefaultDetailPostRepository.swift */,
 				D2525A382887DCB400078D1C /* ViewDefaultMyPageRepository.swift */,
 				D2525A352887DC8000078D1C /* Protocol */,
 			);
@@ -256,6 +265,7 @@
 		D2525A352887DC8000078D1C /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				D2525A4C288E729F00078D1C /* ViewDetailPostRepository.swift */,
 				D2525A362887DC9300078D1C /* ViewMyPageRepository.swift */,
 			);
 			path = Protocol;
@@ -277,6 +287,23 @@
 				D2525A44288E668500078D1C /* DetailViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		D2525A46288E6FDF00078D1C /* DetailUsecase */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A4A288E70E800078D1C /* ViewDefaultDetailPostUsecase.swift */,
+				D2525A47288E6FEE00078D1C /* Protocol */,
+			);
+			path = DetailUsecase;
+			sourceTree = "<group>";
+		};
+		D2525A47288E6FEE00078D1C /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				D2525A48288E702C00078D1C /* ViewDetailPostUsecase.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		D2623538287D145A002F0610 /* DetailScene */ = {
@@ -407,6 +434,7 @@
 			children = (
 				D24B348B2886A23000F8243F /* LoginUsecase */,
 				B3AD441E2887F15F00A9B59E /* HomeUsecase */,
+				D2525A46288E6FDF00078D1C /* DetailUsecase */,
 				D2525A3C2887E4B500078D1C /* Entity */,
 			);
 			path = DomainLayer;
@@ -555,9 +583,11 @@
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,
 				D262352B287C0203002F0610 /* DetailButtonSection.swift in Sources */,
 				B3F149B1287AB6AD0072DA45 /* DetailViewController.swift in Sources */,
+				D2525A4D288E729F00078D1C /* ViewDetailPostRepository.swift in Sources */,
 				D2525A2C2887D3EC00078D1C /* MediaPagingDTO.swift in Sources */,
 				D2623523287BC06B002F0610 /* DetailProfileSection.swift in Sources */,
 				D2623552287D8183002F0610 /* NetworkServiceable.swift in Sources */,
+				D2525A4B288E70E800078D1C /* ViewDefaultDetailPostUsecase.swift in Sources */,
 				D262354B287D7B02002F0610 /* NetworkService.swift in Sources */,
 				D2623533287C1959002F0610 /* DetailView.swift in Sources */,
 				D262352F287C0D71002F0610 /* DetailDescriptionSection.swift in Sources */,
@@ -571,6 +601,7 @@
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
 				B3F115BF2888F7A1001B498C /* ImageCacheService.swift in Sources */,
 				B3AD44212887F7BA00A9B59E /* MediaUrlDTO.swift in Sources */,
+				D2525A49288E702C00078D1C /* ViewDetailPostUsecase.swift in Sources */,
 				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
 				D2525A3E2887E4C100078D1C /* UserPageEntity.swift in Sources */,
@@ -585,6 +616,7 @@
 				D2525A392887DCB400078D1C /* ViewDefaultMyPageRepository.swift in Sources */,
 				B3F149AF287AB6AD0072DA45 /* SceneDelegate.swift in Sources */,
 				D2525A3B2887DE6100078D1C /* JSONConverter.swift in Sources */,
+				D2525A4F288E72E500078D1C /* ViewDefaultDetailPostRepository.swift in Sources */,
 				D2623541287D6049002F0610 /* LoginViewController.swift in Sources */,
 				B3F115C12888F7D1001B498C /* FileCachedService.swift in Sources */,
 				B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */,

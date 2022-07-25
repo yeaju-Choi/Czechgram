@@ -15,7 +15,7 @@ final class DetailViewModel {
         self.mediaImageEntity = cellEntity
     }
 
-    func enquireAllData() {
-
+    func enquireImages() {
+        
     }
 }
