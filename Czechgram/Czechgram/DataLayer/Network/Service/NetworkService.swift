@@ -9,7 +9,7 @@ import Foundation
 
 struct NetworkService: NetworkServiceable {
 
-    static func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
+    func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
 
         let request = makeURLRequest(with: endPoint)
         switch request {
@@ -40,7 +40,33 @@ struct NetworkService: NetworkServiceable {
         }
     }
 
-    static func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
+    func requestImage(url: URL, completion: @escaping CompletionHandler) {
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else { return }
+
+            if let error = error {
+                completion(.failure(.transportError(error)))
+                return
+            }
+
+            guard (200...299).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+
+            completion(.success(data))
+        }.resume()
+    }
+}
+
+private extension NetworkService {
+
+    func makeURLRequest(with target: EndPoint) -> Result<URLRequest, NetworkError> {
         guard let url = target.url else { return .failure(.noData) }
 
         var request = URLRequest(url: url)

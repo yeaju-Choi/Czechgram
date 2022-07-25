@@ -12,6 +12,8 @@ enum EndPoint: EndPontable {
     case instagramAuthorize
     case shortLivedToken(code: String)
     case longLivedToken(token: String)
+    case userPage(token: String)
+    case imageUrl(mediaID: String, token: String)
 
     var scheme: String {
         return "https"
@@ -19,7 +21,7 @@ enum EndPoint: EndPontable {
 
     var host: String {
         switch self {
-        case .longLivedToken:
+        case .longLivedToken, .userPage, .imageUrl:
             return "graph.instagram.com"
         default:
             return "api.instagram.com"
@@ -35,6 +37,10 @@ enum EndPoint: EndPontable {
             return "/oauth/access_token"
         case .longLivedToken:
             return "/access_token"
+        case .userPage:
+            return "/me"
+        case .imageUrl(let id, _):
+            return "/\(id)"
         }
     }
 
@@ -49,10 +55,7 @@ enum EndPoint: EndPontable {
 
     var contentType: [String: String]? {
         switch self {
-        case .instagramAuthorize:
-            return ["Content-type": "application/json",
-                    "Accept": "application/json"]
-        case .longLivedToken:
+        case .instagramAuthorize, .longLivedToken, .userPage, .imageUrl:
             return ["Content-type": "application/json",
                     "Accept": "application/json"]
         default:
@@ -79,6 +82,14 @@ enum EndPoint: EndPontable {
         case .longLivedToken(let token):
             return [URLQueryItem(name: "grant_type", value: "ig_exchange_token"),
                     URLQueryItem(name: "client_secret", value: "2b5c96cee7df4b0e8b5a8a291ed7d747"),
+                    URLQueryItem(name: "access_token", value: token)]
+
+        case .userPage(let token):
+            return [URLQueryItem(name: "fields", value: "username,media_count,media"),
+                    URLQueryItem(name: "access_token", value: token)]
+
+        case .imageUrl(_, let token):
+            return [URLQueryItem(name: "fields", value: "id,media_type,media_url,thumbnail_url,timestamp"),
                     URLQueryItem(name: "access_token", value: token)]
         }
 

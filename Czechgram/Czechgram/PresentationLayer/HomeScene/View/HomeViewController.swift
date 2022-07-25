@@ -9,18 +9,18 @@ import UIKit
 
 final class HomeViewController: UIViewController {
 
-    let dummyData: [String] = ["userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage", "userImage"]
+    private var homeVM = HomeViewModel()
 
     private var profileView = ProfileView()
-    private var datasource: CollectionViewDatasource<String, PostCell>?
+    private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
 
     private var scrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.backgroundColor = .white
-            scrollView.showsVerticalScrollIndicator = false
-            return scrollView
-        }()
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
     private var contentView: UIView = {
         let view = UIView()
@@ -28,15 +28,18 @@ final class HomeViewController: UIViewController {
         return view
     }()
 
-    private var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
         collectionView.register(PostCell.self, forCellWithReuseIdentifier: PostCell.reuseIdentifier)
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+
+    private var contentViewHeightConstraint = [NSLayoutConstraint]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +47,8 @@ final class HomeViewController: UIViewController {
 
         setNavigationController()
         configureLayouts()
-        setCollectionView()
+        configureBind()
+        homeVM.enquireAllData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -53,6 +57,24 @@ final class HomeViewController: UIViewController {
 }
 
 private extension HomeViewController {
+
+    func configureBind() {
+        homeVM.myPageData.bind { [weak self] userPageData in
+            guard let userPageData = userPageData else { return }
+            self?.datasource = CollectionViewDatasource(userPageData.media.images, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: MediaImageEntity, cell: PostCell) in
+                guard let image = imageData.image else { return }
+                cell.set(image: image)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                self?.profileView.setProfileData(userName: userPageData.userName, postCount: userPageData.mediaCount)
+                self?.collectionView.dataSource = self?.datasource
+                self?.setContentViewHeight(imagesCount: userPageData.media.images.count)
+                self?.collectionView.reloadData()
+                self?.scrollView.setNeedsLayout()
+            }
+        }
+    }
 
     func setNavigationController() {
         let titleView = HomeNavigationTitleView()
@@ -93,30 +115,34 @@ private extension HomeViewController {
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 1500)
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
-    func setCollectionView() {
-        datasource = CollectionViewDatasource(dummyData, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: String, cell: PostCell) in
-            cell.set(image: UIImage(named: imageData) ?? UIImage())
-        }
-        self.collectionView.dataSource = self.datasource
-        self.collectionView.delegate = self
+    func setContentViewHeight(imagesCount: Int) {
+        NSLayoutConstraint.deactivate(contentViewHeightConstraint)
+
+        let row = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
+
+        let cellHeight = Int(collectionView.frame.width / 3 - 1)
+        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220)
+
+        contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: contentViewHeight)]
+        NSLayoutConstraint.activate(contentViewHeightConstraint)
     }
 }
 
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         let detailVC = DetailViewController()
-         self.navigationController?.pushViewController(detailVC, animated: true)
+//         let detailVC = DetailViewController()
+//         self.navigationController?.pushViewController(detailVC, animated: true)
+         self.homeVM.enquireNextImages()
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / 3 - 1
-        return CGSize(width: width, height: width)
+         let width = collectionView.frame.width / 3 - 1
+         return CGSize(width: width, height: width)
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -126,4 +152,5 @@ private extension HomeViewController {
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
          return 1
      }
+
  }

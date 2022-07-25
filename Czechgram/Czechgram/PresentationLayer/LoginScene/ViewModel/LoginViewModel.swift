@@ -5,7 +5,7 @@
 //  Created by juntaek.oh on 2022/07/12.
 //
 
-import UIKit
+import Foundation
 
 final class LoginViewModel {
 
