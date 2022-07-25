@@ -15,12 +15,12 @@ final class HomeViewController: UIViewController {
     private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
 
     private var scrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.backgroundColor = .white
-            scrollView.showsVerticalScrollIndicator = false
-            return scrollView
-        }()
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
 
     private var contentView: UIView = {
         let view = UIView()
@@ -28,12 +28,13 @@ final class HomeViewController: UIViewController {
         return view
     }()
 
-    private var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
         collectionView.register(PostCell.self, forCellWithReuseIdentifier: PostCell.reuseIdentifier)
+        collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -46,7 +47,6 @@ final class HomeViewController: UIViewController {
 
         setNavigationController()
         configureLayouts()
-        setCollectionView()
         configureBind()
         homeVM.enquireAllData()
     }
@@ -119,22 +119,10 @@ private extension HomeViewController {
         ])
     }
 
-    func setCollectionView() {
-
-        self.collectionView.delegate = self
-    }
-
     func setContentViewHeight(imagesCount: Int) {
         NSLayoutConstraint.deactivate(contentViewHeightConstraint)
 
-        var line = 0
-
-        if imagesCount % 3 == 0 {
-            line = imagesCount / 3
-
-        } else {
-            line = imagesCount / 3 + 1
-        }
+        let line = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
 
         let cellHeight = Int(collectionView.frame.width / 3 - 1)
         let collectionViewHeight = CGFloat((cellHeight * line) + (1 * line) + 220)
