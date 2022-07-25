@@ -9,7 +9,13 @@ import Foundation
 
 final class DetailViewModel {
 
+    let mediaImageEntity: MediaImageEntity
+
+    init(cellEntity: MediaImageEntity) {
+        self.mediaImageEntity = cellEntity
+    }
+
     func enquireAllData() {
-        
+
     }
 }

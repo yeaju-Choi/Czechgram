@@ -9,6 +9,9 @@ import UIKit
 
 final class DetailViewController: UIViewController {
 
+    private var detailViewModel: DetailViewModel
+    private let userId: String
+
     private var dataSource: CollectionViewDatasource<UIImage, DetailCollectionViewCell>?
 
     private let detailScrollView: UIScrollView = {
@@ -28,6 +31,16 @@ final class DetailViewController: UIViewController {
 
         return detailView
     }()
+
+    init(cellEntity: MediaImageEntity, userId: String) {
+        self.detailViewModel = DetailViewModel(cellEntity: cellEntity)
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +79,7 @@ private extension DetailViewController {
     }
 
     func setSectionsData() {
-        detailView.setProfileData(profile: UIImage(), userId: "zeto_h_jt")
+        detailView.setProfileData(profile: UIImage(), userId: userId)
         detailView.setDescriptionData(profile: UIImage(), userId: "yeyeju_", likePeople: "님 외 12명이 좋아합니다", description: """
                         zeto_h_jt 견생 중 가장 장발일 때
                         #말티즈 #사진빨 #빡빡이

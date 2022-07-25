@@ -135,7 +135,8 @@ private extension HomeViewController {
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         let detailVC = DetailViewController()
+         guard let cellEntity = homeVM.myPageData.value?.media.images[indexPath.row], let id = homeVM.myPageData.value?.userName else { return }
+         let detailVC = DetailViewController(cellEntity: cellEntity, userId: id)
          self.navigationController?.pushViewController(detailVC, animated: true)
      }
 
