@@ -11,7 +11,7 @@ final class Observable<T> {
     typealias Listener = ((T) -> Void)
 
     private var listener: Listener?
-    var value: T {
+    private(set) var value: T {
         didSet {
             listener?(value)
         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6FFB6391C18D03BDD1B39D73 /* Pods_Czechgram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8395B4FD5F0B8CBFCD1C25 /* Pods_Czechgram.framework */; };
+		B34F386D288E6DA600505C1D /* LoadingReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34F386C288E6DA600505C1D /* LoadingReusableView.swift */; };
 		B37747DB287BBA0200E2599B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DA287BBA0200E2599B /* HomeViewController.swift */; };
 		B37747DD287BBCC800E2599B /* HomeNavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */; };
 		B37747DF287BED7D00E2599B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37747DE287BED7C00E2599B /* ProfileView.swift */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		2C1CA1BA3CAEE782D8C6E777 /* Pods-Czechgram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.debug.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.debug.xcconfig"; sourceTree = "<group>"; };
 		7B8395B4FD5F0B8CBFCD1C25 /* Pods_Czechgram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Czechgram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B34F386C288E6DA600505C1D /* LoadingReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingReusableView.swift; sourceTree = "<group>"; };
 		B37747DA287BBA0200E2599B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationTitleView.swift; sourceTree = "<group>"; };
 		B37747DE287BED7C00E2599B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				B37747DC287BBCC800E2599B /* HomeNavigationTitleView.swift */,
 				B37747DE287BED7C00E2599B /* ProfileView.swift */,
 				B37747E0287C146000E2599B /* PostCell.swift */,
+				B34F386C288E6DA600505C1D /* LoadingReusableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				D262352D287C03DC002F0610 /* UIView +.swift in Sources */,
 				B3F115BF2888F7A1001B498C /* ImageCacheService.swift in Sources */,
 				B3AD44212887F7BA00A9B59E /* MediaUrlDTO.swift in Sources */,
+				B34F386D288E6DA600505C1D /* LoadingReusableView.swift in Sources */,
 				D2525A49288E702C00078D1C /* ViewDetailPageUsecase.swift in Sources */,
 				B3F23FEB287D607E00E06E85 /* Endpoint.swift in Sources */,
 				D2623527287BF572002F0610 /* CollectionViewDatasource.swift in Sources */,
