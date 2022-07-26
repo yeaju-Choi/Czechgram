@@ -10,14 +10,13 @@ import Foundation
 final class HomeViewModel {
 
     var myPageData: Observable<UserPageEntity?> = Observable(nil)
-    let myPageUsecase: ViewMyPageUsecase = ViewDefaultMyPageUsecase()
+    let myPageUsecase: ViewMainPageUsecase = ViewDefaultMainPageUsecase()
 
     var isFetchAllData: Bool {
         return myPageData.value?.mediaCount == myPageData.value?.media.images.count
     }
 
     func enquireAllData() {
-
         myPageUsecase.executeUserPage { [weak self] userPage in
             self?.enquireImages(with: userPage.media, completion: { [weak self] mediaImages in
                 let images = mediaImages.sorted { firstValue, secondValue in
@@ -35,7 +34,6 @@ final class HomeViewModel {
     }
 
     func enquireNextImages() {
-
         myPageUsecase.executeNextMediaImage(with: myPageData.value?.media.page.next) { [weak self] mediaEntity in
             guard let mediaEntity = mediaEntity else { return }
             self?.enquireImages(with: mediaEntity, completion: { [weak self] mediaImages in

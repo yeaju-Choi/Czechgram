@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ViewDefaultMyPageRepository: ViewMyPageRepository {
+final class ViewDefaultMainPageRepository: ViewMainPageRepository {
 
     let networkService: NetworkServiceable = NetworkService()
 
@@ -47,7 +47,7 @@ final class ViewDefaultMyPageRepository: ViewMyPageRepository {
 
 }
 
-private extension ViewDefaultMyPageRepository {
+private extension ViewDefaultMainPageRepository {
 
     func fetchUserPageData(with completion: @escaping (UserPageDTO?) -> Void) {
         guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
