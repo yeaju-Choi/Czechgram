@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewMyPageUsecase {
+protocol ViewMainPageUsecase {
 
     func executeUserPage(completion: @escaping (UserPageEntity) -> Void)
     func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)

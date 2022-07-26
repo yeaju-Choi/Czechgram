@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Media
 struct MediaDTO: Codable {
     let mediaIDs: [MediaID]
-    let paging: MediaPagingDTO
+    let paging: MediaPagingDTO?
 
     enum CodingKeys: String, CodingKey {
         case mediaIDs = "data"

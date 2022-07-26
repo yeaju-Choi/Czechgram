@@ -11,7 +11,7 @@ final class HomeViewModel {
 
     var myPageData: Observable<UserPageEntity?> = Observable(nil)
 
-    let myPageUsecase: ViewMyPageUsecase = ViewDefaultMyPageUsecase()
+    let myPageUsecase: ViewMainPageUsecase = ViewDefaultMainPageUsecase()
 
     func enquireAllData() {
         myPageUsecase.executeUserPage { [weak self] userPage in
