@@ -46,7 +46,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-
+        self.scrollView.delegate = self
         setNavigationController()
         configureLayouts()
         configureBind()
@@ -127,7 +127,7 @@ private extension HomeViewController {
         let row = imagesCount % 3 == 0 ? imagesCount / 3 : imagesCount / 3 + 1
 
         let cellHeight = Int(collectionView.frame.width / 3 - 1)
-        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220 + 100)
+        let contentViewHeight = CGFloat((cellHeight * row) + (1 * row) + 220 + 60)
 
         contentViewHeightConstraint = [contentView.heightAnchor.constraint(equalToConstant: contentViewHeight)]
         NSLayoutConstraint.activate(contentViewHeightConstraint)
@@ -157,13 +157,12 @@ private extension HomeViewController {
      // MARK: Loading Footer Settings
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
-         // 로딩중이거나, 모든 데이터를 가지고 왔다면
-         if homeVM.isFetchAllData || homeVM.isLoading {
-             return CGSize.zero // 로딩창 안보이게 설정
+         // 로딩중이 아니거나, 모든 데이터를 가지고 왔다면
+         if homeVM.isFetchAllData || !homeVM.isLoading {
+             return CGSize.zero
          } else {
              return CGSize(width: collectionView.frame.width, height: 50)
          }
-
      }
 
      // footer appear
@@ -173,7 +172,6 @@ private extension HomeViewController {
          if elementKind == UICollectionView.elementKindSectionFooter && homeVM.isLoading {
                      footer.activityIndicator.startAnimating()
              } else {
-
                  footer.activityIndicator.stopAnimating()
              }
 
@@ -186,19 +184,18 @@ private extension HomeViewController {
                  footer.activityIndicator.stopAnimating()
              }
          }
+ }
 
-     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
-         if homeVM.isFetchAllData {
-                 print("no more Image")
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if homeVM.isFetchAllData {
+             print("no more Image")
          } else {
-             // 보고있는 이미지가 마지막 이미지이고, 로딩중이 아닐때
-             guard let imagesCount: Int = homeVM.myPageData.value?.media.images.count else { return }
-                    if indexPath.row ==  imagesCount - 1 && homeVM.isLoading == false {
-                        homeVM.enquireNextImages()
-                    }
+             let scrollViewHeight = scrollView.frame.size.height
+             let scrollOffset = scrollView.contentOffset.y
+             if !homeVM.isLoading && (scrollViewHeight - scrollOffset < 30) {
+                 homeVM.enquireNextImages()
              }
-
          }
-
+     }
  }

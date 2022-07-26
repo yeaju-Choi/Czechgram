@@ -15,7 +15,6 @@ final class LoadingReusableView: UICollectionReusableView {
     private(set) var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
-//        indicator.hidesWhenStopped = true
         indicator.stopAnimating()
         return indicator
 
@@ -31,11 +30,6 @@ final class LoadingReusableView: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//    func loadAddtionalData() {
-//        self.activityIndicator.startAnimating()
-//        homeVM.enquireNextImages()
-//    }
 
 }
 
