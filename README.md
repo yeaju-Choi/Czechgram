@@ -27,7 +27,7 @@
 ## 📝 기능소개 
 |   로그인    |   메인화면   |   미디어 상세화면   |
 | :----------: | :--------: | :----------: |
-|  <img src="https://user-images.githubusercontent.com/59790540/180960369-faa3a331-6ec3-4ed0-a019-19d62f92a992.gif" width="200"> | <img src="https://i.imgur.com/do5Au9S.gif" width="200"> |<img src="https://i.imgur.com/bOzkgSp.gif" width="200"> |
+|  <img src="https://user-images.githubusercontent.com/59790540/180960369-faa3a331-6ec3-4ed0-a019-19d62f92a992.gif" width="200"> | <img src="https://i.imgur.com/1tCTQ9c.gif" width="200"> |<img src="https://i.imgur.com/bOzkgSp.gif" width="200"> |
 
 
 
