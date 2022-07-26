@@ -13,6 +13,7 @@ final class HomeViewController: UIViewController {
 
     private var profileView = ProfileView()
     private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
+    private var isLoading = false
 
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -74,6 +75,7 @@ private extension HomeViewController {
                 self?.setContentViewHeight(imagesCount: userPageData.media.images.count)
                 self?.collectionView.reloadData()
                 self?.scrollView.setNeedsLayout()
+                self?.isLoading = false
             }
         }
     }
@@ -157,8 +159,7 @@ private extension HomeViewController {
      // MARK: Loading Footer Settings
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
-         // 로딩중이 아니거나, 모든 데이터를 가지고 왔다면
-         if homeVM.isFetchAllData || !homeVM.isLoading {
+         if homeVM.isFetchAllData || !isLoading {
              return CGSize.zero
          } else {
              return CGSize(width: collectionView.frame.width, height: 50)
@@ -169,7 +170,7 @@ private extension HomeViewController {
      func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
              guard let footer = view as? LoadingReusableView else { return }
 
-         if elementKind == UICollectionView.elementKindSectionFooter && homeVM.isLoading {
+         if elementKind == UICollectionView.elementKindSectionFooter && isLoading {
                      footer.activityIndicator.startAnimating()
              } else {
                  footer.activityIndicator.stopAnimating()
@@ -188,14 +189,17 @@ private extension HomeViewController {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if homeVM.isFetchAllData {
-             print("no more Image")
-         } else {
-             let scrollViewHeight = scrollView.frame.size.height
-             let scrollOffset = scrollView.contentOffset.y
-             if !homeVM.isLoading && (scrollViewHeight - scrollOffset < 30) {
-                 homeVM.enquireNextImages()
-             }
-         }
-     }
- }
+
+        let scrollViewHeight = scrollView.frame.size.height
+        let scrollOffset = scrollView.contentOffset.y
+        if !homeVM.isFetchAllData && !isLoading && (scrollViewHeight - scrollOffset < 30) {
+            isLoading = true
+
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            homeVM.enquireNextImages()
+        }
+
+    }
+}
