@@ -9,7 +9,6 @@ import UIKit
 
 final class LoadingReusableView: UICollectionReusableView {
 
-    var homeVM = HomeViewModel()
     static let reuseIdentifier = "LoadingFooter"
 
     private(set) var activityIndicator: UIActivityIndicatorView = {
