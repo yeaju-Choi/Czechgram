@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ViewDefaultDetailPostRepository: ViewDetailPostRepository {
+final class ViewDefaultDetailPageRepository: ViewDetailPageRepository {
 
     let networkService: NetworkServiceable = NetworkService()
 
@@ -44,7 +44,7 @@ final class ViewDefaultDetailPostRepository: ViewDetailPostRepository {
     }
 }
 
-private extension ViewDefaultDetailPostRepository {
+private extension ViewDefaultDetailPageRepository {
 
     func fetchUserImageData(with dto: MediaUrlDTO, completion: @escaping (UIImage?, String?) -> Void) {
         guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url) else { return }

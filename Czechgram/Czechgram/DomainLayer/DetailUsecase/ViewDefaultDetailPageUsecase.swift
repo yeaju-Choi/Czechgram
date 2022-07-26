@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class ViewDefaultDetailPostUsecase: ViewDetailPostUsecase {
+final class ViewDefaultDetailPageUsecase: ViewDetailPageUsecase {
 
-    private var detailPostRepository: ViewDetailPostRepository = ViewDefaultDetailPostRepository()
+    private var detailPostRepository: ViewDetailPageRepository = ViewDefaultDetailPageRepository()
 
     func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void) {
         detailPostRepository.requestChildrenData(with: id) { mediaDTO in
@@ -38,7 +38,7 @@ final class ViewDefaultDetailPostUsecase: ViewDetailPostUsecase {
     }
 }
 
-private extension ViewDefaultDetailPostUsecase {
+private extension ViewDefaultDetailPageUsecase {
 
     func convert(from userDTO: MediaDTO) -> MediaEntity {
         let userEntity = MediaEntity(images: [MediaImageEntity](), page: userDTO.paging ?? MediaPagingDTO(next: nil, previous: nil))

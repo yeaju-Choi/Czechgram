@@ -12,7 +12,7 @@ final class DetailViewModel {
     var myPageData: Observable<[MediaImageEntity]?> = Observable(nil)
 
     let mediaImageEntity: MediaImageEntity
-    private var detailUsecase: ViewDetailPostUsecase = ViewDefaultDetailPostUsecase()
+    private var detailUsecase: ViewDetailPageUsecase = ViewDefaultDetailPageUsecase()
 
     init(cellEntity: MediaImageEntity) {
         self.mediaImageEntity = cellEntity

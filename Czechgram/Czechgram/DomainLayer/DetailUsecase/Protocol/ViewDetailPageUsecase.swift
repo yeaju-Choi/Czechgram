@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewDetailPostUsecase {
+protocol ViewDetailPageUsecase {
 
     func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void)
     func executePostImages(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)

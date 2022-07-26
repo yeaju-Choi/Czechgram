@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
+final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
-    let myPageRepository: ViewMyPageRepository = ViewDefaultMyPageRepository()
+    let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
 
     func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
         myPageRepository.requestPageData { [weak self] userPageDTO in
@@ -40,7 +40,7 @@ final class ViewDefaultMyPageUsecase: ViewMyPageUsecase {
     }
 }
 
-private extension ViewDefaultMyPageUsecase {
+private extension ViewDefaultMainPageUsecase {
 
     func convert(from mediaDTO: MediaDTO) -> MediaEntity {
         var imageEntity = [MediaImageEntity]()
