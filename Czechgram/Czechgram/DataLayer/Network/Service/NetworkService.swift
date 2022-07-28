@@ -11,7 +11,7 @@ import RxSwift
 struct NetworkService: NetworkServiceable {
 
     func request(endPoint: EndPoint) -> Single<Data> {
-        Single<Data>.create { observer -> Disposable in
+        return Single<Data>.create { observer -> Disposable in
             let request = makeURLRequest(with: endPoint)
             switch request {
             case .failure:
@@ -46,7 +46,7 @@ struct NetworkService: NetworkServiceable {
     }
 
     func requestImage(url: URL) -> Single<Data> {
-        Single<Data>.create { observer -> Disposable in
+        return Single<Data>.create { observer -> Disposable in
             URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let httpResponse = response as? HTTPURLResponse else { return }
 
