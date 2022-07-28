@@ -6,22 +6,28 @@
 //
 
 import Foundation
+import RxSwift
 
 final class LoginViewModel {
 
     private let instagramUsecase: OAuthLoginUsecase = InstagramLoginUsecase()
 
-    var instaOAuthPageURL: Observable<URL?> = Observable(nil)
-    var isFetchedOAuthToken: Observable<Bool> = Observable(false)
+    let disposeBag = DisposeBag()
+    let instaOAuthPageURL = PublishSubject<URL>()
+    let isFetchedOAuthToken = PublishSubject<Bool>()
 
     init() {
         configureNotification()
+        configureBinding()
     }
 
     func enquireInstaToken() {
-        instagramUsecase.execute { [weak self] validURL in
-            self?.instaOAuthPageURL.updateValue(value: validURL)
+        guard let url = instagramUsecase.execute() else {
+            isFetchedOAuthToken.onNext(false)
+            return
         }
+        
+        instaOAuthPageURL.onNext(url)
     }
 }
 
@@ -36,14 +42,19 @@ private extension LoginViewModel {
     @objc
     func transferGrantCode(_ notification: Notification) {
         guard let code = notification.userInfo?["GrantCode"] as? String else { return }
-        instagramUsecase.execute(with: code) { [weak self] token in
-            guard let longLivedToken = token else {
-                self?.isFetchedOAuthToken.updateValue(value: false)
-                return
-            }
-
-            UserDefaults.standard.set(longLivedToken, forKey: "accessToken")
-            self?.isFetchedOAuthToken.updateValue(value: true)
-        }
+        
+        instagramUsecase.execute(with: code)
+    }
+    
+    func configureBinding() {
+        instagramUsecase.longLivedToken
+            .subscribe(onNext: { [weak self] token in
+                self?.isFetchedOAuthToken.onNext(true)
+                
+            }, onError: { error in
+                self.isFetchedOAuthToken.onNext(false)
+                
+            })
+            .disposed(by: disposeBag)
     }
 }

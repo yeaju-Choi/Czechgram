@@ -10,9 +10,8 @@ import RxSwift
 
 protocol OAuthLoginUsecase {
 
-    func execute() -> URL?
-    func execute(with grantCode: String) -> Observable<String>
+    var longLivedToken: PublishSubject<String> { get }
     
-//    func execute(_ urlCompletion: @escaping (URL) -> Void)
-//    func execute(with grantCode: String, _ tokenCompletion: @escaping (String?) -> Void)
+    func execute() -> URL?
+    func execute(with grantCode: String)
 }

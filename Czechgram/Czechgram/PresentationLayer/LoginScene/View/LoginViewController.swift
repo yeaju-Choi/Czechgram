@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RxSwift
 
 final class LoginViewController: UIViewController {
 
     var loginVM = LoginViewModel()
+    
+    let disposeBag = DisposeBag()
 
     private let instaLoginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -63,28 +66,28 @@ private extension LoginViewController {
     }
 
     func configureObservableBinding() {
-        loginVM.instaOAuthPageURL.bind { url in
-            guard let validURL = url, UIApplication.shared.canOpenURL(validURL) else { return }
-            UIApplication.shared.open(validURL)
-        }
+        loginVM.instaOAuthPageURL
+            .subscribe(onNext: { url in
+                UIApplication.shared.open(url)
+                
+            })
+            .disposed(by: disposeBag)
 
-        loginVM.isFetchedOAuthToken.bind { isFetched in
-            switch isFetched {
-            case true:
-                DispatchQueue.main.async {
+        loginVM.isFetchedOAuthToken
+            .observe(on: ConcurrentMainScheduler.instance)
+            .subscribe(onNext: { isFetched in
+                if isFetched {
                     let homeVC = HomeViewController()
                     let navigation = UINavigationController(rootViewController: homeVC)
                     navigation.modalPresentationStyle = .fullScreen
                     self.present(navigation, animated: true)
-                }
-
-            case false:
-                DispatchQueue.main.async {
+                    
+                } else {
                     let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel))
                     self.present(alert, animated: true)
                 }
-            }
-        }
+            })
+            .disposed(by: disposeBag)
     }
 }

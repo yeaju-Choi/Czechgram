@@ -71,59 +71,6 @@ struct NetworkService: NetworkServiceable {
             return Disposables.create()
         }
     }
-    
-//    func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
-//        let request = makeURLRequest(with: endPoint)
-//        switch request {
-//        case .failure:
-//            completion(.failure(.noURL))
-//
-//        case .success(let request):
-//            URLSession.shared.dataTask(with: request) { (data, response, error) in
-//                guard let httpResponse = response as? HTTPURLResponse else { return }
-//
-//                if let error = error {
-//                    completion(.failure(.transportError(error)))
-//                    return
-//                }
-//
-//                guard (200...299).contains(httpResponse.statusCode) else {
-//                    completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
-//                    return
-//                }
-//
-//                guard let data = data else {
-//                    completion(.failure(.noData))
-//                    return
-//                }
-//
-//                completion(.success(data))
-//            }.resume()
-//        }
-//    }
-//
-//    func requestImage(url: URL, completion: @escaping CompletionHandler) {
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            guard let httpResponse = response as? HTTPURLResponse else { return }
-//
-//            if let error = error {
-//                completion(.failure(.transportError(error)))
-//                return
-//            }
-//
-//            guard (200...299).contains(httpResponse.statusCode) else {
-//                completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
-//                return
-//            }
-//
-//            guard let data = data else {
-//                completion(.failure(.noData))
-//                return
-//            }
-//
-//            completion(.success(data))
-//        }.resume()
-//    }
 }
 
 private extension NetworkService {
