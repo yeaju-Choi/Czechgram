@@ -8,4 +8,8 @@ target 'Czechgram' do
   # Pods for Czechgram
   pod 'SwiftLint'
 
+  # RxSwift
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
+
 end
