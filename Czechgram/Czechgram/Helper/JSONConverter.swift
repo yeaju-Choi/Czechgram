@@ -22,14 +22,6 @@ struct JSONConverter<T: Codable> {
             observer(.success(json))
             return Disposables.create()
         }
-        
-//        do {
-//            let decodedData = try JSONDecoder().decode(Model.self, from: data)
-//            return decodedData
-//        } catch {
-//            print(NetworkError.decodingError(error))
-//            return nil
-//        }
     }
 
     func encode(model: Model) -> Single<Data> {
@@ -42,13 +34,5 @@ struct JSONConverter<T: Codable> {
             observer(.success(data))
             return Disposables.create()
         }
-        
-//        do {
-//            let encodedData = try JSONEncoder().encode(model)
-//            return encodedData
-//        } catch {
-//            print(NetworkError.encodingError(error))
-//            return nil
-//        }
     }
 }
