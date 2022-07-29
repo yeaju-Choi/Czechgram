@@ -10,8 +10,9 @@ import RxSwift
 
 protocol OAuthLoginUsecase {
 
+    var validURL: PublishSubject<URL> { get }
     var longLivedToken: PublishSubject<String> { get }
     
-    func execute() -> URL?
+    func execute()
     func execute(with grantCode: String)
 }

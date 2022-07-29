@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 final class LoginViewController: UIViewController {
 
@@ -27,8 +28,9 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         configureLayouts()
-        configureInstaLoginButton()
-        configureObservableBinding()
+        bindViewModel()
+//        configureInstaLoginButton()
+//        configureObservableBinding()
     }
 }
 
@@ -44,38 +46,21 @@ private extension LoginViewController {
             instaLoginButton.heightAnchor.constraint(equalTo: instaLoginButton.widthAnchor)
         ])
     }
-
-    func configureInstaLoginButton() {
-        let homeVC = HomeViewController()
-        let navi = UINavigationController(rootViewController: homeVC)
-        navi.modalPresentationStyle = .fullScreen
-
-        if #available(iOS 14.0, *) {
-            let action = UIAction { _ in
-                self.loginVM.enquireInstaToken()
-            }
-            instaLoginButton.addAction(action, for: .touchDown)
-        } else {
-            instaLoginButton.addTarget(self, action: #selector(presentNextScene(to:)), for: .touchDown)
-        }
-    }
-
-    @objc
-    func presentNextScene(to viewController: UIViewController) {
-        self.loginVM.enquireInstaToken()
-    }
-
-    func configureObservableBinding() {
-        loginVM.instaOAuthPageURL
+    
+    func bindViewModel() {
+        let output = self.loginVM.transform(input: LoginViewModel.Input(loginButtonDidTapEvent: self.instaLoginButton.rx.tap.asObservable()),
+                                            disposeBag: self.disposeBag)
+        
+        output.instaOAuthPageURL
             .subscribe(onNext: { url in
                 UIApplication.shared.open(url)
                 
             })
             .disposed(by: disposeBag)
-
-        loginVM.isFetchedOAuthToken
-            .observe(on: ConcurrentMainScheduler.instance)
-            .subscribe(onNext: { isFetched in
+        
+        output.isFetchedOAuthToken
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { isFetched in
                 if isFetched {
                     let homeVC = HomeViewController()
                     let navigation = UINavigationController(rootViewController: homeVC)
@@ -88,6 +73,52 @@ private extension LoginViewController {
                     self.present(alert, animated: true)
                 }
             })
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
     }
+
+//    func configureInstaLoginButton() {
+//        let homeVC = HomeViewController()
+//        let navi = UINavigationController(rootViewController: homeVC)
+//        navi.modalPresentationStyle = .fullScreen
+//
+//        if #available(iOS 14.0, *) {
+//            let action = UIAction { _ in
+//                self.loginVM.enquireInstaToken()
+//            }
+//            instaLoginButton.addAction(action, for: .touchDown)
+//        } else {
+//            instaLoginButton.addTarget(self, action: #selector(presentNextScene(to:)), for: .touchDown)
+//        }
+//    }
+//
+//    @objc
+//    func presentNextScene(to viewController: UIViewController) {
+//        self.loginVM.enquireInstaToken()
+//    }
+//
+//    func configureObservableBinding() {
+//        loginVM.instaOAuthPageURL
+//            .subscribe(onNext: { url in
+//                UIApplication.shared.open(url)
+//
+//            })
+//            .disposed(by: disposeBag)
+//
+//        loginVM.isFetchedOAuthToken
+//            .asDriver(onErrorJustReturn: false)
+//            .drive(onNext: { isFetched in
+//                if isFetched {
+//                    let homeVC = HomeViewController()
+//                    let navigation = UINavigationController(rootViewController: homeVC)
+//                    navigation.modalPresentationStyle = .fullScreen
+//                    self.present(navigation, animated: true)
+//
+//                } else {
+//                    let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+//                    self.present(alert, animated: true)
+//                }
+//            })
+//            .disposed(by: self.disposeBag)
+//    }
 }

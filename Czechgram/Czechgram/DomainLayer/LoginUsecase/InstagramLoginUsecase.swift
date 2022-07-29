@@ -13,11 +13,13 @@ final class InstagramLoginUsecase: OAuthLoginUsecase {
     let networkService: NetworkServiceable = NetworkService()
 
     let disposeBag = DisposeBag()
+    
+    let validURL = PublishSubject<URL>()
     let longLivedToken = PublishSubject<String>()
     
-    func execute() -> URL? {
-        guard let url = EndPoint.instagramAuthorize.url else { return nil }
-        return url
+    func execute() {
+        guard let url = EndPoint.instagramAuthorize.url else { return }
+        validURL.onNext(url)
     }
     
     func execute(with grantCode: String) {
