@@ -29,8 +29,6 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .white
         configureLayouts()
         bindViewModel()
-//        configureInstaLoginButton()
-//        configureObservableBinding()
     }
 }
 
@@ -75,50 +73,4 @@ private extension LoginViewController {
             })
             .disposed(by: self.disposeBag)
     }
-
-//    func configureInstaLoginButton() {
-//        let homeVC = HomeViewController()
-//        let navi = UINavigationController(rootViewController: homeVC)
-//        navi.modalPresentationStyle = .fullScreen
-//
-//        if #available(iOS 14.0, *) {
-//            let action = UIAction { _ in
-//                self.loginVM.enquireInstaToken()
-//            }
-//            instaLoginButton.addAction(action, for: .touchDown)
-//        } else {
-//            instaLoginButton.addTarget(self, action: #selector(presentNextScene(to:)), for: .touchDown)
-//        }
-//    }
-//
-//    @objc
-//    func presentNextScene(to viewController: UIViewController) {
-//        self.loginVM.enquireInstaToken()
-//    }
-//
-//    func configureObservableBinding() {
-//        loginVM.instaOAuthPageURL
-//            .subscribe(onNext: { url in
-//                UIApplication.shared.open(url)
-//
-//            })
-//            .disposed(by: disposeBag)
-//
-//        loginVM.isFetchedOAuthToken
-//            .asDriver(onErrorJustReturn: false)
-//            .drive(onNext: { isFetched in
-//                if isFetched {
-//                    let homeVC = HomeViewController()
-//                    let navigation = UINavigationController(rootViewController: homeVC)
-//                    navigation.modalPresentationStyle = .fullScreen
-//                    self.present(navigation, animated: true)
-//
-//                } else {
-//                    let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-//                    self.present(alert, animated: true)
-//                }
-//            })
-//            .disposed(by: self.disposeBag)
-//    }
 }

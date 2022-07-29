@@ -12,8 +12,6 @@ import RxRelay
 final class LoginViewModel {
 
     private let instagramUsecase: OAuthLoginUsecase = InstagramLoginUsecase()
-
-//    let disposeBag = DisposeBag()
     
     struct Input {
         let loginButtonDidTapEvent: Observable<Void>
@@ -26,7 +24,6 @@ final class LoginViewModel {
 
     init() {
         configureNotification()
-//        configureBinding()
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -49,15 +46,6 @@ final class LoginViewModel {
         
         return output
     }
-
-//    func enquireInstaToken() {
-//        guard let url = instagramUsecase.execute() else {
-//            isFetchedOAuthToken.accept(false)
-//            return
-//        }
-//
-//        instaOAuthPageURL.accept(url)
-//    }
 }
 
 // MARK: Private extension of Settings
@@ -74,16 +62,4 @@ private extension LoginViewModel {
         
         instagramUsecase.execute(with: code)
     }
-    
-//    func configureBinding() {
-//        instagramUsecase.longLivedToken
-//            .subscribe(onNext: { [weak self] token in
-//                self?.isFetchedOAuthToken.accept(true)
-//
-//            }, onError: { error in
-//                self.isFetchedOAuthToken.accept(false)
-//
-//            })
-//            .disposed(by: disposeBag)
-//    }
 }
