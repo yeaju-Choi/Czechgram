@@ -11,7 +11,6 @@ import RxRelay
 
 final class HomeViewModel {
 
-//    var myPageData: Observable<UserPageEntity?> = Observable(nil)
     let myPageUsecase: ViewMainPageUsecase = ViewDefaultMainPageUsecase()
     
     struct Input {
@@ -19,7 +18,6 @@ final class HomeViewModel {
     }
     
     struct Output {
-//        let myPageData = PublishRelay<UserPageEntity>()
         let isFetchAllData = PublishRelay<Bool>()
         let userPageEntity = PublishRelay<UserPageEntity>()
     }
@@ -41,27 +39,13 @@ final class HomeViewModel {
             .bind(to: output.userPageEntity)
             .disposed(by: disposeBag)
  
-        
         return output
-        
+    }
+    
+    func enquireNextImages() {
+        myPageUsecase.executeNextMediaImage()
     }
 }
-   
-        
-//        myPageUsecase.executeUserPage { [weak self] userPage in
-//            self?.enquireImages(with: userPage.media, completion: { [weak self] mediaImages in
-//                let images = mediaImages.sorted { firstValue, secondValue in
-//                    if let firstTime = firstValue.createdTime, let secondTime = secondValue.createdTime {
-//                        return firstTime > secondTime
-//                    } else {
-//                        return firstValue.id > secondValue.id
-//                    }
-//                }
-//                var completedUserPage = userPage
-//                completedUserPage.media.images = images
-//                self?.myPageData.updateValue(value: completedUserPage)
-//            })
-//        }
     
 
 

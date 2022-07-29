@@ -12,8 +12,6 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
     let userPageEntity = PublishSubject<UserPageEntity>()
-//    let userImageEntity = PublishSubject<[MediaImageEntity]>()
-//    let mediaEntity = PublishSubject<MediaEntity>()
     let disposeBag = DisposeBag()
     
     private var tempUserPageEntity: UserPageEntity?
@@ -23,7 +21,6 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
         myPageRepository.requestPageData()
             .map { self.convert(from: $0) }
             .subscribe { [weak self] userPageEntity in
-//                self?.userPageEntity.onNext(userpageEntity)
                 self?.tempUserPageEntity = userPageEntity
                 self?.setMediaImage(with: userPageEntity.media)
             } onError: { error in
@@ -33,32 +30,6 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     
     }
-    
-//    func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
-//        myPageRepository.requestPageData { [weak self] userPageDTO in
-//            guard let validDTO = userPageDTO, let entity = self?.convert(from: validDTO) else { return }
-//
-//            completion(entity)
-//        }
-//    }
-    
-    
-    
-    
-
-//    func executeMediaImage(with imageEntity: MediaImageEntity) {
-//
-//        myPageRepository.requestMediaData(with: imageEntity.id)
-//            .map{ ($0.0, self.convertDate(with: $0.1)) }
-//            .subscribe { [weak self](image,date) in
-//                var entity = imageEntity
-//                entity.image = image
-//                entity.createdTime = date
-//                self?.userImageEntity.onNext(entity)
-//            } onError: { error in
-//                print(error.localizedDescription)
-//            }.disposed(by: disposeBag)
-//    }
 
     func executeNextMediaImage() {
         guard let section = tempUserPageEntity?.media.page.next, let url = URL(string: section) else { return }

@@ -15,8 +15,10 @@ final class HomeViewController: UIViewController {
 
     private var profileView = ProfileView()
     private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
+    
+    private var userPageEntity: UserPageEntity?
+    private var disposeBag = DisposeBag()
     private var isLoading = false
-    var disposeBag = DisposeBag()
     private var isFetched = false
 
     private var scrollView: UIScrollView = {
@@ -55,7 +57,6 @@ final class HomeViewController: UIViewController {
         setNavigationController()
         configureLayouts()
         configureBind()
-        homeVM.enquireAllData()
     }
 
     override func viewDidLayoutSubviews() {
@@ -65,8 +66,6 @@ final class HomeViewController: UIViewController {
 
 private extension HomeViewController {
     
-    
-
     func configureBind() {
         let output = self.homeVM.transform(input: HomeViewModel.Input(viewDidLoadEvent: Observable.just(()).asObservable()), disposeBag: disposeBag)
         
@@ -79,6 +78,7 @@ private extension HomeViewController {
         output.userPageEntity
             .observe(on: ConcurrentMainScheduler.instance)
             .bind { [weak self] entity in
+                self?.userPageEntity = entity
                 self?.datasource = CollectionViewDatasource(entity.media.images, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: MediaImageEntity, cell: PostCell) in
                     guard let image = imageData.image else { return }
                     cell.set(image: image)
@@ -151,7 +151,7 @@ private extension HomeViewController {
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         guard let cellEntity = homeVM.myPageData.value?.media.images[indexPath.row], let id = homeVM.myPageData.value?.userName else { return }
+         guard let cellEntity = userPageEntity?.media.images[indexPath.row], let id = userPageEntity?.userName else { return }
          let detailVC = DetailViewController(cellEntity: cellEntity, userId: id)
          self.navigationController?.pushViewController(detailVC, animated: true)
      }
@@ -201,8 +201,8 @@ private extension HomeViewController {
  }
 
 extension HomeViewController: UIScrollViewDelegate {
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         let scrollViewHeight = scrollView.frame.size.height
         let scrollOffset = scrollView.contentOffset.y
         if !self.isFetched && !isLoading && (scrollViewHeight - scrollOffset < 30) {
@@ -211,9 +211,8 @@ extension HomeViewController: UIScrollViewDelegate {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-//            homeVM.enquireNextImages()
-            
         }
-
+        
+        homeVM.enquireNextImages()
     }
 }
