@@ -7,14 +7,15 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 final class LoginViewModel {
 
     private let instagramUsecase: OAuthLoginUsecase = InstagramLoginUsecase()
 
     let disposeBag = DisposeBag()
-    let instaOAuthPageURL = PublishSubject<URL>()
-    let isFetchedOAuthToken = PublishSubject<Bool>()
+    let instaOAuthPageURL = PublishRelay<URL>()
+    let isFetchedOAuthToken = PublishRelay<Bool>()
 
     init() {
         configureNotification()
@@ -23,11 +24,11 @@ final class LoginViewModel {
 
     func enquireInstaToken() {
         guard let url = instagramUsecase.execute() else {
-            isFetchedOAuthToken.onNext(false)
+            isFetchedOAuthToken.accept(false)
             return
         }
         
-        instaOAuthPageURL.onNext(url)
+        instaOAuthPageURL.accept(url)
     }
 }
 
@@ -49,10 +50,10 @@ private extension LoginViewModel {
     func configureBinding() {
         instagramUsecase.longLivedToken
             .subscribe(onNext: { [weak self] token in
-                self?.isFetchedOAuthToken.onNext(true)
+                self?.isFetchedOAuthToken.accept(true)
                 
             }, onError: { error in
-                self.isFetchedOAuthToken.onNext(false)
+                self.isFetchedOAuthToken.accept(false)
                 
             })
             .disposed(by: disposeBag)
