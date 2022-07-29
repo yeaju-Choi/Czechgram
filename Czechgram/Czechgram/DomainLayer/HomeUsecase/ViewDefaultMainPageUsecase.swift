@@ -12,6 +12,7 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
     let userPageEntity = PublishSubject<UserPageEntity>()
+    let userImageEntity = PublishSubject<MediaImageEntity>()
     let disposeBag = DisposeBag()
 
     
@@ -36,15 +37,19 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 //        }
 //    }
 
-    func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
-        myPageRepository.requestMediaData(with: imageEntity.id) { [weak self] image, createdTime in
-            guard let image = image, let time = createdTime, let date = self?.convertDate(with: time) else { return }
-            var entity = imageEntity
-            entity.image = image
-            entity.createdTime = date
-            // TODO: entity 저장 (캐시, 파일매니저)
-            completion(entity)
-        }
+    func executeMediaImage(with imageEntity: MediaImageEntity) {
+        
+        myPageRepository.requestMediaData(with: imageEntity.id)
+            .map{ ($0.0, self.convertDate(with: $0.1)) }
+            .subscribe { [weak self](image,date) in
+                var entity = imageEntity
+                entity.image = image
+                entity.createdTime = date
+                // TODO: entity 저장 (캐시, 파일매니저)
+                self?.userImageEntity.onNext(entity)
+            } onError: { error in
+                print(error.localizedDescription)
+            }.disposed(by: disposeBag)
     }
 
     func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void) {

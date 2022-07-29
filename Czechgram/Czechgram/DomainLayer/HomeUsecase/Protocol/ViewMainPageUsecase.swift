@@ -10,7 +10,9 @@ import Foundation
 protocol ViewMainPageUsecase {
 
     func executeUserPage()
+    func executeMediaImage(with imageEntity: MediaImageEntity)
+    
 //    func executeUserPage(completion: @escaping (UserPageEntity) -> Void)
-    func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)
+//    func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)
     func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void)
 }
