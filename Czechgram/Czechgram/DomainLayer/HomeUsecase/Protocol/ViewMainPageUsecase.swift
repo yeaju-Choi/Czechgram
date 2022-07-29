@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ViewMainPageUsecase {
 
+    var userPageEntity: PublishSubject<UserPageEntity> { get }
+    var userImageEntity: PublishSubject<MediaImageEntity> { get }
+    var mediaEntity: PublishSubject<MediaEntity> { get }
+    
     func executeUserPage()
     func executeMediaImage(with imageEntity: MediaImageEntity)
+    func executeNextMediaImage(with nextImageSection: String?)
     
-//    func executeUserPage(completion: @escaping (UserPageEntity) -> Void)
-//    func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)
-    func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void)
 }

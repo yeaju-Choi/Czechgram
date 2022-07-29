@@ -13,6 +13,7 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
     let userPageEntity = PublishSubject<UserPageEntity>()
     let userImageEntity = PublishSubject<MediaImageEntity>()
+    let mediaEntity = PublishSubject<MediaEntity>()
     let disposeBag = DisposeBag()
 
     
@@ -52,13 +53,16 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
             }.disposed(by: disposeBag)
     }
 
-    func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void) {
+    func executeNextMediaImage(with nextImageSection: String?) {
         guard let section = nextImageSection, let url = URL(string: section) else { return }
-        myPageRepository.requestNextPageMediaData(with: url) { [weak self] media in
-            guard let media = media else { return }
-            let mediaEntity = self?.convert(from: media)
-            completion(mediaEntity)
-        }
+        myPageRepository.requestNextPageMediaData(with: url)
+            .map{ self.convert(from: $0)}
+            .subscribe { [weak self] mediaEntity in
+                self?.mediaEntity.onNext(mediaEntity)
+            } onError: { error in
+                print(error.localizedDescription)
+            }.disposed(by: disposeBag)
+
     }
 }
 

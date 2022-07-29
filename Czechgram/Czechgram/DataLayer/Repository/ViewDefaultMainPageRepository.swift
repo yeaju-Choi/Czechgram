@@ -61,23 +61,41 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
             } else {
                 observer.onError(NetworkError.noData)
             }
+            return Disposables.create()
         }
     
     }
 
-    func requestNextPageMediaData(with validURL: URL) -> Observable<URL> {
-        
-        networkService.requestImage(url: validURL) { result in
-            switch result {
-            case .success(let data):
-                let jsonConverter = JSONConverter<MediaDTO>()
-                let dto = jsonConverter.decode(data: data)
-                completion(dto)
+    func requestNextPageMediaData(with validURL: URL) -> Observable<MediaDTO> {
+        return Observable<MediaDTO>.create { [weak self] observer -> Disposable in
+            self?.networkService.requestImage(url: validURL)
+                .subscribe { data in
+                    let jsonConverter = JSONConverter<MediaDTO>()
+                    jsonConverter.decode(data: data)
+                        .subscribe { mediaDTO in
+                            observer.onNext(mediaDTO)
+                        } onFailure: { error in
+                            observer.onError(error)
+                        }.dispose()
 
-            case .failure:
-                print(NetworkError.noData)
-            }
+                } onFailure: { error in
+                    observer.onError(error)
+                }.dispose()
+            return Disposables.create()
         }
+    }
+        
+//        networkService.requestImage(url: validURL) { result in
+//            switch result {
+//            case .success(let data):
+//                let jsonConverter = JSONConverter<MediaDTO>()
+//                let dto = jsonConverter.decode(data: data)
+//                completion(dto)
+//
+//            case .failure:
+//                print(NetworkError.noData)
+//            }
+//        }
     }
 
 //    func requestMediaData(with id: String, for completion: @escaping (UIImage?, String?) -> Void) {
@@ -110,11 +128,10 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
 //        }
 //    }
 
-}
+
+
 
 private extension ViewDefaultMainPageRepository {
-
-    
 
     func fetchUserImageData(with dto: MediaUrlDTO) -> Observable<(UIImage,String)> {
         return Observable<(UIImage,String)>.create { [weak self] observer -> Disposable in
@@ -124,7 +141,7 @@ private extension ViewDefaultMainPageRepository {
                 } else {
                     self?.networkService.requestImage(url: validUrl)
                         .subscribe(onSuccess: { data in
-                            guard let image = UIImage(data: data) else { observer.onError(NetworkError.noData)}
+                            guard let image = UIImage(data: data) else { return observer.onError(NetworkError.noData)}
                             ImageCacheService.saveData(image: image, url: validUrl)
                             observer.onNext((image,dto.timestamp))
                         }, onFailure: { error in
@@ -134,6 +151,7 @@ private extension ViewDefaultMainPageRepository {
             } else {
                 observer.onError(NetworkError.noData)
             }
+            return Disposables.create()
         }
     }
 
