@@ -6,18 +6,35 @@
 //
 
 import Foundation
+import RxSwift
 
 final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
+    let userPageEntity = PublishSubject<UserPageEntity>()
+    let disposeBag = DisposeBag()
 
-    func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
-        myPageRepository.requestPageData { [weak self] userPageDTO in
-            guard let validDTO = userPageDTO, let entity = self?.convert(from: validDTO) else { return }
+    
+    func executeUserPage() {
+        myPageRepository.requestPageData()
+            .map { self.convert(from: $0) }
+            .subscribe { [weak self] userpageEntity in
+                self?.userPageEntity.onNext(userpageEntity)
+            } onError: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
 
-            completion(entity)
-        }
+    
     }
+    
+//    func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
+//        myPageRepository.requestPageData { [weak self] userPageDTO in
+//            guard let validDTO = userPageDTO, let entity = self?.convert(from: validDTO) else { return }
+//
+//            completion(entity)
+//        }
+//    }
 
     func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
         myPageRepository.requestMediaData(with: imageEntity.id) { [weak self] image, createdTime in
