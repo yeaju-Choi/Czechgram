@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class HomeViewController: UIViewController {
 
@@ -14,6 +16,8 @@ final class HomeViewController: UIViewController {
     private var profileView = ProfileView()
     private var datasource: CollectionViewDatasource<MediaImageEntity, PostCell>?
     private var isLoading = false
+    var disposeBag = DisposeBag()
+    private var isFetched = false
 
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -60,24 +64,32 @@ final class HomeViewController: UIViewController {
 }
 
 private extension HomeViewController {
+    
+    
 
     func configureBind() {
-        homeVM.myPageData.bind { [weak self] userPageData in
-            guard let userPageData = userPageData else { return }
-            self?.datasource = CollectionViewDatasource(userPageData.media.images, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: MediaImageEntity, cell: PostCell) in
-                guard let image = imageData.image else { return }
-                cell.set(image: image)
-            }
-
-            DispatchQueue.main.async { [weak self] in
-                self?.profileView.setProfileData(userName: userPageData.userName, postCount: userPageData.mediaCount)
+        let output = self.homeVM.transform(input: HomeViewModel.Input(viewDidLoadEvent: Observable.just(()).asObservable()), disposeBag: disposeBag)
+        
+        output.isFetchAllData
+            .asDriver(onErrorJustReturn: true)
+            .drive { [weak self] isFetched in
+                self?.isFetched = isFetched
+            }.disposed(by: disposeBag)
+        
+        output.userPageEntity
+            .observe(on: ConcurrentMainScheduler.instance)
+            .bind { [weak self] entity in
+                self?.datasource = CollectionViewDatasource(entity.media.images, reuseIdentifier: PostCell.reuseIdentifier) { (imageData: MediaImageEntity, cell: PostCell) in
+                    guard let image = imageData.image else { return }
+                    cell.set(image: image)
+                }
+                self?.profileView.setProfileData(userName: entity.userName, postCount: entity.mediaCount)
                 self?.collectionView.dataSource = self?.datasource
-                self?.setContentViewHeight(imagesCount: userPageData.media.images.count)
+                self?.setContentViewHeight(imagesCount: entity.media.images.count)
                 self?.collectionView.reloadData()
                 self?.scrollView.setNeedsLayout()
                 self?.isLoading = false
-            }
-        }
+            }.disposed(by: disposeBag)
     }
 
     func setNavigationController() {
@@ -160,7 +172,7 @@ private extension HomeViewController {
      // MARK: Loading Footer Settings
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 
-         if homeVM.isFetchAllData || !isLoading {
+         if isFetched || !isLoading {
              return CGSize.zero
          } else {
              return CGSize(width: collectionView.frame.width, height: 50)
@@ -193,13 +205,14 @@ extension HomeViewController: UIScrollViewDelegate {
 
         let scrollViewHeight = scrollView.frame.size.height
         let scrollOffset = scrollView.contentOffset.y
-        if !homeVM.isFetchAllData && !isLoading && (scrollViewHeight - scrollOffset < 30) {
+        if !self.isFetched && !isLoading && (scrollViewHeight - scrollOffset < 30) {
             isLoading = true
 
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-            homeVM.enquireNextImages()
+//            homeVM.enquireNextImages()
+            
         }
 
     }

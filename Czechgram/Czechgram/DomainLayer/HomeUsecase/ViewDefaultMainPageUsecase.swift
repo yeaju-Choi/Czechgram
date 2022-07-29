@@ -12,16 +12,20 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
     let userPageEntity = PublishSubject<UserPageEntity>()
-    let userImageEntity = PublishSubject<MediaImageEntity>()
-    let mediaEntity = PublishSubject<MediaEntity>()
+//    let userImageEntity = PublishSubject<[MediaImageEntity]>()
+//    let mediaEntity = PublishSubject<MediaEntity>()
     let disposeBag = DisposeBag()
+    
+    private var tempUserPageEntity: UserPageEntity?
 
     
     func executeUserPage() {
         myPageRepository.requestPageData()
             .map { self.convert(from: $0) }
-            .subscribe { [weak self] userpageEntity in
-                self?.userPageEntity.onNext(userpageEntity)
+            .subscribe { [weak self] userPageEntity in
+//                self?.userPageEntity.onNext(userpageEntity)
+                self?.tempUserPageEntity = userPageEntity
+                self?.setMediaImage(with: userPageEntity.media)
             } onError: { error in
                 print(error.localizedDescription)
             }
@@ -37,32 +41,34 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 //            completion(entity)
 //        }
 //    }
+    
+    
+    
+    
 
-    func executeMediaImage(with imageEntity: MediaImageEntity) {
-        
-        myPageRepository.requestMediaData(with: imageEntity.id)
-            .map{ ($0.0, self.convertDate(with: $0.1)) }
-            .subscribe { [weak self](image,date) in
-                var entity = imageEntity
-                entity.image = image
-                entity.createdTime = date
-                // TODO: entity 저장 (캐시, 파일매니저)
-                self?.userImageEntity.onNext(entity)
-            } onError: { error in
-                print(error.localizedDescription)
-            }.disposed(by: disposeBag)
-    }
+//    func executeMediaImage(with imageEntity: MediaImageEntity) {
+//
+//        myPageRepository.requestMediaData(with: imageEntity.id)
+//            .map{ ($0.0, self.convertDate(with: $0.1)) }
+//            .subscribe { [weak self](image,date) in
+//                var entity = imageEntity
+//                entity.image = image
+//                entity.createdTime = date
+//                self?.userImageEntity.onNext(entity)
+//            } onError: { error in
+//                print(error.localizedDescription)
+//            }.disposed(by: disposeBag)
+//    }
 
-    func executeNextMediaImage(with nextImageSection: String?) {
-        guard let section = nextImageSection, let url = URL(string: section) else { return }
+    func executeNextMediaImage() {
+        guard let section = tempUserPageEntity?.media.page.next, let url = URL(string: section) else { return }
         myPageRepository.requestNextPageMediaData(with: url)
             .map{ self.convert(from: $0)}
             .subscribe { [weak self] mediaEntity in
-                self?.mediaEntity.onNext(mediaEntity)
+                self?.appendMediaImages(with: mediaEntity)
             } onError: { error in
                 print(error.localizedDescription)
             }.disposed(by: disposeBag)
-
     }
 }
 
@@ -94,5 +100,60 @@ private extension ViewDefaultMainPageUsecase {
         } else {
             return nil
         }
+    }
+    
+    func appendMediaImages(with mediaEntity: MediaEntity) {
+        var box = [MediaImageEntity]()
+        Observable.from(mediaEntity.images)
+            .subscribe { [weak self] imageEntity in
+                self?.myPageRepository.requestMediaData(with: imageEntity.id)
+                    .map{ ($0.0, self?.convertDate(with: $0.1)) }
+                    .subscribe { (image,date) in
+                        var entity = imageEntity
+                        entity.image = image
+                        entity.createdTime = date
+                        box.append(entity)
+                    } onError: { error in
+                        print(error.localizedDescription)
+                    }.dispose()
+            } onError: { error in
+                print(error.localizedDescription)
+            } onCompleted: {
+                guard let tempUserPageEntity = self.tempUserPageEntity else {
+                    return
+                }
+                var newValue = tempUserPageEntity
+                newValue.media.images.append(contentsOf: box)
+                self.userPageEntity.onNext(newValue)
+            }.disposed(by: disposeBag)
+
+    }
+    
+    func setMediaImage(with mediaEntity: MediaEntity) {
+        
+        var box = [MediaImageEntity]()
+        Observable.from(mediaEntity.images)
+            .subscribe { [weak self] imageEntity in
+                self?.myPageRepository.requestMediaData(with: imageEntity.id)
+                    .map{ ($0.0, self?.convertDate(with: $0.1)) }
+                    .subscribe { (image,date) in
+                        var entity = imageEntity
+                        entity.image = image
+                        entity.createdTime = date
+                        box.append(entity)
+                    } onError: { error in
+                        print(error.localizedDescription)
+                    }.dispose()
+            } onError: { error in
+                print(error.localizedDescription)
+            } onCompleted: {
+                guard let tempUserPageEntity = self.tempUserPageEntity else {
+                    return
+                }
+                var newValue = tempUserPageEntity
+                newValue.media.images = box
+                self.userPageEntity.onNext(newValue)
+            }.disposed(by: disposeBag)
+
     }
 }
