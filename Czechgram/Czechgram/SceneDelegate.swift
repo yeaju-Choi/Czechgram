@@ -14,40 +14,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        if let token = UserDefaults.standard.object(forKey: "accessToken") as? String {
-            let networkService = NetworkService()
-            networkService.request(endPoint: EndPoint.userPage(token: token)) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.window = UIWindow(windowScene: windowScene)
-                        let mainViewController = HomeViewController()
-                        let naviController = UINavigationController(rootViewController: mainViewController)
+        self.window = UIWindow(windowScene: windowScene)
+        let mainViewController = HomeViewController()
+        let naviController = UINavigationController(rootViewController: mainViewController)
 
-                        self.window?.rootViewController = naviController
-                        self.window?.makeKeyAndVisible()
-                    }
+        self.window?.rootViewController = naviController
+        self.window?.makeKeyAndVisible()
 
-                case .failure:
-                    DispatchQueue.main.async {
-                        self.window = UIWindow(windowScene: windowScene)
-                        let mainViewController = LoginViewController()
-
-                        self.window?.rootViewController = mainViewController
-                        self.window?.makeKeyAndVisible()
-                    }
-                }
-            }
-
-        } else {
-            DispatchQueue.main.async {
-                self.window = UIWindow(windowScene: windowScene)
-                let mainViewController = LoginViewController()
-
-                self.window?.rootViewController = mainViewController
-                self.window?.makeKeyAndVisible()
-            }
-        }
+//        if let token = UserDefaults.standard.object(forKey: "accessToken") as? String {
+//            let networkService = NetworkService()
+//            networkService.request(endPoint: EndPoint.userPage(token: token)) { result in
+//                switch result {
+//                case .success:
+//                    DispatchQueue.main.async {
+//                        self.window = UIWindow(windowScene: windowScene)
+//                        let mainViewController = HomeViewController()
+//                        let naviController = UINavigationController(rootViewController: mainViewController)
+//
+//                        self.window?.rootViewController = naviController
+//                        self.window?.makeKeyAndVisible()
+//                    }
+//
+//                case .failure:
+//                    DispatchQueue.main.async {
+//                        self.window = UIWindow(windowScene: windowScene)
+//                        let mainViewController = LoginViewController()
+//
+//                        self.window?.rootViewController = mainViewController
+//                        self.window?.makeKeyAndVisible()
+//                    }
+//                }
+//            }
+//
+//        } else {
+//            DispatchQueue.main.async {
+//                self.window = UIWindow(windowScene: windowScene)
+//                let mainViewController = LoginViewController()
+//
+//                self.window?.rootViewController = mainViewController
+//                self.window?.makeKeyAndVisible()
+//            }
+//        }
 
     }
 

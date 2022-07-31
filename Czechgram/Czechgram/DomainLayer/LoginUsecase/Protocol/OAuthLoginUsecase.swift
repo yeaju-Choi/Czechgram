@@ -12,7 +12,7 @@ protocol OAuthLoginUsecase {
 
     var validURL: PublishSubject<URL> { get }
     var longLivedToken: PublishSubject<String> { get }
-    
+
     func execute()
     func execute(with grantCode: String)
 }

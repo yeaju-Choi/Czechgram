@@ -11,11 +11,8 @@ import RxSwift
 protocol ViewMainPageUsecase {
 
     var userPageEntity: PublishSubject<UserPageEntity> { get }
-//    var userImageEntity: PublishSubject<[MediaImageEntity]> { get }
-//    var mediaEntity: PublishSubject<MediaEntity> { get }
-    
+
     func executeUserPage()
     func executeNextMediaImage()
-    
-    
+
 }

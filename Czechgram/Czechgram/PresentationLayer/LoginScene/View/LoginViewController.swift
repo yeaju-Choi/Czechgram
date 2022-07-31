@@ -12,7 +12,7 @@ import RxCocoa
 final class LoginViewController: UIViewController {
 
     var loginVM = LoginViewModel()
-    
+
     let disposeBag = DisposeBag()
 
     private let instaLoginButton: UIButton = {
@@ -44,18 +44,18 @@ private extension LoginViewController {
             instaLoginButton.heightAnchor.constraint(equalTo: instaLoginButton.widthAnchor)
         ])
     }
-    
+
     func bindViewModel() {
         let output = self.loginVM.transform(input: LoginViewModel.Input(loginButtonDidTapEvent: self.instaLoginButton.rx.tap.asObservable()),
                                             disposeBag: self.disposeBag)
-        
+
         output.instaOAuthPageURL
             .subscribe(onNext: { url in
                 UIApplication.shared.open(url)
-                
+
             })
             .disposed(by: disposeBag)
-        
+
         output.isFetchedOAuthToken
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { isFetched in
@@ -64,7 +64,7 @@ private extension LoginViewController {
                     let navigation = UINavigationController(rootViewController: homeVC)
                     navigation.modalPresentationStyle = .fullScreen
                     self.present(navigation, animated: true)
-                    
+
                 } else {
                     let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel))

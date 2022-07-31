@@ -12,41 +12,32 @@ import RxRelay
 final class HomeViewModel {
 
     let myPageUsecase: ViewMainPageUsecase = ViewDefaultMainPageUsecase()
-    
-    struct Input {
-        let viewDidLoadEvent: Observable<Void>
-    }
-    
+
     struct Output {
         let isFetchAllData = PublishRelay<Bool>()
         let userPageEntity = PublishRelay<UserPageEntity>()
     }
-    
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+
+    func transform(disposeBag: DisposeBag) -> Output {
         let output = Output()
-        
-        input.viewDidLoadEvent
-            .subscribe { [weak self] _ in
-                self?.myPageUsecase.executeUserPage()
-            }.disposed(by: disposeBag)
-        
+
         self.myPageUsecase.userPageEntity
             .map { $0.mediaCount == $0.media.images.count }
             .bind(to: output.isFetchAllData)
             .disposed(by: disposeBag)
-        
+
         self.myPageUsecase.userPageEntity
             .bind(to: output.userPageEntity)
             .disposed(by: disposeBag)
- 
+
         return output
     }
-    
+
+    func enquireDefaultImages() {
+        myPageUsecase.executeUserPage()
+    }
+
     func enquireNextImages() {
         myPageUsecase.executeNextMediaImage()
     }
 }
-    
-
-
-

@@ -39,7 +39,7 @@ struct NetworkService: NetworkServiceable {
 
                     observer(.success(data))
                 }.resume()
-                
+
                 return Disposables.create()
             }
         }
@@ -67,7 +67,7 @@ struct NetworkService: NetworkServiceable {
 
                 observer(.success(data))
             }.resume()
-            
+
             return Disposables.create()
         }
     }

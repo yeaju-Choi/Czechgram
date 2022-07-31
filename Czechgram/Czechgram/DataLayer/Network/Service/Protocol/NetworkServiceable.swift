@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 
 protocol NetworkServiceable {
-    
+
     func request(endPoint: EndPoint) -> Single<Data>
     func requestImage(url: URL) -> Single<Data>
 }
