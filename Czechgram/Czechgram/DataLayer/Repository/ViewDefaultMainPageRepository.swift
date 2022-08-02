@@ -27,15 +27,6 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
                guard let userPageDTO = jsonConveter.decode(data: data) else { return }
                self?.userDTO.onNext(userPageDTO)
 
-//               jsonConveter.decode(data: data)
-//                   .subscribe { [weak self] userPageDTO in
-//                       self?.userDTO.onNext(userPageDTO)
-//
-//                   } onFailure: { error in
-//                       print(error.localizedDescription)
-//
-//                   }.dispose()
-
            }, onFailure: { error in
                print(error.localizedDescription)
 
@@ -51,16 +42,7 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
                     let jsonConverter = JSONConverter<MediaUrlDTO>()
                     guard let mediaUrlDTO = jsonConverter.decode(data: data) else { return }
                     self?.fetchUserImageData(with: mediaUrlDTO)
-
-//                    jsonConverter.decode(data: data)
-//                        .subscribe { [weak self] mediaUrlDTO in
-//                            self?.fetchUserImageData(with: mediaUrlDTO)
-//
-//                        } onFailure: { error in
-//                            print(error)
-//
-//                        }.dispose()
-
+                    
                 } onFailure: { error in
                     print(error)
 
@@ -74,15 +56,6 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
                 let jsonConverter = JSONConverter<MediaDTO>()
                 guard let mediaDTO = jsonConverter.decode(data: data) else { return }
                 self?.mediaDTO.onNext(mediaDTO)
-
-//                jsonConverter.decode(data: data)
-//                    .subscribe { [weak self] mediaDTO in
-//                        self?.mediaDTO.onNext(mediaDTO)
-//
-//                    } onFailure: { [weak self] error in
-//                        self?.mediaDTO.onError(error)
-//
-//                    }.dispose()
 
             } onFailure: { [weak self] error in
                 self?.mediaDTO.onError(error)

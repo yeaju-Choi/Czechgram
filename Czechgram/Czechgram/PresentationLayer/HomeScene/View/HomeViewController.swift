@@ -152,9 +152,9 @@ private extension HomeViewController {
  extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
      func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//         guard let cellEntity = userPageEntity?.media.images[indexPath.row], let id = userPageEntity?.userName else { return }
-//         let detailVC = DetailViewController(cellEntity: cellEntity, userId: id)
-//         self.navigationController?.pushViewController(detailVC, animated: true)
+         guard let cellEntity = userPageEntity?.media.images[indexPath.row], let id = userPageEntity?.userName else { return }
+         let detailVC = DetailViewController(cellEntity: cellEntity, userId: id)
+         self.navigationController?.pushViewController(detailVC, animated: true)
      }
 
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
