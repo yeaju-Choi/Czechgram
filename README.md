@@ -37,7 +37,9 @@
 
 [![Swift](https://img.shields.io/badge/swift-v5.5-orange?logo=swift)](https://developer.apple.com/kr/swift/)
 [![Xcode](https://img.shields.io/badge/xcode-v13.2-blue?logo=xcode)](https://developer.apple.com/kr/xcode/)
+[![rxswift](https://img.shields.io/badge/RxSwift-6.5.0-red)]()
 <img src="https://img.shields.io/badge/UIkit-000000?style=flat&logo=UIkit" alt="uikit" maxWidth="100%">
+
 
 <br>
 
