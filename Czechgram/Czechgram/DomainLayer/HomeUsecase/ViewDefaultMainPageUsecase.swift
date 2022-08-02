@@ -20,7 +20,13 @@ final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
             guard let entity = tempUserPageEntity, entity.media.images.count == tempImageData.count else { return }
 
             var extraEntity = entity
-            extraEntity.media.images = tempImageData
+            extraEntity.media.images = tempImageData.sorted { firstImage, secondImage in
+                if let firstDate = firstImage.createdTime, let secondDate = secondImage.createdTime {
+                    return firstDate > secondDate
+                } else {
+                    return firstImage.id > secondImage.id
+                }
+            }
             tempUserPageEntity?.media.images = tempImageData
 
             userPageEntity.onNext(extraEntity)
