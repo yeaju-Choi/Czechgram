@@ -6,37 +6,73 @@
 //
 
 import Foundation
+import RxSwift
 
 final class ViewDefaultMainPageUsecase: ViewMainPageUsecase {
 
     let myPageRepository: ViewMainPageRepository = ViewDefaultMainPageRepository()
+    let userPageEntity = PublishSubject<UserPageEntity>()
+    let disposeBag = DisposeBag()
 
-    func executeUserPage(completion: @escaping (UserPageEntity) -> Void) {
-        myPageRepository.requestPageData { [weak self] userPageDTO in
-            guard let validDTO = userPageDTO, let entity = self?.convert(from: validDTO) else { return }
+    private var tempUserPageEntity: UserPageEntity?
+    private var tempImageData = [MediaImageEntity]() {
+        didSet {
+            guard let entity = tempUserPageEntity, entity.media.images.count == tempImageData.count else { return }
 
-            completion(entity)
+            var extraEntity = entity
+            extraEntity.media.images = tempImageData.sorted { firstImage, secondImage in
+                if let firstDate = firstImage.createdTime, let secondDate = secondImage.createdTime {
+                    return firstDate > secondDate
+                } else {
+                    return firstImage.id > secondImage.id
+                }
+            }
+            tempUserPageEntity?.media.images = tempImageData
+
+            userPageEntity.onNext(extraEntity)
         }
     }
 
-    func executeMediaImage(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
-        myPageRepository.requestMediaData(with: imageEntity.id) { [weak self] image, createdTime in
-            guard let image = image, let time = createdTime, let date = self?.convertDate(with: time) else { return }
-            var entity = imageEntity
-            entity.image = image
-            entity.createdTime = date
-            // TODO: entity 저장 (캐시, 파일매니저)
-            completion(entity)
-        }
+    init() {
+        myPageRepository.userDTO
+            .map { self.convert(from: $0) }
+            .subscribe { [weak self] userPageEntity in
+                self?.tempUserPageEntity = userPageEntity
+                self?.setMediaImage(with: userPageEntity.media)
+            } onError: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
+
+        myPageRepository.mediaDTO
+            .map { self.convert(from: $0)}
+            .subscribe { [weak self] mediaEntity in
+                self?.tempUserPageEntity?.media.images.append(contentsOf: mediaEntity.images)
+                self?.setMediaImage(with: mediaEntity)
+            } onError: { error in
+                print(error.localizedDescription)
+            }.disposed(by: disposeBag)
+
+        myPageRepository.imageData
+            .subscribe { [weak self] imageData in
+                let date = self?.convertDate(with: imageData.2)
+                let entity = MediaImageEntity(id: imageData.0, image: imageData.1, createdTime: date)
+                self?.tempImageData.append(entity)
+
+            } onError: { error in
+                print(error.localizedDescription)
+            }
+            .disposed(by: disposeBag)
     }
 
-    func executeNextMediaImage(with nextImageSection: String?, completion: @escaping (MediaEntity?) -> Void) {
-        guard let section = nextImageSection, let url = URL(string: section) else { return }
-        myPageRepository.requestNextPageMediaData(with: url) { [weak self] media in
-            guard let media = media else { return }
-            let mediaEntity = self?.convert(from: media)
-            completion(mediaEntity)
-        }
+    func executeUserPage() {
+        myPageRepository.requestPageData()
+    }
+
+    func executeNextMediaImage() {
+        guard let section = tempUserPageEntity?.media.page.next, let url = URL(string: section) else { return }
+
+        myPageRepository.requestNextPageMediaData(with: url)
     }
 }
 
@@ -67,6 +103,12 @@ private extension ViewDefaultMainPageUsecase {
             return date
         } else {
             return nil
+        }
+    }
+
+    func setMediaImage(with id: MediaEntity) {
+        id.images.forEach {
+            myPageRepository.requestMediaData(with: $0.id)
         }
     }
 }

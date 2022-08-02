@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class LoginViewController: UIViewController {
 
     var loginVM = LoginViewModel()
+
+    let disposeBag = DisposeBag()
 
     private let instaLoginButton: UIButton = {
         let button = UIButton(type: .system)
@@ -24,8 +28,7 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         configureLayouts()
-        configureInstaLoginButton()
-        configureObservableBinding()
+        bindViewModel()
     }
 }
 
@@ -42,49 +45,32 @@ private extension LoginViewController {
         ])
     }
 
-    func configureInstaLoginButton() {
-        let homeVC = HomeViewController()
-        let navi = UINavigationController(rootViewController: homeVC)
-        navi.modalPresentationStyle = .fullScreen
+    func bindViewModel() {
+        let output = self.loginVM.transform(input: LoginViewModel.Input(loginButtonDidTapEvent: self.instaLoginButton.rx.tap.asObservable()),
+                                            disposeBag: self.disposeBag)
 
-        if #available(iOS 14.0, *) {
-            let action = UIAction { _ in
-                self.loginVM.enquireInstaToken()
-            }
-            instaLoginButton.addAction(action, for: .touchDown)
-        } else {
-            instaLoginButton.addTarget(self, action: #selector(presentNextScene(to:)), for: .touchDown)
-        }
-    }
+        output.instaOAuthPageURL
+            .subscribe(onNext: { url in
+                UIApplication.shared.open(url)
 
-    @objc
-    func presentNextScene(to viewController: UIViewController) {
-        self.loginVM.enquireInstaToken()
-    }
+            })
+            .disposed(by: disposeBag)
 
-    func configureObservableBinding() {
-        loginVM.instaOAuthPageURL.bind { url in
-            guard let validURL = url, UIApplication.shared.canOpenURL(validURL) else { return }
-            UIApplication.shared.open(validURL)
-        }
-
-        loginVM.isFetchedOAuthToken.bind { isFetched in
-            switch isFetched {
-            case true:
-                DispatchQueue.main.async {
+        output.isFetchedOAuthToken
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { isFetched in
+                if isFetched {
                     let homeVC = HomeViewController()
                     let navigation = UINavigationController(rootViewController: homeVC)
                     navigation.modalPresentationStyle = .fullScreen
                     self.present(navigation, animated: true)
-                }
 
-            case false:
-                DispatchQueue.main.async {
+                } else {
                     let alert = UIAlertController(title: "Ooops!", message: "Failed to convert AccessToken, check it again", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .cancel))
                     self.present(alert, animated: true)
                 }
-            }
-        }
+            })
+            .disposed(by: self.disposeBag)
     }
 }

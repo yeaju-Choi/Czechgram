@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol ViewDetailPageUsecase {
 
-    func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void)
-    func executePostImages(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void)
+    var mediaImageEntitesSubject: PublishSubject<[MediaImageEntity]> {get}
+    var mediaImageEntitySubject: PublishSubject<MediaImageEntity> {get}
+
+    func executePostData(with id: String)
+    func executePostImages(with imageEntity: MediaImageEntity)
 }

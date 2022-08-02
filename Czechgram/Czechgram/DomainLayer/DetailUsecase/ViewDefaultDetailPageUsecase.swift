@@ -6,35 +6,46 @@
 //
 
 import Foundation
+import RxSwift
 
 final class ViewDefaultDetailPageUsecase: ViewDetailPageUsecase {
 
     private var detailPostRepository: ViewDetailPageRepository = ViewDefaultDetailPageRepository()
+    let mediaImageEntitesSubject = PublishSubject<[MediaImageEntity]>()
+    let mediaImageEntitySubject = PublishSubject<MediaImageEntity>()
 
-    func executePostData(with id: String, completion: @escaping ([MediaImageEntity]) -> Void) {
-        detailPostRepository.requestChildrenData(with: id) { mediaDTO in
-            var mediaImageEnities = [MediaImageEntity]()
+    let disposebag = DisposeBag()
 
-            if !mediaDTO.mediaIDs.isEmpty {
-                mediaDTO.mediaIDs.forEach {
-                    let entity = MediaImageEntity(id: $0.id)
-                    mediaImageEnities.append(entity)
+    func executePostData(with id: String) {
+        detailPostRepository.requestChildrenData(with: id)
+            .subscribe { [weak self] mediaDTO in
+                var mediaImageEnities = [MediaImageEntity]()
+
+                if !mediaDTO.mediaIDs.isEmpty {
+                    mediaDTO.mediaIDs.forEach {
+                        let entity = MediaImageEntity(id: $0.id)
+                        mediaImageEnities.append(entity)
+                    }
                 }
-            }
+                self?.mediaImageEntitesSubject.onNext(mediaImageEnities)
 
-            completion(mediaImageEnities)
-        }
+            } onError: { error in
+                print(error.localizedDescription)
+            }.disposed(by: disposebag)
     }
 
-    func executePostImages(with imageEntity: MediaImageEntity, completion: @escaping (MediaImageEntity) -> Void) {
-        detailPostRepository.requestChildrenImage(with: imageEntity.id) { [weak self] image, createdTime in
-            guard let image = image, let time = createdTime, let date = self?.convertDate(with: time) else { return }
-            var entity = imageEntity
-            entity.image = image
-            entity.createdTime = date
-            // TODO: entity 저장 (캐시, 파일매니저)
-            completion(entity)
-        }
+    func executePostImages(with imageEntity: MediaImageEntity) {
+
+        detailPostRepository.requestChildrenImage(with: imageEntity.id)
+            .subscribe { [weak self] image, createdTime in
+                guard let date = self?.convertDate(with: createdTime) else { return }
+                var entity = imageEntity
+                entity.image = image
+                entity.createdTime = date
+                self?.mediaImageEntitySubject.onNext(entity)
+            } onError: { error in
+                print(error.localizedDescription)
+            }.disposed(by: disposebag)
     }
 }
 

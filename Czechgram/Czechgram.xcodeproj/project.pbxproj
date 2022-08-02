@@ -57,7 +57,6 @@
 		D262354B287D7B02002F0610 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262354A287D7B02002F0610 /* NetworkService.swift */; };
 		D262354D287D7DF0002F0610 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D262354C287D7DF0002F0610 /* NetworkError.swift */; };
 		D2623552287D8183002F0610 /* NetworkServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623551287D8183002F0610 /* NetworkServiceable.swift */; };
-		D262355A287E97F0002F0610 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2623559287E97F0002F0610 /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,7 +113,6 @@
 		D262354A287D7B02002F0610 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D262354C287D7DF0002F0610 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		D2623551287D8183002F0610 /* NetworkServiceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkServiceable.swift; sourceTree = "<group>"; };
-		D2623559287E97F0002F0610 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		D4D04BDAB99B9DD95911428E /* Pods-Czechgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Czechgram.release.xcconfig"; path = "Target Support Files/Pods-Czechgram/Pods-Czechgram.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -457,7 +455,6 @@
 		D2623558287E97DB002F0610 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				D2623559287E97F0002F0610 /* Observable.swift */,
 				D2525A3A2887DE6100078D1C /* JSONConverter.swift */,
 			);
 			path = Helper;
@@ -475,6 +472,7 @@
 				B3F149A6287AB6AD0072DA45 /* Frameworks */,
 				B3F149A7287AB6AD0072DA45 /* Resources */,
 				B3F149C0287AB7EC0072DA45 /* ShellScript */,
+				15D165CF4CA4F3CE2E81693B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -554,6 +552,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		15D165CF4CA4F3CE2E81693B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Czechgram/Pods-Czechgram-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Czechgram/Pods-Czechgram-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Czechgram/Pods-Czechgram-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B3F149C0287AB7EC0072DA45 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -579,7 +594,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24B348E2886A25D00F8243F /* OAuthLoginUsecase.swift in Sources */,
-				D262355A287E97F0002F0610 /* Observable.swift in Sources */,
 				B3F23FED287D609200E06E85 /* Endpontable.swift in Sources */,
 				D2525A2F2887DBC700078D1C /* HomeViewModel.swift in Sources */,
 				B37747E1287C146000E2599B /* PostCell.swift in Sources */,

@@ -6,61 +6,78 @@
 //
 
 import UIKit
+import RxSwift
 
 final class ViewDefaultDetailPageRepository: ViewDetailPageRepository {
 
     let networkService: NetworkServiceable = NetworkService()
+    let disposebag = DisposeBag()
 
-    func requestChildrenData(with id: String, for completion: @escaping (MediaDTO) -> Void) {
-        guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
-        networkService.request(endPoint: .detailPage(mediaID: id, token: token)) { result in
-            switch result {
-            case .success(let data):
-                let jsonConverter = JSONConverter<MediaDTO>()
-                guard let mediaDTO = jsonConverter.decode(data: data) else { print(NetworkError.noURL)
-                    return }
-
-                completion(mediaDTO)
-            case .failure:
-                print(NetworkError.noData)
+    func requestChildrenData(with id: String) -> Observable<MediaDTO> {
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String, let self = self
+            else { observer.onError(NetworkError.noData)
+                return Disposables.create()
             }
+            self.networkService.request(endPoint: .detailPage(mediaID: id, token: token))
+                .subscribe { data in
+                    let jsonConverter = JSONConverter<MediaDTO>()
+                    guard let mediaDTO = jsonConverter.decode(data: data) else { return observer.onError(NetworkError.decodingError) }
+                    observer.onNext(mediaDTO)
+                } onFailure: { _ in
+                    observer.onError(NetworkError.noData)
+                }.disposed(by: self.disposebag)
+
+            return Disposables.create()
         }
     }
 
-    func requestChildrenImage(with id: String, for completion: @escaping (UIImage?, String?) -> Void) {
-        guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String else { return }
-        networkService.request(endPoint: .imageUrl(mediaID: id, token: token)) { [weak self] result in
-            switch result {
-            case .success(let data):
-                let jsonConverter = JSONConverter<MediaUrlDTO>()
-                guard let mediaUrlDTO = jsonConverter.decode(data: data) else { print(NetworkError.noURL)
-                    return }
+    func requestChildrenImage(with id: String) -> Observable<(UIImage, String)> {
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let token = UserDefaults.standard.object(forKey: "accessToken") as? String, let self = self
+            else { observer.onError(NetworkError.noData)
+                return Disposables.create()
+                }
+            self.networkService.request(endPoint: .imageUrl(mediaID: id, token: token))
+                .subscribe { data in
+                    let jsonConverter = JSONConverter<MediaUrlDTO>()
+                    guard let mediaUrlDTO = jsonConverter.decode(data: data) else { return observer.onError(NetworkError.decodingError) }
+                    self.fetchUserImageData(with: mediaUrlDTO)
+                        .subscribe { imageSet in
+                            observer.onNext(imageSet)
+                        } onError: { _ in
+                            observer.onError(NetworkError.noData)
+                        }.disposed(by: self.disposebag)
 
-                self?.fetchUserImageData(with: mediaUrlDTO, completion: completion)
-            case .failure:
-                print(NetworkError.noData)
-            }
+                } onFailure: { _ in
+                    observer.onError(NetworkError.noData)
+                }.disposed(by: self.disposebag)
+            return Disposables.create()
         }
     }
 }
 
 private extension ViewDefaultDetailPageRepository {
 
-    func fetchUserImageData(with dto: MediaUrlDTO, completion: @escaping (UIImage?, String?) -> Void) {
-        guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url) else { return }
-        if let cachedImage = ImageCacheService.loadData(url: validUrl) {
-            completion(cachedImage, dto.timestamp)
-        } else {
-            networkService.requestImage(url: validUrl) { result in
-                switch result {
-                case .success(let data):
-                    let image = UIImage(data: data)
-                    ImageCacheService.saveData(image: image, url: validUrl)
-                    completion(image, dto.timestamp)
-                case .failure:
-                    print(NetworkError.noData)
-                }
+    func fetchUserImageData(with dto: MediaUrlDTO) -> Observable<(UIImage, String)> {
+        return Observable.create { [weak self] observer -> Disposable in
+            guard let url: String = dto.mediaType == .Video ? dto.thumbnailUrl : dto.mediaUrl, let validUrl = URL(string: url), let self = self
+            else { observer.onError(NetworkError.noData)
+                return Disposables.create()
             }
+            if let cachedImage = ImageCacheService.loadData(url: validUrl) {
+                observer.onNext((cachedImage, dto.timestamp))
+            } else {
+                self.networkService.requestImage(url: validUrl)
+                    .subscribe { data in
+                        guard let image = UIImage(data: data) else { return observer.onError(NetworkError.noData) }
+                        ImageCacheService.saveData(image: image, url: validUrl)
+                        observer.onNext((image, dto.timestamp))
+                    } onFailure: { _ in
+                        observer.onError(NetworkError.noData)
+                    }.disposed(by: self.disposebag)
+            }
+            return Disposables.create()
         }
     }
 }

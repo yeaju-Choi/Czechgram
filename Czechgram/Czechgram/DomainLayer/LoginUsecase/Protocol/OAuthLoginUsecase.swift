@@ -6,9 +6,13 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol OAuthLoginUsecase {
 
-    func execute(_ urlCompletion: @escaping (URL) -> Void)
-    func execute(with grantCode: String, _ tokenCompletion: @escaping (String?) -> Void)
+    var validURL: PublishSubject<URL> { get }
+    var longLivedToken: PublishSubject<String> { get }
+
+    func execute()
+    func execute(with grantCode: String)
 }
