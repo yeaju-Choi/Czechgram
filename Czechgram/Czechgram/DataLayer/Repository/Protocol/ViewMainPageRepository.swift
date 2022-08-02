@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol ViewMainPageRepository {
 
-    func requestPageData(for completion: @escaping (UserPageDTO?) -> Void)
-    func requestMediaData(with id: String, for completion: @escaping (UIImage?, String?) -> Void)
-    func requestNextPageMediaData(with validURL: URL, for completion: @escaping (MediaDTO?) -> Void)
+    var userDTO: PublishSubject<UserPageDTO> { get }
+    var mediaDTO: PublishSubject<MediaDTO> { get }
+    var imageData: PublishSubject<(String, UIImage, String)> { get }
+
+    func requestPageData()
+    func requestMediaData(with id: String)
+    func requestNextPageMediaData(with validURL: URL)
 }

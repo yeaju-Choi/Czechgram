@@ -6,53 +6,63 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 final class DetailViewModel {
 
-    var myPageData: Observable<[MediaImageEntity]?> = Observable(nil)
-
     let mediaImageEntity: MediaImageEntity
+    var mediaCount = 0
+
     private var detailUsecase: ViewDetailPageUsecase = ViewDefaultDetailPageUsecase()
+    private var tempImageEntites = [MediaImageEntity]()
+
+    struct Output {
+        let myPageData = PublishRelay<[MediaImageEntity]>()
+    }
+
+    func transform(disposeBag: DisposeBag) -> Output {
+        let output = Output()
+
+        detailUsecase.mediaImageEntitesSubject
+            .bind { [weak self] mediaImages in
+                guard let imageEntity = self?.mediaImageEntity else { return }
+                if mediaImages.isEmpty {
+                    output.myPageData.accept([imageEntity])
+
+                } else {
+                    self?.supplementProperties(for: mediaImages)
+                }
+            }.disposed(by: disposeBag)
+
+        detailUsecase.mediaImageEntitySubject
+            .bind { [weak self] mediaImageEntity in
+                guard let self = self else { return }
+                self.tempImageEntites.append(mediaImageEntity)
+                guard self.tempImageEntites.count != self.mediaCount else {
+                    output.myPageData.accept(self.tempImageEntites)
+                    return
+                }
+            }.disposed(by: disposeBag)
+
+        return output
+    }
 
     init(cellEntity: MediaImageEntity) {
         self.mediaImageEntity = cellEntity
     }
 
     func enquireImages() {
-        detailUsecase.executePostData(with: mediaImageEntity.id) { [weak self] mediaImageEntities in
-            guard let imageEntity = self?.mediaImageEntity else { return }
-
-            if mediaImageEntities.isEmpty {
-                self?.myPageData.updateValue(value: [imageEntity])
-
-            } else {
-                self?.supplementProperties(for: mediaImageEntities)
-            }
-        }
+        detailUsecase.executePostData(with: mediaImageEntity.id)
     }
 }
 
 private extension DetailViewModel {
 
     func supplementProperties(for mediaImage: [MediaImageEntity]) {
-        var imageEntites = [MediaImageEntity]()
-
+        mediaCount = mediaImage.count
         mediaImage.forEach {
-            detailUsecase.executePostImages(with: $0) { [weak self] imageEntity in
-                imageEntites.append(imageEntity)
-
-                guard imageEntites.count != mediaImage.count else {
-                    imageEntites.sort { firstValue, secondValue in
-                        if let firstTime = firstValue.createdTime, let secondTime = secondValue.createdTime {
-                            return firstTime > secondTime
-                        } else {
-                            return firstValue.id > secondValue.id
-                        }
-                    }
-                    self?.myPageData.updateValue(value: imageEntites)
-                    return
-                }
-            }
+            detailUsecase.executePostImages(with: $0)
         }
     }
 }

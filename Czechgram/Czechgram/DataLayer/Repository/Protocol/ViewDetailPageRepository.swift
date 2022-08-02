@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol ViewDetailPageRepository {
 
-    func requestChildrenData(with id: String, for completion: @escaping (MediaDTO) -> Void)
-    func requestChildrenImage(with id: String, for completion: @escaping (UIImage?, String?) -> Void)
+    func requestChildrenData(with id: String) -> Observable<MediaDTO>
+    func requestChildrenImage(with id: String) -> Observable<(UIImage, String)>
 }

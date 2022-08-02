@@ -6,22 +6,45 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 final class LoginViewModel {
 
     private let instagramUsecase: OAuthLoginUsecase = InstagramLoginUsecase()
 
-    var instaOAuthPageURL: Observable<URL?> = Observable(nil)
-    var isFetchedOAuthToken: Observable<Bool> = Observable(false)
+    struct Input {
+        let loginButtonDidTapEvent: Observable<Void>
+    }
+
+    struct Output {
+        let instaOAuthPageURL = PublishRelay<URL>()
+        let isFetchedOAuthToken = PublishRelay<Bool>()
+    }
 
     init() {
         configureNotification()
     }
 
-    func enquireInstaToken() {
-        instagramUsecase.execute { [weak self] validURL in
-            self?.instaOAuthPageURL.updateValue(value: validURL)
-        }
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+
+        input.loginButtonDidTapEvent
+            .subscribe({ [weak self] _ in
+                self?.instagramUsecase.execute()
+            })
+            .disposed(by: disposeBag)
+
+        self.instagramUsecase.validURL
+            .bind(to: output.instaOAuthPageURL)
+            .disposed(by: disposeBag)
+
+        self.instagramUsecase.longLivedToken
+            .map { !$0.isEmpty }
+            .bind(to: output.isFetchedOAuthToken)
+            .disposed(by: disposeBag)
+
+        return output
     }
 }
 
@@ -36,14 +59,7 @@ private extension LoginViewModel {
     @objc
     func transferGrantCode(_ notification: Notification) {
         guard let code = notification.userInfo?["GrantCode"] as? String else { return }
-        instagramUsecase.execute(with: code) { [weak self] token in
-            guard let longLivedToken = token else {
-                self?.isFetchedOAuthToken.updateValue(value: false)
-                return
-            }
 
-            UserDefaults.standard.set(longLivedToken, forKey: "accessToken")
-            self?.isFetchedOAuthToken.updateValue(value: true)
-        }
+        instagramUsecase.execute(with: code)
     }
 }

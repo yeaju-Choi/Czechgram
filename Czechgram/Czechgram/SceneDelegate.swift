@@ -6,38 +6,38 @@
 //
 
 import UIKit
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var dispose: DisposeBag?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        if let token = UserDefaults.standard.object(forKey: "accessToken") as? String {
+        dispose = DisposeBag()
+
+        if let token = UserDefaults.standard.object(forKey: "accessToken") as? String, let disposeBag = dispose {
             let networkService = NetworkService()
-            networkService.request(endPoint: EndPoint.userPage(token: token)) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.window = UIWindow(windowScene: windowScene)
-                        let mainViewController = HomeViewController()
-                        let naviController = UINavigationController(rootViewController: mainViewController)
+            networkService.request(endPoint: .userPage(token: token))
+                .observe(on: ConcurrentMainScheduler.instance)
+                .subscribe { [weak self] _ in
+                    self?.window = UIWindow(windowScene: windowScene)
+                    let mainViewController = HomeViewController()
+                    let naviController = UINavigationController(rootViewController: mainViewController)
 
-                        self.window?.rootViewController = naviController
-                        self.window?.makeKeyAndVisible()
-                    }
+                    self?.window?.rootViewController = naviController
+                    self?.window?.makeKeyAndVisible()
 
-                case .failure:
-                    DispatchQueue.main.async {
-                        self.window = UIWindow(windowScene: windowScene)
-                        let mainViewController = LoginViewController()
+                } onFailure: { [weak self] _ in
+                    self?.window = UIWindow(windowScene: windowScene)
+                    let mainViewController = LoginViewController()
 
-                        self.window?.rootViewController = mainViewController
-                        self.window?.makeKeyAndVisible()
-                    }
-                }
-            }
+                    self?.window?.rootViewController = mainViewController
+                    self?.window?.makeKeyAndVisible()
+
+                }.disposed(by: disposeBag)
 
         } else {
             DispatchQueue.main.async {
@@ -48,7 +48,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window?.makeKeyAndVisible()
             }
         }
-
+//            networkService.request(endPoint: EndPoint.userPage(token: token)) { result in
+//                switch result {
+//                case .success:
+//                    DispatchQueue.main.async {
+//                        self.window = UIWindow(windowScene: windowScene)
+//                        let mainViewController = HomeViewController()
+//                        let naviController = UINavigationController(rootViewController: mainViewController)
+//
+//                        self.window?.rootViewController = naviController
+//                        self.window?.makeKeyAndVisible()
+//                    }
+//
+//                case .failure:
+//                    DispatchQueue.main.async {
+//                        self.window = UIWindow(windowScene: windowScene)
+//                        let mainViewController = LoginViewController()
+//
+//                        self.window?.rootViewController = mainViewController
+//                        self.window?.makeKeyAndVisible()
+//                    }
+//                }
+//            }
+//
+//        } else {
+//            DispatchQueue.main.async {
+//                self.window = UIWindow(windowScene: windowScene)
+//                let mainViewController = LoginViewController()
+//
+//                self.window?.rootViewController = mainViewController
+//                self.window?.makeKeyAndVisible()
+//            }
+//        }
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

@@ -6,58 +6,59 @@
 //
 
 import Foundation
+import RxSwift
 
 final class InstagramLoginUsecase: OAuthLoginUsecase {
 
     let networkService: NetworkServiceable = NetworkService()
 
-    func execute(_ urlCompletion: @escaping (URL) -> Void) {
-        guard let url = EndPoint.instagramAuthorize.url else { return }
+    let disposeBag = DisposeBag()
 
-        urlCompletion(url)
+    let validURL = PublishSubject<URL>()
+    let longLivedToken = PublishSubject<String>()
+
+    func execute() {
+        guard let url = EndPoint.instagramAuthorize.url else { return }
+        validURL.onNext(url)
     }
 
-    func execute(with grantCode: String, _ tokenCompletion: @escaping (String?) -> Void) {
-        changeShortLivedToken(from: grantCode) { token in
-            tokenCompletion(token)
-        }
+    func execute(with grantCode: String) {
+        changeShortLivedToken(from: grantCode)
     }
 }
 
 private extension InstagramLoginUsecase {
 
-    func changeShortLivedToken(from grantCode: String, _ tokenCompletion: @escaping (String?) -> Void) {
-        networkService.request(endPoint: .shortLivedToken(code: grantCode)) { [weak self] result in
-            switch result {
-            case .success(let data):
-                      guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+    func changeShortLivedToken(from grantCode: String) {
+        networkService.request(endPoint: .shortLivedToken(code: grantCode))
+            .subscribe { [weak self] data in
+                guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                       let accessToken = jsonData["access_token"] as? String,
                       let userID = jsonData["user_id"] as? UInt else { return }
 
                 UserDefaults.standard.set(userID, forKey: "userID")
-                self?.changeLongLivedToken(from: accessToken) { token in
-                    tokenCompletion(token)
-                }
+                self?.changeLongLivedToken(from: accessToken)
 
-            case .failure(let error):
+            } onFailure: { error in
                 print(error.localizedDescription)
+
             }
-        }
+            .disposed(by: disposeBag)
     }
 
-    func changeLongLivedToken(from shortToken: String, _ tokenCompletion: @escaping (String?) -> Void) {
-        networkService.request(endPoint: .longLivedToken(token: shortToken)) { result in
-            switch result {
-            case .success(let data):
+    func changeLongLivedToken(from shortToken: String) {
+        networkService.request(endPoint: .longLivedToken(token: shortToken))
+            .subscribe { [weak self] data in
                 guard let jsonData = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                 let accessToken = jsonData["access_token"] as? String else { return }
 
                 UserDefaults.standard.set(accessToken, forKey: "accessToken")
-                tokenCompletion(accessToken)
+                self?.longLivedToken.onNext(accessToken)
 
-            case .failure(let error):
+            } onFailure: { error in
                 print(error.localizedDescription)
+
             }
-        }
+            .disposed(by: disposeBag)
     }
 }

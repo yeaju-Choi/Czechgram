@@ -6,61 +6,70 @@
 //
 
 import Foundation
+import RxSwift
 
 struct NetworkService: NetworkServiceable {
 
-    func request(endPoint: EndPoint, completion: @escaping CompletionHandler) {
+    func request(endPoint: EndPoint) -> Single<Data> {
+        return Single<Data>.create { observer -> Disposable in
+            let request = makeURLRequest(with: endPoint)
+            switch request {
+            case .failure:
+                observer(.failure(NetworkError.noURL))
+                return Disposables.create()
 
-        let request = makeURLRequest(with: endPoint)
-        switch request {
-        case .failure:
-            completion(.failure(.noURL))
+            case .success(let request):
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard let httpResponse = response as? HTTPURLResponse else { return }
 
-        case .success(let request):
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    if let error = error {
+                        observer(.failure(NetworkError.transportError(error)))
+                        return
+                    }
+
+                    guard (200...299).contains(httpResponse.statusCode) else {
+                        observer(.failure(NetworkError.serverError(statusCode: httpResponse.statusCode)))
+                        return
+                    }
+
+                    guard let data = data else {
+                        observer(.failure(NetworkError.noData))
+                        return
+                    }
+
+                    observer(.success(data))
+                }.resume()
+
+                return Disposables.create()
+            }
+        }
+    }
+
+    func requestImage(url: URL) -> Single<Data> {
+        return Single<Data>.create { observer -> Disposable in
+            URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let httpResponse = response as? HTTPURLResponse else { return }
 
                 if let error = error {
-                    completion(.failure(.transportError(error)))
+                    observer(.failure(NetworkError.transportError(error)))
                     return
                 }
 
                 guard (200...299).contains(httpResponse.statusCode) else {
-                    completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
+                    observer(.failure(NetworkError.serverError(statusCode: httpResponse.statusCode)))
                     return
                 }
 
                 guard let data = data else {
-                    completion(.failure(.noData))
+                    observer(.failure(NetworkError.noData))
                     return
                 }
 
-                completion(.success(data))
+                observer(.success(data))
             }.resume()
+
+            return Disposables.create()
         }
-    }
-
-    func requestImage(url: URL, completion: @escaping CompletionHandler) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse else { return }
-
-            if let error = error {
-                completion(.failure(.transportError(error)))
-                return
-            }
-
-            guard (200...299).contains(httpResponse.statusCode) else {
-                completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
-
-            completion(.success(data))
-        }.resume()
     }
 }
 
