@@ -5,14 +5,16 @@
 //  Created by 최예주 on 2022/07/10.
 //
 
- import UIKit
+import UIKit
+import RxSwift
 
- final class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
 
     private var detailViewModel: DetailViewModel
     private let userId: String
 
     private var dataSource: CollectionViewDatasource<MediaImageEntity, DetailCollectionViewCell>?
+    private var disposebag = DisposeBag()
 
     private let detailScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -59,9 +61,9 @@
         super.viewDidLayoutSubviews()
         detailView.setUserImageRoundly()
     }
- }
+}
 
- private extension DetailViewController {
+private extension DetailViewController {
 
     func configureLayouts() {
         view.addSubview(detailScrollView)
@@ -103,24 +105,25 @@
     }
 
     func configureBinding() {
-        detailViewModel.myPageData.bind { [weak self] entities in
-            guard let entities = entities, let firstImage = entities[0].image else { return }
-            let ratio = firstImage.size.height / firstImage.size.width
-            self?.imageRatio = ratio
-            self?.dataSource = CollectionViewDatasource(entities, reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (entity: MediaImageEntity, cell: DetailCollectionViewCell) in
-                guard let image = entity.image else { return }
-                cell.set(image: image)
-            })
+        let output = self.detailViewModel.transform(disposeBag: disposebag)
 
-            DispatchQueue.main.async {
+        output.myPageData
+            .observe(on: ConcurrentMainScheduler.instance)
+            .bind { [weak self] entities in
+                guard let firstImage = entities[0].image else { return }
+                let ratio = firstImage.size.height / firstImage.size.width
+                self?.imageRatio = ratio
+                self?.dataSource = CollectionViewDatasource(entities, reuseIdentifier: DetailCollectionViewCell.reuseIdentifier, cellConfigurator: { (entity: MediaImageEntity, cell: DetailCollectionViewCell) in
+                    guard let image = entity.image else { return }
+                    cell.set(image: image)
+                })
                 self?.detailView.updateCollectionView(with: self?.dataSource)
                 self?.detailView.reloadCollectionView(ratio: ratio)
-            }
+            }.disposed(by: disposebag)
         }
-    }
- }
+}
 
- extension DetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 추가 구현 예정
     }
@@ -133,4 +136,4 @@
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
- }
+}

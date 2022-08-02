@@ -42,7 +42,6 @@ final class ViewDefaultMainPageRepository: ViewMainPageRepository {
                     let jsonConverter = JSONConverter<MediaUrlDTO>()
                     guard let mediaUrlDTO = jsonConverter.decode(data: data) else { return }
                     self?.fetchUserImageData(with: mediaUrlDTO)
-                    
                 } onFailure: { error in
                     print(error)
 
